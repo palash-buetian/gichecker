@@ -7,6 +7,39 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: login.php");
     exit;
 }
+
+include 'config.php';
+
+
+if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
+
+    $mouja_id =    mysqli_real_escape_string($conn,$_POST['mouja_id']);
+    $sa_dag =mysqli_real_escape_string($conn,$_POST['sa_dag']);
+    $bs_dag =mysqli_real_escape_string($conn,$_POST['bs_dag']);
+    $sa_khatian =mysqli_real_escape_string($conn,$_POST['sa_khatian']);
+    $bs_khatian =mysqli_real_escape_string($conn,$_POST['bs_khatian']);
+    $sa_land_amount =mysqli_real_escape_string($conn,$_POST['sa_land_amount']);
+    $bs_land_amount =mysqli_real_escape_string($conn,$_POST['bs_land_amount']);
+    $interest_id =mysqli_real_escape_string($conn,$_POST['interest_id']);
+
+    $update_query = "INSERT INTO dag (mouja_id, sa_dag, bs_dag, sa_khatian, sa_land_amount, bs_land_amount, interest_id) VALUES ('$mouja_id', '$sa_dag', '$bs_dag', '$sa_khatian', '$sa_land_amount', '$bs_land_amount','$interest_id')";
+
+    if ($conn->query($update_query) === TRUE) {
+        $_SESSION['success_message'] = "নতুন দাগের তথ্য সফলভাবে সংরক্ষণ করা হয়েছে।";
+    } else {
+        $_SESSION['error_message'] = "এই দাগের তথ্য ইতোমধ্যে যোগ করা হয়েছে।";
+    }
+
+    $conn->close();
+
+
+
+    header("Location: dashboard.php");
+    exit();
+
+}
+
+
 ?>
 
 
@@ -132,10 +165,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                     <div class="portlet-body">
                                         <div style="font-size: 15px; text-align: justify;margin: 20px;">
 
-                                            <form enctype="multipart/form-data" method="post" accept-charset="utf-8"
-                                                  class="form-horizontal" action="/add">
+
+                                            <form enctype="multipart/form-data" method="POST"  accept-charset="utf-8"
+                                                  class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'];?>">
                                                 <div style="display:none;"><input type="hidden" name="_method"
                                                                                   value="POST"></div>
+
                                                 <div class="form-body">
                                                     <div class="row">
                                                         <div class="panel-body col-sm-6">
@@ -151,36 +186,18 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                                                 placeholder="মৌজা সিলেক্ট করুন"
                                                                                 required="required" id="mouja_id"
                                                                                 tabindex="-1" aria-hidden="true">
-
-
-                                                                             <option value="0">মৌজা সিলেক্ট করুন</option>
+                                                                            <option value="">মৌজা সিলেক্ট করুন</option>
                                                                             <?php
 
-                                                                            if (isset($_REQUEST["mouja_id"])){
-                                                                                $mouja_id=(int)$_REQUEST["mouja_id"];
-                                                                            }else{  $mouja_id= 0; }
-
-
-
-                                                                            include 'config.php';
                                                                             // get the info from the db
                                                                             $query = "SELECT * FROM `mouja` ORDER BY id ASC";
                                                                             $result = mysqli_query($conn, $query);
-
                                                                             $numrows =mysqli_num_rows($result);
-
-
-                                                                            print($numrows);
-
-                                                                            while ($info = mysqli_fetch_array($result)) {
-
+                                                                            while ($info2 = mysqli_fetch_array($result)) {
                                                                                 echo '<option value="';
-                                                                                echo $info['id'];
-                                                                                echo '"';
-
-                                                                                if ($mouja_id == $info['id']) echo ' selected="selected"';
-                                                                                echo '>';
-                                                                                echo $info['name'];
+                                                                                echo $info2['id'];
+                                                                                echo '">';
+                                                                                echo $info2['name'];
                                                                                 echo '</option>';
                                                                             }
                                                                             ?>
@@ -193,29 +210,28 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                                 <label class="col-sm-4 control-label">এসএ খতিয়ান নম্বর
                                                                 </label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input text required"><input type="text"
-                                                                                                            name="username"
-                                                                                                            pattern="[A-Za-z0-9]{3,15}"
-                                                                                                            title="3 to 15 characters. A-Z,a-z,0-9"
-                                                                                                            required="required"
-                                                                                                            class="form-control"
-                                                                                                            maxlength="255"
-                                                                                                            id="username">
+                                                                    <div class="input number "><input type="number"
+                                                                                                      name="sa_khatian"
+
+
+                                                                                                      class="form-control"
+                                                                                                      value="0"
+                                                                                                      maxlength="255"
+                                                                                                      id="sa_khatian">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">এসএ দাগ নম্বর
-                                                                   </label>
+                                                                </label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input text required"><input type="text"
-                                                                                                            name="username"
-                                                                                                            pattern="[A-Za-z0-9]{3,15}"
-                                                                                                            title="3 to 15 characters. A-Z,a-z,0-9"
-                                                                                                            required="required"
+                                                                    <div class="input text required"><input type="number"
+                                                                                                            name="sa_dag"
+
                                                                                                             class="form-control"
                                                                                                             maxlength="255"
-                                                                                                            id="username">
+                                                                                                            value="0"
+                                                                                                            id="sa_dag">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -225,12 +241,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                                             class="required"
                                                                             aria-required="true">* </span></label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input text required"><input type="text"
-                                                                                                            name="name_bn"
-                                                                                                            required="required"
-                                                                                                            class="form-control"
-                                                                                                            maxlength="200"
-                                                                                                            id="name-bn">
+                                                                    <div class="input number "><input type="text"
+                                                                                                      name="sa_land_amount"
+
+                                                                                                      class="form-control"
+                                                                                                      maxlength="200"
+                                                                                                      value="0"
+                                                                                                      id="sa_land_amount">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -259,11 +276,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">বিএস খতিয়ান</label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input email"><input type="email"
-                                                                                                    name="email"
-                                                                                                    class="form-control user_email "
-                                                                                                    maxlength="100"
-                                                                                                    id="email"></div>
+                                                                    <div class="input "><input type="number"
+                                                                                               name="bs_khatian"
+                                                                                               class="form-control user_email "
+                                                                                               maxlength="100"
+                                                                                               value="0"
+                                                                                               id="bs_khatian"></div>
                                                                     <div class="email_validation"
                                                                          style="color: red"></div>
                                                                 </div>
@@ -271,11 +289,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">বিএস দাগ</label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input email"><input type="email"
-                                                                                                    name="email"
-                                                                                                    class="form-control user_email "
-                                                                                                    maxlength="100"
-                                                                                                    id="email"></div>
+                                                                    <div class="input "><input type="number"
+                                                                                               name="bs_dag"
+                                                                                               class="form-control user_email "
+                                                                                               maxlength="100"
+                                                                                               value="0"
+                                                                                               id="bs_dag"></div>
                                                                     <div class="email_validation"
                                                                          style="color: red"></div>
                                                                 </div>
@@ -283,14 +302,16 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">বিএস জমির পরিমাণ</label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input text required">
-                                                                        <input type="text"
-                                                                                                            name="mobile"
-                                                                                                            required="required"
-                                                                                                            class="form-control mobile_number"
-                                                                                                            data-toggle="tooltip"
-                                                                                                            maxlength="255"
-                                                                                                            id="mobile">
+                                                                    <div class="input text ">
+                                                                        <input type="number"
+                                                                               name="bs_land_amount"
+                                                                               step="any"
+
+                                                                               class="form-control"
+                                                                               data-toggle="tooltip"
+                                                                               maxlength="255"
+                                                                               value="0"
+                                                                               id="bs_land_amount">
                                                                     </div>
 
                                                                     <div class="mobile_validation"
@@ -299,6 +320,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                             </div>
 
 
+                                                            <?php print_r($info2);?>
 
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">সরকারি স্বার্থ নির্বাচন করুন
@@ -306,27 +328,35 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                                           aria-required="true">* </span></label>
                                                                 <div class="col-sm-6">
                                                                     <div class="input select">
-                                                                        <select class="form-control select2 select2-hidden-accessible"
-                                                                                name="mouja_id"
+                                                                        <select class="form-control select2 select2-hidden-accessible required"
+                                                                                name="interest_id"
                                                                                 placeholder="সরকারি স্বার্থ সিলেক্ট করুন"
-                                                                                required="required" id="mouja_id"
+                                                                                required="required" id="interest_id"
                                                                                 tabindex="-1" aria-hidden="true">
-                                                                            <option value="0">সরকারি স্বার্থ সিলেক্ট
-                                                                                করুন
-                                                                            </option>
-                                                                            <option value="25105">খাস জমি</option>
-                                                                            <option value="25032">অর্পিত সম্পত্তি
-                                                                            </option>
-                                                                            <option value="25106">ওয়াকফ সম্পত্তি
-                                                                            </option>
-                                                                            <option value="25107">দেবোত্তর সম্পত্তি
-                                                                            </option>
-                                                                            <option value="25111">অধিগ্রহনকৃত সম্পত্তি
-                                                                            </option>
-                                                                            <option value="25121">মামলা ও আপত্তি
-                                                                                সম্পর্কিত
-                                                                            </option>
+
+
+                                                                            <option value="">সরকারি স্বার্থ সিলেক্ট
+                                                                                করুন  </option>
+
+                                                                            <?php
+
+                                                                            // get the info from the db
+                                                                            $interest_query = "SELECT * FROM `interest` ORDER BY `interest_id` ASC";
+                                                                            $interest_result = mysqli_query($conn, $interest_query);
+
+                                                                            while ($interest_info = mysqli_fetch_array($interest_result)) {
+
+                                                                                echo '<option value="';
+                                                                                echo $interest_info['interest_id'];
+                                                                                echo '">';
+                                                                                echo $interest_info['interest_name'];
+                                                                                echo '</option>';
+                                                                            }
+
+                                                                            ?>
                                                                         </select>
+
+
 
                                                                     </div>
                                                                 </div>

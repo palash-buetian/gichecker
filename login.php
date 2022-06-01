@@ -91,10 +91,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["username"] = $username;
 
 // Redirect user to welcome page
-                            header("location: dashboard.php");
+
                             $cookie_name = "username";
                             $cookie_value =  $username;
                             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+
+                            $_SESSION['success_message'] = "আপনি সফলভাবে লগ-ইন করেছেন।";
+                            header("Location: dashboard.php");
+                            exit();
 
 
                         } else {

@@ -37,12 +37,17 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 
 
     $update_query = "UPDATE `dag` SET `mouja_id`='$mouja_id', `sa_dag`='$sa_dag', `bs_dag`='$bs_dag', `sa_khatian`='$sa_khatian', `bs_khatian`='$bs_khatian', `sa_land_amount`='$sa_land_amount', `bs_land_amount`='$bs_land_amount', `interest_id`='$interest_id'  WHERE `id`='$id' LIMIT 1;";
-    print($update_query);
 
     $result = mysqli_query($conn, $update_query);
 
 
-    header("Location: /dashboard");
+
+//Start the session if already not started.
+    session_start();
+    $_SESSION['success_message'] = "আপনার পরিবর্তন সফলভাবে সংরক্ষণ করা হয়েছে।";
+    header("Location: dashboard.php");
+    exit();
+
 }
 
 

@@ -92,7 +92,19 @@ $(document).ready(function () {
 			$('#output').slideUp(500);
 		}
 	});
-	
+
+	//delete data
+
+
+		$('a.delete').click(function (e) {
+			e.preventDefault();
+			var link = this;
+			var deleteModal = $("#deleteDataModal");
+			// open modal
+			deleteModal.modal();
+		});
+
+
 	
 	// on select change
 	$('select').on('change', function () {
