@@ -194,7 +194,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                                                                 required="required" id="interest_id"
                                                                                 tabindex="-1" aria-hidden="true">
 
-                                                                            </option>
+
                                                                             <?php
                                                                             if (isset($_REQUEST["interest_id"])){
                                                                                 $interest_id=(int)$_REQUEST["interest_id"];
@@ -419,20 +419,25 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                                                         <tr style="">
 
-                                                            <td style="text-align: center;"
-                                                                class="numeric_bangla"><?php echo $offset+$i; ?></td>
+                                                            <td style="text-align: center;" class="numeric_bangla" > <?php echo $offset+$i; ?></td>
 
                                                             <td style="text-align: center;"><?php echo $mouja_info['name']; ?></td>
 
+                                                            <td style="text-align: center;" class="numeric_bangla"><?php echo $info['sa_dag']; ?></td>
                                                             <td style="text-align: center;"
-                                                                class="numeric_bangla"><?php echo $info['sa_dag']; ?></td>
-                                                            <td style="text-align: center;"
-                                                               ><?php echo $info['bs_dag'] == null ? "বিএস অপ্রকাশিত" : ' class="numeric_bangla">'. $info['bs_dag']; ?></td>
 
+                                                            <?php
+                                                               if ($mouja_info['bs_jl'] == null ) {
+                                                                   echo '> বিএস অপ্রকাশিত';
+                                                                   }
+                                                               else {
+                                                                   echo $info['bs_dag'] == 0 ? ">অজানা" : ' class="numeric_bangla">'. $info['bs_dag'];
+                                                               }
+                                                               echo '</td>';
+                                                               ?>
 
-                                                            <td style="text-align: center;" <?php echo $mouja_info['sa_jl'] == null ? ">এসএ অপ্রকাশিত" : ' class="numeric_bangla">'. $mouja_info['sa_jl']; ?></td>
+                                                            <td style="text-align: center;" class="numeric_bangla"> <?php echo $mouja_info['sa_jl']; ?></td>
                                                             <td style="text-align: center;" <?php echo $mouja_info['bs_jl'] == null ? ">বিএস অপ্রকাশিত" : 'class="numeric_bangla">'. $mouja_info['bs_jl']; ?></td>
-
 
 
                                                             <td style="text-align: center;" <?php echo $info['sa_khatian'] == 0 ? ">অজানা" : ' class="numeric_bangla">'. $info['sa_khatian']; ?></td>
