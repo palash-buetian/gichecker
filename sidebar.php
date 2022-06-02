@@ -72,7 +72,7 @@
                 </a>
             </li>
             <li>
-                <a href="/mouja" class="service-list" data-s_id="13">
+                <a href="/mouja.php" class="service-list" data-s_id="13">
                     <!--                                <form class="login-form" action="http://oh.lams.gov.bd/emutationSso" method="post">-->
                     <span class="title">মৌজা তালিকা</span>
                     <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->

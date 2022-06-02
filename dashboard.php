@@ -99,6 +99,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                     <div class="portlet-body">
                                         <div style="font-size: 32px; text-align: center;margin: 20px;">
                                             <div class="col-sm-12">
+
                                                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                                     <div class="row">
                                                         <div class="col-sm-1">
