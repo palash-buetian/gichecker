@@ -11,9 +11,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 require_once "config.php";
 
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $name =$_POST['office_name'];
+    $name = $_POST['office_name'];
 
     $query = "UPDATE `settings` SET `field_value`='$name' WHERE `field_name`='office_name' LIMIT 1;";
     print($query);
@@ -76,7 +76,7 @@ $info = mysqli_fetch_array($result2);
                                     </div>
                                 </div>
                                 <div class="col-md-6 text-right" style="margin-top: 10px;">
-                                    <a href="/add" style="background:#399439;" type="submit" name="submit"
+                                    <a href="/mouja_add.php" style="background:#399439;" type="submit" name="submit"
                                        value="search"
                                        id="submit" class="btn btn-success btn-lg">
                                         <i class="fa fa-fw fa-plus"></i> নতুন মৌজা সংযোজন করুন
@@ -109,7 +109,8 @@ $info = mysqli_fetch_array($result2);
                                                             </div>
                                                             <h4 class="modal-title w-100">আপনি কি
                                                                 নিশ্চিত?</h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-hidden="true">×
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
@@ -120,7 +121,8 @@ $info = mysqli_fetch_array($result2);
                                                         <div class="modal-footer justify-content-center">
                                                             <!-- add a hidden input field to store ID for next step -->
                                                             <input type="hidden" name="id" value="1393">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">না, ফেরত যান
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">না, ফেরত যান
                                                             </button>
                                                             <button type="submit" class="btn btn-danger">হ্যাঁ, ডিলিট
                                                                 করুন
@@ -130,101 +132,63 @@ $info = mysqli_fetch_array($result2);
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="deleteDataModal" class="modal fade">
-                                                <div class="modal-dialog modal-confirm">
-                                                    <div class="modal-content">
-                                                        <form action="delete_data.php" method="GET"></form>
-                                                        <div class="modal-header flex-column">
-                                                            <div class="icon-box">
-                                                                <i class="fa fw fa-trash"></i>
-                                                            </div>
-                                                            <h4 class="modal-title w-100">আপনি কি
-                                                                নিশ্চিত?</h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>আপনি কি এই রেকর্ড ডিলিট করার বিষয়ে
-                                                                নিশ্চিত ? এটা ডিলিট করলে রেকর্ডটি আর
-                                                                ফেরত পাওয়া যাবে না।.</p>
-                                                        </div>
-                                                        <div class="modal-footer justify-content-center">
-                                                            <!-- add a hidden input field to store ID for next step -->
-                                                            <input type="hidden" name="id" value="1392">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">না, ফেরত যান
-                                                            </button>
-                                                            <button type="submit" class="btn btn-danger">হ্যাঁ, ডিলিট
-                                                                করুন
-                                                            </button>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
 
                                             <table class="table table-striped table-bordered table-hover" id="sample_6">
                                                 <thead>
                                                 <tr>
                                                     <th style="text-align: center;">ক্রম</th>
                                                     <th style="text-align: center;">মৌজার নাম</th>
-
                                                     <th style="text-align: center;">এসএ জেএল</th>
                                                     <th style="text-align: center;">বিএস জেএল</th>
-
-
-
                                                     <th style="text-align: center;" width="20%">পদক্ষেপ</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
 
 
-                                                <tr style="">
+                                                <?php
 
-                                                    <td style="text-align: center;" class="numeric_bangla"> 1</td>
+                                                include 'config.php';
 
-                                                    <td style="text-align: center;">পিরিজপুর</td>
+                                                // get the info from the db
+                                                $query = "SELECT * FROM `mouja` ORDER BY id ASC";
+                                                $result = mysqli_query($conn, $query);
+                                                $numrows = mysqli_num_rows($result);
+                                                $i =1;
+                                                while ($info2 = mysqli_fetch_array($result)) {
 
-                                                    <td style="text-align: center;" class="numeric_bangla"> 114</td>
-                                                    <td style="text-align: center;" class="numeric_bangla">9</td>
 
+                                                    echo ' <tr style="">
+                                                    <td style="text-align: center;" class="numeric_bangla">';
+                                                    echo $i;
+                                                    echo '</td>
+                                                    <td style="text-align: center;">';
 
-
+                                                    echo $info2['name'];
+                                                    echo '  </td>
+                                                    <td style="text-align: center;" class="numeric_bangla">';
+                                                    echo $info2['sa_jl'];
+                                                    echo '</td>
+                                                    <td style="text-align: center;" ';
+                                                    echo  $info2['bs_jl']==null? '>অপ্রকাশিত': 'class="numeric_bangla">'.$info2['bs_jl'];
+                                                    echo '</td>
                                                     <td class="text-center">
-                                                        <a href="/edit.php?id=1393" class="btn btn-primary btn-xs label-success" title="সংশোধন"><i class="fa fa-pencil fa-fw"></i> সংশোধন</a>
-                                                        <a href="#deleteDataModal" class="btn btn-danger btn-xs" data-toggle="modal" data-id="1393" title="ডিলিট"><i class="fa fa-trash-o fa-lg"></i> ডিলিট</a>
+                                                        <a href="/mouja_edit.php?id=';
+                                                    echo $info2['id'];
+                                                    echo '" class="btn btn-primary btn-xs label-success" title="সংশোধন"><i class="fa fa-pencil fa-fw"></i> সংশোধন</a>
+                                                        <a href="#deleteDataModal" class="btn btn-danger btn-xs" data-toggle="modal" data-id="';
+                                                    echo $info2['id'];
+                                                    echo '" title="ডিলিট"><i class="fa fa-trash-o fa-lg"></i> ডিলিট</a>
                                                     </td>
                                                     <!-- Modal HTML -->
-
-                                                </tr>
-
-
-                                                <tr style="">
-
-                                                    <td style="text-align: center;" class="numeric_bangla"> 2</td>
-
-                                                    <td style="text-align: center;">মিউনিসিপ্যালিটি</td>
-
-                                                    <td style="text-align: center;" class="numeric_bangla">333</td>
-                                                    <td style="text-align: center;"> অপ্রকাশিত</td>
-
-
-
-                                                    <td class="text-center">
-                                                        <a href="/edit.php?id=1392" class="btn btn-primary btn-xs label-success" title="সংশোধন"><i class="fa fa-pencil fa-fw"></i> সংশোধন</a>
-                                                        <a href="#deleteDataModal" class="btn btn-danger btn-xs" data-toggle="modal" data-id="1392" title="ডিলিট"><i class="fa fa-trash-o fa-lg"></i> ডিলিট</a>
-                                                    </td>
-                                                    <!-- Modal HTML -->
-
-                                                </tr>
-
+                                                </tr>';
+                                                $i++;
+                                                }
+                                                ?>
 
 
                                                 </tbody>
                                             </table>
-
 
 
                                             <div class="paginator">

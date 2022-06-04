@@ -10,59 +10,35 @@
             </li>
 
 
-            <li>
-                <a href="" class="service-list" data-s_id="11">
-                    <i class="icon-book-open"></i>
-                    <!--                                <form class="login-form" action="http://ldtax.gov.bd/dashboard/login" method="post">-->
-                    <span class="title">খাস জমি (১ম খন্ড)</span>
-                    <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->
-                </a>
-            </li>
-            <li>
-                <a href="" class="service-list" data-s_id="11">
-                    <!--                                <form class="login-form" action="http://ldtax.gov.bd/dashboard/login" method="post">-->
-                    <span class="title">খাস জমি (২য় খন্ড)</span>
-                    <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->
-                </a>
-            </li>
-            <li>
-                <a href="" class="service-list" data-s_id="11">
-                    <!--                                <form class="login-form" action="http://ldtax.gov.bd/dashboard/login" method="post">-->
-                    <span class="title">দেবোত্তর সম্পত্তি</span>
-                    <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->
-                </a>
-            </li>
-            <li>
-                <a href="" class="service-list" data-s_id="11">
-                    <!--                                <form class="login-form" action="http://ldtax.gov.bd/dashboard/login" method="post">-->
-                    <span class="title">ওয়াকফ সম্পত্তি</span>
-                    <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->
-                </a>
-            </li>
-            <li>
-                <a href="" class="service-list" data-s_id="11">
-                    <!--                                <form class="login-form" action="http://ldtax.gov.bd/dashboard/login" method="post">-->
-                    <span class="title">অর্পিত সম্পত্তি (ক তালিকা)</span>
-                    <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->
-                </a>
-            </li>
-            <li>
-                <a href="" class="service-list" data-s_id="13">
-                    <!--                                <form class="login-form" action="http://oh.lams.gov.bd/emutationSso" method="post">-->
-                    <span class="title">অর্পিত সম্পত্তি (খ তালিকা)</span>
-                    <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->
-                </a>
-            </li>
+
+            <?php
+
+            include 'config.php';
+
+            // get the info from the db
+            $interest_query = "SELECT * FROM `interest` ORDER BY `interest_id` ASC";
+            $interest_result = mysqli_query($conn, $interest_query);
+
+            $interest_rows =mysqli_num_rows($interest_result);
 
 
+            while ($interest_info = mysqli_fetch_array($interest_result)) {
 
-            <li>
-                <a href="/settings" class="service-list" data-s_id="13">
-                    <!--                                <form class="login-form" action="http://oh.lams.gov.bd/emutationSso" method="post">-->
-                    <span class="title">সেটিংস</span>
-                    <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->
+                echo ' <li>';
+               echo ' <a href="/interest.php?interest=';
+               echo $interest_info['interest_id'];
+               echo '" class="service-list" data-s_id="13"><span class="title">';
+
+                    echo $interest_info['interest_name'];
+                    echo "</span>
                 </a>
-            </li>
+            </li>";
+
+            }
+
+            ?>
+
+
 
             <li>
                 <a href="/users" class="service-list" data-s_id="13">
