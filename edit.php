@@ -34,10 +34,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
     $sa_land_amount =$_POST['sa_land_amount'];
     $bs_land_amount =$_POST['bs_land_amount'];
     $interest_id =$_POST['interest_id'];
+    $comment =$_POST['comment'];
 
+    $update_query = "UPDATE `dag` SET `mouja_id`='$mouja_id', `sa_dag`='$sa_dag', `bs_dag`='$bs_dag', `sa_khatian`='$sa_khatian', `bs_khatian`='$bs_khatian', `sa_land_amount`='$sa_land_amount', `bs_land_amount`='$bs_land_amount', `interest_id`='$interest_id', `comment`='$comment' WHERE `id`='$id' LIMIT 1;";
 
-    $update_query = "UPDATE `dag` SET `mouja_id`='$mouja_id', `sa_dag`='$sa_dag', `bs_dag`='$bs_dag', `sa_khatian`='$sa_khatian', `bs_khatian`='$bs_khatian', `sa_land_amount`='$sa_land_amount', `bs_land_amount`='$bs_land_amount', `interest_id`='$interest_id'  WHERE `id`='$id' LIMIT 1;";
-
+    print_r($update_query);
     $result = mysqli_query($conn, $update_query);
 
 
@@ -45,7 +46,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 //Start the session if already not started.
     session_start();
     $_SESSION['success_message'] = "আপনার পরিবর্তন সফলভাবে সংরক্ষণ করা হয়েছে।";
-    header("Location: dashboard.php");
+   // header("Location: dashboard.php");
     exit();
 
 }
@@ -289,27 +290,15 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-
-
-
-
-
-
                                                             <div class="form-group">
                                                                 <div id="profile_image_preview" class="col-sm-offset-7"
                                                                      style="max-height: 200px;max-margin-bottom: 10px;width: 219px;">
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group">
-                                                                <div id="signature_image_preview"
-                                                                     class="col-sm-offset-7"
-                                                                     style="max-height: 200px;margin-bottom: 10px; max-width: 219px;">
-                                                                </div>
-                                                            </div>
 
                                                         </div>
+
                                                         <div class="panel-body col-sm-6">
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">বিএস খতিয়ান</label>
@@ -412,6 +401,19 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                         </div>
                                                     </div>
 
+                                                    <div class="row">
+                                                        <div class="panel-body col-sm-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-3 control-label" for="comment">মন্তব্য/ বিস্তারিত তথ্য</label>
+                                                                <div class="col-sm-6">
+                                                                    <textarea class="form-control" id="comment" name="comment" rows="3">
+                                                                        <?php echo $info['comment']; ?>
+                                                                    </textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="form-actions">
                                                     <div class="row">

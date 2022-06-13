@@ -83,7 +83,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                 </div>
                                 <div class="col-md-6 text-right" style="margin-top: 10px;">
                                     <a href="/add" style="background:#399439;" type="submit" name="submit"
-                                       value="search"
                                        id="submit" class="btn btn-success btn-lg">
                                         <i class="fa fa-fw fa-plus"></i> নতুন তথ্য সংযোজন করুন
                                     </a>
@@ -139,7 +138,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
-                                                                <div class=" input select required">
+                                                                <div class=" input select">
                                                                     <div id="container_mouja_id" class="">
                                                                         <select class="form-control select2 select2-hidden-accessible"
                                                                                 name="mouja_id"
@@ -204,12 +203,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
-                                                                <div class=" input select required">
+                                                                <div class=" input select">
                                                                     <div id="container_mouja_id" class="">
                                                                         <select class="form-control select2 select2-hidden-accessible"
                                                                                 name="interest_id"
                                                                                 placeholder="সরকারি স্বার্থ সিলেক্ট করুন"
-                                                                                required="required" id="interest_id"
+                                                                                 id="interest_id"
                                                                                 tabindex="-1" aria-hidden="true">
 
 
@@ -274,7 +273,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
                                                                 <div>
-                                                                    <button type="submit" name="submit" value="search"
+                                                                    <button type="submit" name="submit"
                                                                             id="submit" class="btn btn-primary">
                                                                         <i class="fa fa-fw fa-search"></i> অনুসন্ধান
                                                                     </button>
@@ -384,6 +383,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     $sa_dag = $_POST['sa_dag'];
                                                     $bs_dag = $_POST['bs_dag'];
                                                     $mouja_id = $_POST['mouja_id'];
+                                                    $interest_id = $_POST['interest_id'];
+
+
 
                                                     if ($mouja_id == 0 & $interest_id == 0) {
 
@@ -410,10 +412,43 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                             $mouja_part = '';
                                                         }
                                                     } else {
+
+
+
                                                         $query = "SELECT * FROM `dag` ORDER BY id DESC LIMIT 135";
                                                     }
 
-                                                    $query = "SELECT * FROM dag WHERE {$sa_part} {$joiner} {$bs_part} {$mouja_part}";
+                                                    $data = array_filter($_REQUEST);
+
+
+                                                    $joiner = '';
+                                                    $i = 1;
+                                                    foreach ($data as $var=>$val){
+                                                        $joiner .= "$var=$val";
+
+                                                        if($i<sizeof($data))
+                                                            $joiner .= " AND ";
+
+                                                        $i++;
+                                                    }
+
+
+
+                                                    $query_final = "SELECT * FROM dag WHERE ".$joiner;
+
+
+
+//                                                    $stmt = $conn->prepare("SELECT * FROM dag WHERE (sa_dag, bs_dag, mouja_id, interest_id) VALUES (?, ?,?,?)");
+//                                                    $stmt->bind_param('i', $sa_dag, $bs_dag,$mouja_id,$interest_id );
+//                                                    $sa_dag = $_POST['sa_dag'];
+//                                                    $bs_dag = $_POST['bs_dag'];
+//                                                    $mouja_id = $_POST['mouja_id'];
+//                                                    $interest_id = $_POST['interest_id'];
+//
+//                                                    $stmt->execute();
+//                                                    print_r($stmt);
+
+                                                    //$query = "SELECT * FROM dag WHERE {$sa_part} {$joiner} {$bs_part} {$mouja_part}";
 
                                                 } else {
 
