@@ -1,38 +1,22 @@
+function validateNumberAndForwardSlash(e) {
+    var key = window.event ? event.keyCode : event.which;
+
+  if (event.keyCode >= 48 && event.keyCode <= 57 || event.keyCode == 191) {
+    return true;
+  } else {
+    return false;
+  }
+    
+	
+	
+	
+
+};
 
 
+	
 
 $(document).ready(function () {
-	
-	
-	const choices = new Choices('[data-trigger]',
-		{
-			searchEnabled: true,
-			itemSelectText: '',
-			items: [],
-			choices: [],
-			renderChoiceLimit: -1,
-			maxItemCount: -1,
-			addItems: true,
-			addItemFilter: null,
-			removeItems: true,
-			removeItemButton: false,
-			editItems: false,
-			allowHTML: true,
-			duplicateItemsAllowed: true,
-			delimiter: ',',
-			paste: true,
-			searchEnabled: true,
-			searchChoices: true,
-			searchFloor: 1,
-			searchResultLimit: 4,
-			searchFields: ['label', 'value'],
-			position: 'auto',
-			resetScrollPosition: true,
-			shouldSort: false,
-			shouldSortItems: false,
-		});
-
-
 	
 	$("#submitBtn").click(function () {
 		var dag = $('#search').val();
@@ -133,5 +117,6 @@ $(document).ready(function () {
 		}
 	});
 	
+
 	
 });

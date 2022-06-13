@@ -251,7 +251,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                                                             name="sa_khatian"
 
 
-                                                                                                            class="form-control"
+                                                                                                            class="form-control numeric_bangla"
                                                                                                             value="<?php echo $info['sa_khatian']; ?>"
                                                                                                             maxlength="255"
                                                                                                             id="sa_khatian">
@@ -262,10 +262,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <label class="col-sm-4 control-label">এসএ দাগ নম্বর
                                                                 </label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input text required"><input type="number"
+                                                                    <div class="input text required"><input type="text"
                                                                                                             name="sa_dag"
+																											onkeypress="return validateNumberAndForwardSlash(event)"
 
-                                                                                                            class="form-control"
+                                                                                                            class="form-control numeric_bangla"
                                                                                                             maxlength="255"
                                                                                                             value="<?php echo $info['sa_dag']; ?>"
                                                                                                             id="sa_dag">
@@ -281,7 +282,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                     <div class="input number "><input type="text"
                                                                                                             name="sa_land_amount"
 
-                                                                                                            class="form-control"
+                                                                                                            class="form-control numeric_bangla"
                                                                                                             maxlength="200"
                                                                                                             value="<?php echo $info['sa_land_amount']; ?>"
                                                                                                             id="sa_land_amount">
@@ -315,7 +316,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <div class="col-sm-6">
                                                                     <div class="input "><input type="number"
                                                                                                     name="bs_khatian"
-                                                                                                    class="form-control user_email "
+                                                                                                    class="form-control user_email numeric_bangla"
                                                                                                     maxlength="100"
                                                                                                     value="<?php echo $info['bs_khatian']; ?>"
                                                                                                     id="bs_khatian"></div>
@@ -328,7 +329,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <div class="col-sm-6">
                                                                     <div class="input "><input type="number"
                                                                                                     name="bs_dag"
-                                                                                                    class="form-control user_email "
+                                                                                                    class="form-control user_email numeric_bangla"
                                                                                                     maxlength="100"
                                                                                                     value="<?php echo $info['bs_dag']; ?>"
                                                                                                     id="bs_dag"></div>
@@ -344,7 +345,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                                name="bs_land_amount"
                                                                                step="any"
 
-                                                                               class="form-control"
+                                                                               class="form-control numeric_bangla"
                                                                                data-toggle="tooltip"
                                                                                maxlength="255"
                                                                                value="<?php echo $info['bs_land_amount']; ?>"

@@ -9,6 +9,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 ?>
 
+
+
+																			
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <!--
@@ -210,26 +213,28 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                                                 tabindex="-1" aria-hidden="true">
 
 
-                                                                            <?php
-                                                                            if (isset($_REQUEST["interest_id"])) {
-                                                                                $interest_id = (int)$_REQUEST["interest_id"];
-                                                                            } else {
-                                                                                $interest_id = 0;
-                                                                            }
-
-                                                                            ?>
+                                                                         
                                                                             <option value="">সরকারি স্বার্থ সিলেক্ট
                                                                                 করুন  </option>
 
-                                                                            <?php
+                                                                           <?php
+																		   
+																		   
+																		   if (isset($_REQUEST["interest_id"])) {
+																				$interest_id = (int)$_REQUEST["interest_id"];
+																			} else {
+																				$interest_id = 0;
+}
 
+																			print_r($interest_id);
+																			
                                                                             // get the info from the db
                                                                             $interest_query = "SELECT * FROM `interest` ORDER BY `interest_id` ASC";
                                                                             $interest_result = mysqli_query($conn, $interest_query);
 
                                                                             $interest_rows =mysqli_num_rows($interest_result);
 
-                                                                            print_r($info['interest_id']);
+                                                                            
 
                                                                             while ($interest_info = mysqli_fetch_array($interest_result)) {
 
@@ -237,7 +242,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                                                 echo $interest_info['interest_id'];
                                                                                 echo '"';
 
-                                                                                if ($info['interest_id'] == $interest_info['interest_id']) echo ' selected="selected"';
+																				if($interest_id!=0 & $interest_id == $interest_info['interest_id']){
+                                                                                 echo ' selected="selected"';}
+																				
                                                                                 echo '>';
                                                                                 echo $interest_info['interest_name'];
                                                                                 echo '</option>';
