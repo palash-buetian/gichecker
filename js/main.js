@@ -55,4 +55,21 @@ $(document).ready(function () {
 	$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
 		$("#success-alert").slideUp(500);
 	});
+	
+	
+	var bs_unpublished = $('#bs_jl_unpublished').is(':checked');
+	
+	$('#bs_jl_unpublished').val($(this).is(':checked'));
+
+    $('#bs_jl_unpublished').change(function() {
+		
+        if($(this).is(":checked")) {
+			
+            $("#bs_jl").attr("readonly","readonly");
+			$("#bs_jl").val("");
+        }
+        $('#textbox1').val($(this).is(':checked'));        
+    });
+	
+	
 });
