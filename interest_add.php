@@ -14,32 +14,22 @@ include 'config.php';
 if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 
 
-    $mouja_name =$_POST['mouja_name'];
-    $sa_jl =$_POST['sa_jl'];
-    $bs_jl =$_POST['bs_jl'];
-
-    if(isset($_POST['bs_jl_unpublished']) ){
-        $update_query = "INSERT INTO mouja ( name, sa_jl, bs_jl ) VALUES ('$mouja_name', '$sa_jl', NULL)";
-
-    }else{
-        $update_query = "INSERT INTO mouja ( name, sa_jl ) VALUES ('$mouja_name', '$sa_jl','$bs_jl')";
+    $interest_name =$_POST['interest_name'];
 
 
-    }
-
-    //print_r($update_query);
+    $update_query = "INSERT INTO interest ( interest_name) VALUES ('$interest_name')";
 
     if ($conn->query($update_query) === TRUE) {
-        $_SESSION['success_message'] = "নতুন মৌজা সফলভাবে সংরক্ষণ করা হয়েছে।";
+        $_SESSION['success_message'] = "নতুন দাগের তথ্য সফলভাবে সংরক্ষণ করা হয়েছে।";
     } else {
-        $_SESSION['error_message'] = "এই মৌজার তথ্য ইতোমধ্যে যোগ করা হয়েছে।";
+        $_SESSION['error_message'] = "এই দাগের তথ্য ইতোমধ্যে যোগ করা হয়েছে।";
     }
 
     $conn->close();
 
 
 
-    header("Location: mouja.php");
+    header("Location: interest.php");
     exit();
 
 }
@@ -92,7 +82,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                 <div class="col-md-12"></div>
                                 <div class="col-md-6">
                                     <div class="page-title">
-                                        <h2 style="margin-top: 0px;"> নতুন মৌজা যুক্ত করুন</h2>
+                                        <h2 style="margin-top: 0px;"> সরকারি স্বার্থ ধরণ যুক্ত করুন</h2>
                                     </div>
                                 </div>
 
@@ -105,7 +95,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                 <div class="portlet  box box red-sunglo">
                                     <div class="portlet-title">
                                         <div class="caption">
-                                            <i class="fa fa-pencil"></i>নতুন মৌজা যুক্ত করুন
+                                            <i class="fa fa-pencil"></i>নতুন স্বার্থ যুক্ত করুন
                                         </div>
                                     </div>
                                     <div class="portlet-body">
@@ -122,68 +112,36 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                     <div class="row">
                                                         <div class="panel-body col-sm-12">
 
+
                                                             <div class="form-group">
-                                                                <label class="col-sm-4 control-label"> মৌজার নাম
+                                                                <label class="col-sm-4 control-label">নতুন সরকারি স্বার্থের নাম
                                                                 </label>
                                                                 <div class="col-sm-6">
-
-                                                                    <div class="input "><input type="text"
-                                                                                               name="mouja_name"
-                                                                                               class="form-control"
-                                                                                               value=""
-                                                                                               required="required"
-                                                                                               maxlength="255"
-                                                                                               id="mouja_name">
+                                                                    <div class="input number "><input type="text"
+                                                                                                      name="interest_name"
+                                                                                                      class="form-control numeric_bangla"
+                                                                                                      value=""
+                                                                                                      required = "required"
+                                                                                                      maxlength="255"
+                                                                                                      id="interest_name">
                                                                     </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label class="col-sm-4 control-label">এসএ জেএল নম্বর
-                                                                </label>
-                                                                <div class="col-sm-6">
-                                                                    <div class="input number"><input type="number"
-                                                                                                     name="sa_jl"
-                                                                                                     class="form-control numeric_bangla"
-                                                                                                     value=""
-                                                                                                     required="required"
-                                                                                                     maxlength="255"
-                                                                                                     id="sa_jl">
-                                                                    </div>
+                                                                <div id="profile_image_preview" class="col-sm-offset-7"
+                                                                     style="max-height: 200px;max-margin-bottom: 10px;width: 219px;">
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group">
-                                                                <label class="col-sm-4 control-label"> বিএস জেএল নম্বর
-                                                                </label>
-                                                                <div class="col-sm-6">
-                                                                    <div class="input number"><input type="number"
-                                                                                                     name="bs_jl"
-                                                                                                     class="form-control numeric_bangla"
-                                                                                                     value=""
-                                                                                                     maxlength="255"
-                                                                                                     id="bs_jl"
-                                                                                                     required="required"
 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-4 control-label"> বিএস অপ্রকাশিত
-                                                            </label>
-                                                            <div class="col-sm-1">
-                                                                <div class="input number"><input type="checkbox"
-                                                                                                 name="bs_jl_unpublished"
-                                                                                                 id="bs_jl_unpublished"
-                                                                                                 class="form-control numeric_bangla"
-                                                                                                 value=""
-                                                                                                 maxlength="255"
-                                                                                                 id="bs_jl_unpublished">
-                                                                </div>
-                                                            </div>
-                                                        </div>
+
+
                                                     </div>
+
+
+                                                </div>
                                         </div>
                                         <div class="form-actions">
                                             <div class="row">

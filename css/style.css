@@ -1080,3 +1080,26 @@ i {
 	margin: 100px auto;
 }
 
+.bangla_text p{
+	color: black;
+	font-size: 14px;
+}
+li>a {
+	/*font-family:boishakhi !important; */
+}
+.numeric_bangla a {
+	font-family: kalpurushregular !important;
+}
+.pagination {
+	font-family: boishakhi;
+}
+.pagination .active>a {
+	font-family: boishakhi !important;
+}
+.pagination li >a {
+	/*font-family: boishakhi !important; */
+	font-size: 15px;
+}
+.bangla_text a {
+	font-family: "kalpurushregular" !important;
+}

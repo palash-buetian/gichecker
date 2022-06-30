@@ -7,6 +7,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: login.php");
     exit;
 }
+
+//
+//
+//print_r($_SESSION);
 ?>
 
 
@@ -98,42 +102,42 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                             <i class="fa fa-cogs"></i> সরকারি স্বার্থ সার্চ করুন
                                         </div>
                                     </div>
-                                    <div class="portlet-body">
-                                        <div style="font-size: 32px; text-align: center;margin: 20px;">
-                                            <div class="col-sm-12">
+                                    <div class="portlet-body" >
+                                        <div style="font-size: 32px;text-align: center;margin: 20px;margin-bottom: 0px;">
+                                            <div class="col-sm-13">
 
                                                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                                     <div class="row">
-                                                        <div class="col-sm-1">
+                                                        <div class="col-sm-1" style="width: 10%;flex: 0 0 10%;max-width: 10%;">
                                                             <div class="form-group">
                                                                 <input type="text" name="sa_dag" id="sa_dag"
-                                                                       class="form-control input_bangla bn2en"
+                                                                       class="form-control bn2en"
                                                                        value="<?php echo isset($_REQUEST["sa_dag"]) ? $_REQUEST["sa_dag"] : ""; ?>"
-                                                                       placeholder="এসএ দাগ লিখুন">
+                                                                       placeholder="এসএ দাগ ">
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-1">
+                                                        <div class="col-sm-1"  style="width: 10%;flex: 0 0 10%;max-width: 10%;">
                                                             <div class="form-group">
                                                                 <input type="text" name="bs_dag" id="bs_dag"
-                                                                       class="form-control input_bangla bn2en"
+                                                                       class="form-control  bn2en"
                                                                        value="<?php echo isset($_REQUEST["bs_dag"]) ? $_REQUEST["bs_dag"] : ""; ?>"
-                                                                       placeholder="বিএস দাগ লিখুন">
+                                                                       placeholder="বিএস দাগ ">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
                                                                 <input type="text" name="sa_khatian" id="sa_khatian"
-                                                                       class="form-control input_bangla bn2en"
+                                                                       class="form-control  bn2en"
                                                                        value="<?php echo isset($_REQUEST["sa_khatian"]) ? $_REQUEST["sa_khatian"] : ""; ?>"
-                                                                       placeholder="এসএ খতিয়ান লিখুন">
+                                                                       placeholder="এসএ খতিয়ান ">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
                                                                 <input type="text" name="bs_khatian" id="bs_khatian"
-                                                                       class="form-control input_bangla bn2en"
+                                                                       class="form-control  bn2en"
                                                                        value="<?php echo isset($_REQUEST["bs_khatian"]) ? $_REQUEST["bs_khatian"] : ""; ?>"
-                                                                       placeholder="বিএস খতিয়ান লিখুন">
+                                                                       placeholder="বিএস খতিয়ান ">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-2">
@@ -164,7 +168,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                                             $numrows = mysqli_num_rows($result);
 
 
-                                                                            print($numrows);
+                                                                           // print($numrows);
 
                                                                             while ($info = mysqli_fetch_array($result)) {
 
@@ -225,7 +229,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 																				$interest_id = 0;
 }
 
-																			print_r($interest_id);
+																			//print_r($interest_id);
 																			
                                                                             // get the info from the db
                                                                             $interest_query = "SELECT * FROM `interest` ORDER BY `interest_id` ASC";
@@ -270,7 +274,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-2">
+                                                        <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <div>
                                                                     <button type="submit" name="submit"
@@ -313,21 +317,23 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                 <tr>
                                                     <th style="text-align: center;">ক্রম</th>
                                                     <th style="text-align: center;">মৌজার নাম</th>
-                                                    <th style="text-align: center;">এসএ দাগ</th>
-                                                    <th style="text-align: center;">বিএস দাগ</th>
 
                                                     <th style="text-align: center;">এসএ জেএল</th>
                                                     <th style="text-align: center;">বিএস জেএল</th>
 
-                                                    <th style="text-align: center;">এসএ খতিয়ান নম্বর</th>
-                                                    <th style="text-align: center;">বিএস খতিয়ান নম্বর</th>
+                                                    <th style="text-align: center;">এসএ দাগ</th>
+                                                    <th style="text-align: center;">বিএস দাগ</th>
 
-                                                    <th style="text-align: center;">এসএ জমির পরিমাণ</th>
-                                                    <th style="text-align: center;">বিএস জমির পরিমাণ</th>
+
+                                                    <th style="text-align: center;">এসএ খতিয়ান </th>
+                                                    <th style="text-align: center;">বিএস খতিয়ান</th>
+
+                                                    <th style="text-align: center;">এসএ জমি (একর)</th>
+                                                    <th style="text-align: center;">বিএস জমি (একর)</th>
 
                                                     <th style="text-align: center;">সরকারি স্বার্থের ধরণ</th>
 
-                                                    <th style="text-align: center;" width="20%">পদক্ষেপ</th>
+                                                    <th style="text-align: center;" width="15%">পদক্ষেপ</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -341,7 +347,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                 $numrows = mysqli_num_rows($result);
 
                                                 // number of rows to show per page
-                                                $rowsperpage = 20;
+                                                $rowsperpage = 10;
                                                 // find out total pages
                                                 $totalpages = ceil($numrows / $rowsperpage);
 
@@ -374,49 +380,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 
                                                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                                                    $query = $bs_part = $sa_part = $mouja_part = $joiner = '';
-
-
-                                                    $sa_dag = $_REQUEST['sa_dag'];
 
                                                     // Include config file
                                                     $sa_dag = $_POST['sa_dag'];
                                                     $bs_dag = $_POST['bs_dag'];
+                                                    $sa_khatian = $_POST['sa_khatian'];
+                                                    $bs_khatian = $_POST['bs_khatian'];
                                                     $mouja_id = $_POST['mouja_id'];
                                                     $interest_id = $_POST['interest_id'];
 
 
 
-                                                    if ($mouja_id == 0 & $interest_id == 0) {
-
-
-                                                        if ($sa_dag != NULL) {
-                                                            $sa_part = 'sa_dag = ' . $sa_dag;
-                                                        } else {
-                                                            $sa_part = '';
-                                                        }
-                                                        if ($bs_dag != NULL) {
-                                                            $bs_part = ' bs_dag=' . $bs_dag;
-                                                        } else {
-                                                            $bs_part = '';
-                                                        }
-                                                        if ($sa_dag and $bs_dag) {
-                                                            $joiner = ' AND';
-                                                        } else {
-                                                            $joiner = '';
-                                                        }
-
-                                                        if ($mouja_id) {
-                                                            $mouja_part = ' mouja_id=' . $mouja_id;
-                                                        } else {
-                                                            $mouja_part = '';
-                                                        }
-                                                    } else {
-
-
-
-                                                        $query = "SELECT * FROM `dag` ORDER BY id DESC LIMIT 135";
-                                                    }
 
                                                     $data = array_filter($_REQUEST);
 
@@ -428,34 +402,24 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                                                         if($i<sizeof($data))
                                                             $joiner .= " AND ";
-
                                                         $i++;
                                                     }
 
 
+                                                    if((isset($sa_dag) && !empty($sa_dag)) || (isset($bs_dag) && !empty($bs_dag)) || (isset($sa_khatian) && !empty($sa_khatian)) || (isset($bs_khatian) && !empty($bs_khatian)) || (isset($interest_id) && !empty($interest_id)) || (isset($mouja_id) && !empty($mouja_id))){
+                                                        $query_final = "SELECT * FROM dag WHERE ".$joiner." ORDER BY id DESC LIMIT $offset, $rowsperpage";
 
-                                                    $query_final = "SELECT * FROM dag WHERE ".$joiner;
+                                                     //   var_dump($query_final);
+                                                    }
 
 
 
-//                                                    $stmt = $conn->prepare("SELECT * FROM dag WHERE (sa_dag, bs_dag, mouja_id, interest_id) VALUES (?, ?,?,?)");
-//                                                    $stmt->bind_param('i', $sa_dag, $bs_dag,$mouja_id,$interest_id );
-//                                                    $sa_dag = $_POST['sa_dag'];
-//                                                    $bs_dag = $_POST['bs_dag'];
-//                                                    $mouja_id = $_POST['mouja_id'];
-//                                                    $interest_id = $_POST['interest_id'];
-//
-//                                                    $stmt->execute();
-//                                                    print_r($stmt);
 
-                                                    //$query = "SELECT * FROM dag WHERE {$sa_part} {$joiner} {$bs_part} {$mouja_part}";
 
                                                 } else {
 
                                                     $query_final = "SELECT * FROM `dag` ORDER BY id DESC LIMIT $offset, $rowsperpage";
                                                 }
-
-                                                // print($query_final);
 
                                                 // print($query);
 
@@ -464,6 +428,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                 // $info = mysqli_fetch_array($result_final);
 
 
+                                               // var_dump($query_final);
                                                 if (mysqli_num_rows($result_final) > 0) {
                                                     $i = 1;
                                                     while ($info = mysqli_fetch_array($result_final)) {
@@ -491,24 +456,38 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                                                             <td style="text-align: center;"><?php echo $mouja_info['name']; ?></td>
 
-                                                            <td style="text-align: center;"
-                                                                class="numeric_bangla"><?php echo $info['sa_dag']; ?></td>
-                                                            <td style="text-align: center;"
 
+
+
+                                                            <!-- SA jl -->
+                                                            <td style="text-align: center;"
+                                                                class="numeric_bangla"> <?php echo $mouja_info['sa_jl']; ?></td>
+                                                           <!-- bs jl -->
+                                                            <td style="text-align: center;"
                                                             <?php
-                                                            if ($mouja_info['bs_jl'] == null) {
+                                                            if ($mouja_info['bs_jl'] == null || $mouja_info['bs_jl'] == '0') {
                                                                 echo '>  অপ্রকাশিত';
                                                             } else {
-                                                                echo $info['bs_dag'] == 0 ? ">অজানা" : ' class="numeric_bangla">' . $info['bs_dag'];
+                                                                echo ' class="numeric_bangla">' . $mouja_info['bs_jl'];
                                                             }
                                                             echo '</td>';
                                                             ?>
 
-                                                            <td style="text-align: center;"
-                                                                class="numeric_bangla"> <?php echo $mouja_info['sa_jl']; ?></td>
-                                                            <td style="text-align: center;"
-                                                            <?php echo $mouja_info['bs_jl'] == null ? "> অপ্রকাশিত" : 'class="numeric_bangla">' . $mouja_info['bs_jl']; ?></td>
+                                                            <!-- sa khatian -->
 
+                                                            <td style="text-align: center;"
+                                                            <?php echo $info['sa_dag'] == 0 ? ">অজানা" : ' class="numeric_bangla">' . $info['sa_dag']; ?></td>
+
+                                                            <td style="text-align: center"
+
+                                                            <?php
+                                                            if ($mouja_info['bs_jl'] == null || $mouja_info['bs_jl'] == '0') {
+                                                                echo '> অপ্রকাশিত';
+                                                            } else {
+                                                            echo $info['bs_dag'] == 0 ? ">অজানা" : ' class="numeric_bangla">' . $info['bs_dag'];
+                                                            }
+                                                            echo '</td>';
+                                                            ?>
 
                                                             <td style="text-align: center;"
                                                             <?php echo $info['sa_khatian'] == 0 ? ">অজানা" : ' class="numeric_bangla">' . $info['sa_khatian']; ?></td>
@@ -555,7 +534,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                                                     aria-hidden="true">&times;
                                                                             </button>
                                                                         </div>
-                                                                        <div class="modal-body">
+                                                                        <div class="modal-body bangla_text">
                                                                             <p>আপনি কি এই রেকর্ড ডিলিট করার বিষয়ে
                                                                                 নিশ্চিত ? এটা ডিলিট করলে রেকর্ডটি আর
                                                                                 ফেরত পাওয়া যাবে না।.</p>
@@ -601,6 +580,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                                                     <?php
 
+
+
+
                                                     /******  build the pagination links ******/
                                                     // range of num links to show
                                                     $range = 9;
@@ -608,11 +590,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     // if not on page 1, don't show back links
                                                     if ($currentpage > 1) {
                                                         // show << link to go back to page 1
-                                                        echo "<li class='numeric_bangla'><a href='{$_SERVER['PHP_SELF']}?currentpage=1'> প্রথম পেজ</a></li> ";
+                                                        echo "<li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=1'> প্রথম পেজ</a></li> ";
                                                         // get previous page num
                                                         $prevpage = $currentpage - 1;
                                                         // show < link to go back to 1 page
-                                                        echo "<li class='numeric_bangla'><a href='{$_SERVER['PHP_SELF']}?currentpage=$prevpage'> পূর্ববর্তী পেজ</a></li> ";
+                                                        echo "<li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=$prevpage'> পূর্ববর্তী পেজ</a></li> ";
                                                     } // end if
 
                                                     // loop to show links to range of pages around current page
@@ -622,11 +604,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                             // if we're on current page...
                                                             if ($x == $currentpage) {
                                                                 // 'highlight' it but don't make a link
-                                                                echo " <li class='numeric_bangla'><a href>$x</a></li> ";
+                                                                echo " <li class='numeric_bangla active'><a href>$x</a></li> ";
                                                                 // if not current page...
                                                             } else {
                                                                 // make it a link
-                                                                echo " <li class='numeric_bangla'><a href='{$_SERVER['PHP_SELF']}?currentpage=$x'>$x</a></li> ";
+                                                                echo " <li ><a href='{$_SERVER['PHP_SELF']}?currentpage=$x'>$x</a></li> ";
                                                             } // end else
                                                         } // end if
                                                     } // end for
@@ -636,9 +618,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                         // get next page
                                                         $nextpage = $currentpage + 1;
                                                         // echo forward link for next page
-                                                        echo " <li class='numeric_bangla'><a href='{$_SERVER['PHP_SELF']}?currentpage=$nextpage'>পরবর্তী পেজ</a></li> ";
+                                                        echo " <li class='bangla_text' ><a href='{$_SERVER['PHP_SELF']}?currentpage=$nextpage'>পরবর্তী পেজ</a></li> ";
                                                         // echo forward link for lastpage
-                                                        echo " <li class='numeric_bangla'><a href='{$_SERVER['PHP_SELF']}?currentpage=$totalpages'>সর্বশেষ পেজ</a></li> ";
+                                                        echo " <li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=$totalpages'>সর্বশেষ পেজ</a></li> ";
                                                     } // end if
                                                     /****** end build pagination links ******/
 

@@ -288,7 +288,7 @@ Page Header
 .page-sidebar .page-sidebar-menu > li.active > a {
   border-left: 3px solid #8dc641 !important;
   margin-left: -3px;
-  padding-left: 15px;
+  padding-left: 10px;
 }
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu li > a > .arrow.open:before,
 .page-sidebar .page-sidebar-menu li > a > .arrow:before,

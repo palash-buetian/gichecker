@@ -9,17 +9,20 @@ if (isset($_POST['dag']))
 
     if ($_POST['mouza'] != 0)
     {
-        $mouza = $_POST['mouza'];
+        $mouza_id = $_POST['mouza'];
 
-        $query = "SELECT * FROM dag WHERE (sa_dag LIKE '{$dag}%' OR bs_dag LIKE '{$dag}%') ORDER BY sa_dag, bs_dag DESC LIMIT 20";
+        $query = "SELECT * FROM dag WHERE (sa_dag LIKE '{$dag}%' OR bs_dag LIKE '{$dag}%') AND `mouja_id`='$mouza_id' ORDER BY sa_dag DESC LIMIT 20";
     }
     else
     {
-        $query = "SELECT * FROM dag WHERE sa_dag LIKE '{$dag}%' OR bs_dag LIKE '{$dag}%' ORDER BY sa_dag, bs_dag DESC LIMIT 20";
+        $query = "SELECT * FROM dag WHERE (sa_dag LIKE '{$dag}%' OR bs_dag LIKE '{$dag}%')  ORDER BY sa_dag, bs_dag DESC LIMIT 20";
     }
+
+ // print_r($query);
+
     $result = mysqli_query($conn, $query);
 
-    if (mysqli_num_rows($result) > 0)
+    if ( mysqli_num_rows($result) > 0)
     {
         echo '<ul class="list-group">';
 
@@ -40,29 +43,34 @@ if (isset($_POST['dag']))
             $interest_info = mysqli_fetch_array($interest_result);
 
 
+            $exact = '';
 
-
-            $exact = false;
             if (($dag == $info['sa_dag']) or ($dag == $info['bs_dag']))
             {
-                $exact = true;
+                $exact = 'exact';
             }
-            if ($info['bs_dag'] == NULL)
+
+
+            if ($info['bs_dag'] == '0')
             {
-                $dag_out = ' এসএ <span>' . $info['sa_dag'] . '</span>';
+                $dag_out = ' এসএ <span class="numeric_bangla"> ' . $info['sa_dag'].'</span>' ;
             }
-            else
+            if($info['sa_dag']=='0'){
+                $dag_out = ' বিএস <span class="numeric_bangla"> ' . $info['bs_dag'].'</span>' ;
+            }
+            if ($info['sa_dag'] != '0' && $info['bs_dag'] != '0')
             {
-                $dag_out = 'বিএস  <span>' . $info['bs_dag'] . '</span>';
+                $dag_out = ' এসএ <span class="numeric_bangla">' . $info['sa_dag'].'</span> এবং বিএস <span class="numeric_bangla">' . $info['bs_dag'].' </span>' ;
             }
+
+
             $str = $mouja_info['name'] . ' মৌজার ' . $dag_out . ' দাগে ' . $interest_info['interest_name'];
-            echo '<li class="';
-            if ($exact)
-            {
-                echo 'exact ';
-            }
-            echo 'list-group-item list-group-item-danger">' . $str . "</li>";
+
+
+
+            echo '<li class="'. $exact. '  list-group-item list-group-item-danger">' . $str . "</li>";
         }
+
         echo '</ul>';
     }
     else

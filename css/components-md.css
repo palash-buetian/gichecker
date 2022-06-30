@@ -8,7 +8,7 @@ body {
   font-family: "kalpurushregular", kalpurushregular;
   padding: 0px !important;
   margin: 0px !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
   direction: ltr;
 }
 
@@ -974,6 +974,7 @@ a {
 }
 a:hover {
   color: #4b0c79;
+  text-decoration: none;
 }
 a:focus, a:hover, a:active {
   outline: 0;

@@ -10,23 +10,116 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 require_once "config.php";
 
-$username = $_COOKIE['username'];
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    $officer_name = $_POST['officer_name'];
-    $officer_designation = $_POST['officer_designation'];
-
-    $query = "UPDATE `users` SET `officer_name`='$officer_name', `officer_designation`='$officer_designation' WHERE `username`= '$username' LIMIT 1";
-
-    print($query);
-
-    $result = mysqli_query($conn, $query);
-}
+// officer name and designation
+$username =$_COOKIE['username'];
 
 $query1 = "SELECT * FROM `users` WHERE `username`= '$username' LIMIT 1";
 $result2 = mysqli_query($conn, $query1);
 $info2 = mysqli_fetch_array($result2);
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+
+        if(isset($_POST['action']) && $_POST['action']=='change_password'){
+
+            $new_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+
+            $old_password = $_POST['old_password'];
+
+            if(password_verify( $old_password, $info2['password'])) {
+
+                $update_query = "UPDATE `users` SET `password`='$new_password' WHERE `username` = '$username'";
+
+                if ($conn->query($update_query) === TRUE) {
+                    $_SESSION['success_message'] = "পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে।";
+                } else {
+                    $_SESSION['error_message'] = "পাসওয়ার্ড পরিবর্তন করা যায় নাই";
+                }
+            }else{
+                $_SESSION['error_message'] = "আপনি বর্তমান পাসওয়ার্ড ভুল দিয়েছেন।";
+            }
+
+
+
+
+
+        }
+
+   elseif (isset($_POST['action']) && $_POST['action']=='photo'){
+
+       var_dump($_POST);
+       var_dump($_FILES);
+
+
+       $target_dir = "images/uploads/";
+       $fileName =  basename($_FILES["photo"]["name"]);
+       $target_file = $target_dir .$fileName;
+
+
+       $targetFilePath =  $target_file;
+
+
+       $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+
+       if(!empty($_FILES["photo"]["name"])){
+           // Allow certain file formats
+           $allowTypes = array('jpg','png','jpeg','gif');
+           if(in_array($fileType, $allowTypes)){
+               // Upload file to server
+               if(move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFilePath)){
+                   // Insert image file name into database
+                   $query = "UPDATE `users` SET `image`= '$fileName' WHERE `username`='$username'";
+
+//                   print_r($query);
+
+
+                   if($conn->query($query) === TRUE){
+                       $_SESSION['success_message'] = "ব্যবহারকারীর ছবি সফলভাবে পরিবর্তন করা হয়েছে।";
+                   }else{
+                       $_SESSION['error_message'] = "ফাইল আপলোড করা যায় নাই। আবার চেষ্টা করুন।";
+                   }
+               }else{
+                   $_SESSION['error_message'] = "দুঃখিত, সার্ভারের সমস্যার কারণে ছবি আপলোড করা যায় নাই।";
+               }
+           }else{
+               $_SESSION['error_message'] = 'দুঃখিত, শুধুমাত্র JPG, JPEG, PNG, GIF টাইপ ছবি আপলোড করা যাভে।';
+           }
+       }else{
+           $_SESSION['error_message'] = 'আপলোড করার জন্য ফাইল সিলেক্ট করুন।';
+       }
+
+
+       // Check if image file is a actual image or fake image
+
+
+   }
+    else {
+
+        $officer_name = $_POST['officer_name'];
+        $officer_designation = $_POST['officer_designation'];
+        $office_name = $_POST['office_name'];
+
+        $update_query = "UPDATE `users` SET `officer_name`='$officer_name', `officer_designation`='$officer_designation', `office_name`='$office_name' WHERE `username`= '$username' LIMIT 1";
+
+        print($update_query);
+        if ($conn->query($update_query) === TRUE) {
+            $_SESSION['success_message'] = "ব্যবহারকারী তথ্য সফলভাবে সংরক্ষণ করা হয়েছে।";
+        } else {
+            $_SESSION['error_message'] = "ব্যবহারকারী তথ্য পরিবর্তন করা যায় নাই";
+        }
+    }
+
+
+
+    $conn->close();
+
+
+   header("Location: profile.php");
+    exit();
+
+}
+
 
 
 ?>
@@ -67,6 +160,24 @@ $info2 = mysqli_fetch_array($result2);
         <div class="page-content" style="min-height:588px">
             <div class="row">
                 <div class="col-md-12">
+                    <?php if (isset($_SESSION['success_message']) && !empty($_SESSION['success_message'])) { ?>
+                        <div id="success-alert" class="alert alert-success message success">
+                            <button class="close" data-close="alert"></button>
+                            <?php echo $_SESSION['success_message']; ?>
+                        </div>
+                        <?php unset($_SESSION['success_message']);
+                    }
+                    ?>
+
+                    <?php if (isset($_SESSION['error_message']) && !empty($_SESSION['error_message'])) { ?>
+                        <div id="success-alert" class="alert alert-danger message danger">
+                            <button class="close" data-close="alert"></button>
+                            <?php echo $_SESSION['error_message']; ?>
+                        </div>
+                        <?php unset($_SESSION['error_message']);
+                    }
+                    ?>
+
                     <div id="ajax-content">
                         <div class="page-head">
                             <div class="row" style="margin-bottom: 15px;">
@@ -94,21 +205,10 @@ $info2 = mysqli_fetch_array($result2);
 
                                             <form enctype="multipart/form-data" method="post" accept-charset="utf-8"
                                                   class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                                <div style="display:none;"><input type="hidden" name="_method"
-                                                                                  value="user">
-
-                                                    <?php
-
-                                                    if (isset($_POST["submit"])) {
-
-                                                        $target_dir = "images/uploads/";
-                                                        $target_file = $target_dir . basename($_FILES["picture"]["name"]);
+                                                <div style="display:none;"><input type="hidden" name="user"
+                                                                                  value="user_details">
 
 
-                                                        // Check if image file is a actual image or fake image
-
-                                                    }
-                                                    ?>
                                                 </div>
                                                 <div class="form-body">
                                                     <div class="row">
@@ -155,22 +255,33 @@ $info2 = mysqli_fetch_array($result2);
                                                         </div>
 
                                                     </div>
+
                                                     <div class="row">
                                                         <div class="panel-body col-sm-12">
                                                             <div class="form-group">
-                                                                <label class="col-sm-4 control-label">প্রফাইল ছবি
+                                                                <label class="col-sm-4 control-label">অফিসের নাম
                                                                 </label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input ">
-                                                                        <input type="file" class="form-control"
-                                                                               id="picture"/>
-                                                                        <img id='img-upload'/>
+                                                                    <div class="input text required"><input type="text"
+                                                                                                            name="office_name"
+                                                                                                            value="<?php echo $info2['office_name']; ?>"
+                                                                                                            title="Numbers: 0-9"
+                                                                                                            required="required"
+                                                                                                            class="form-control"
+                                                                                                            maxlength="255"
+                                                                                                            id="office_name">
                                                                     </div>
                                                                 </div>
                                                             </div>
 
 
                                                         </div>
+
+                                                    </div>
+
+
+
+
 
                                                     </div>
                                                 </div>
@@ -194,7 +305,7 @@ $info2 = mysqli_fetch_array($result2);
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="portlet  box box green">
+                                <div class="portlet purple box">
                                     <div class="portlet-title">
                                         <div class="caption">
                                             <i class="fa fa-pencil"></i>পাসওয়ার্ড পরিবর্তন করুন
@@ -205,8 +316,9 @@ $info2 = mysqli_fetch_array($result2);
 
                                             <form enctype="multipart/form-data" method="post" accept-charset="utf-8"
                                                   class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                                <div style="display:none;"><input type="hidden" name="_method"
-                                                                                  value="POST">
+                                                <div style="display:none;">
+                                                    <input type="hidden" name="action"
+                                                                                  value="change_password">
 
                                                 </div>
                                                 <div class="form-body">
@@ -217,13 +329,14 @@ $info2 = mysqli_fetch_array($result2);
                                                                 </label>
                                                                 <div class="col-sm-6">
                                                                     <div class="input password required">
-                                                                        <input type="password" name="password"
+                                                                        <input type="password" name="old_password"
                                                                                autocomplete="off"
                                                                                placeholder="বর্তমান পাসওয়ার্ড লিখুন"
                                                                                class="form-control"
+                                                                               required="required"
                                                                                title="রuppercase, one lowercase, one special character."
                                                                                data-toggle="tooltip"
-                                                                               id="password" value=""></div>
+                                                                               id="old_password" value=""></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -239,13 +352,14 @@ $info2 = mysqli_fetch_array($result2);
                                                                 </label>
                                                                 <div class="col-sm-6">
                                                                     <div class="input password required">
-                                                                        <input type="password" name="password"
+                                                                        <input type="password" name="new_password"
                                                                                autocomplete="off"
                                                                                placeholder="নতুন পাসওয়ার্ড লিখুন"
                                                                                class="form-control"
+                                                                               required = "required"
                                                                                title="রuppercase, one lowercase, one special character."
                                                                                data-toggle="tooltip"
-                                                                               id="password" value=""></div>
+                                                                               id="new_password" value=""></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -272,6 +386,77 @@ $info2 = mysqli_fetch_array($result2);
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="portlet  box box green">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="fa fa-pencil"></i>ছবি পরিবর্তন করুন
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div style="font-size: 15px; text-align: justify;margin: 20px;">
+
+                                            <form enctype="multipart/form-data" method="post" accept-charset="utf-8"
+                                                  class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                                <div style="display:none;">
+                                                    <input type="hidden" name="action"
+                                                           value="photo">
+
+                                                </div>
+
+
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="panel-body col-sm-12">
+                                                            <div class="form-group">
+                                                                <div class="col-sm-3 col-md-3  control-label">
+
+                                                                <img alt="" class="px-0 mx-auto d-block img-thumbnail float-right"    <?php
+
+
+                                                                ?>
+                                                                     src="/images/uploads/<?php echo $info2['image']; ?>">
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="input ">
+                                                                        <input type="file" name="photo" class="form-control"
+                                                                               id="picture"/>
+                                                                        <img id='img-upload'/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-actions">
+                                                            <div class="row">
+                                                                <div class="col-md-offset-5 col-md-9">
+                                                                    <button type="submit" class="btn btn-circle blue">সংরক্ষণ
+                                                                    </button>
+                                                                    </br>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+
+                                        </div>
+
+                                        </form>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                     <!-- END PAGE CONTENT INNER -->
                     <!-- END PAGE CONTENT INNER -->

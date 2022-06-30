@@ -15,7 +15,7 @@ if (isset($_GET["id"]) == true) {
     // Include config file
     require_once "config.php";
     $id = $_GET['id'];
-    $query = "SELECT * FROM dag WHERE id = '{$id}'";
+    $query = "SELECT * FROM mouja WHERE id = '{$id}'";
     $result = mysqli_query($conn, $query);
     $info = mysqli_fetch_array($result);
 
@@ -23,38 +23,35 @@ if (isset($_GET["id"]) == true) {
 }
 
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $id =$_POST['id'];
-    $mouja_id =$_POST['mouja_id'];
-    $sa_dag =$_POST['sa_dag'];
-    $bs_dag =$_POST['bs_dag'];
-    $sa_khatian =$_POST['sa_khatian'];
-    $bs_khatian =$_POST['bs_khatian'];
-    $sa_land_amount =$_POST['sa_land_amount'];
-    $bs_land_amount =$_POST['bs_land_amount'];
-    $interest_id =$_POST['interest_id'];
+    $mouja_id = $_POST['mouja_id'];
+    $mouja_name = $_POST['mouja_name'];
+    $sa_jl = $_POST['sa_jl'];
+    $bs_jl = $_POST['bs_jl'];
+    $bs_jl_unpublished = $_POST['bs_jl_unpublished'];
 
+    if($bs_jl_unpublished=='on'){
+        $update_query = "UPDATE `mouja` SET `name`='$mouja_name', `sa_jl`='$sa_jl', `bs_jl`=NULL WHERE `id`='$mouja_id' LIMIT 1;";
+    }else{
+        $update_query = "UPDATE `mouja` SET `name`='$mouja_name', `sa_jl`='$sa_jl', `bs_jl`='$bs_jl' WHERE `id`='$mouja_id' LIMIT 1;";
+    }
 
-    $update_query = "UPDATE `dag` SET `mouja_id`='$mouja_id', `sa_dag`='$sa_dag', `bs_dag`='$bs_dag', `sa_khatian`='$sa_khatian', `bs_khatian`='$bs_khatian', `sa_land_amount`='$sa_land_amount', `bs_land_amount`='$bs_land_amount', `interest_id`='$interest_id'  WHERE `id`='$id' LIMIT 1;";
+   // print_r($update_query);
 
     $result = mysqli_query($conn, $update_query);
-
 
 
 //Start the session if already not started.
     session_start();
     $_SESSION['success_message'] = "আপনার পরিবর্তন সফলভাবে সংরক্ষণ করা হয়েছে।";
-    header("Location: dashboard.php");
+    header("Location: mouja.php");
     exit();
 
 }
 
 
-
-
 ?>
-
 
 
 <!DOCTYPE html>
@@ -78,69 +75,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
       oncontextmenu="return false;">
 <!-- BEGIN HEADER -->
 <!-- BEGIN HEADER -->
-<div class="page-header md-shadow-z-1-i navbar navbar-fixed-top">
-    <!-- BEGIN HEADER INNER -->
-    <div class="page-header-inner">
-        <!-- BEGIN LOGO -->
-        <div class="page-logo">
-            <a href="/dashboard">
-                <img src="/images/logo.png" alt="logo" class="logo-default">
-            </a>
-            <div class="menu-toggler sidebar-toggler">
-                <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
-            </div>
-        </div>
-        <!-- END LOGO -->
-        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse"
-           data-target=".navbar-collapse"></a>
-        <!-- END RESPONSIVE MENU TOGGLER -->
-        <!-- BEGIN PAGE ACTIONS -->
-        <!-- DOC: Remove "hide" class to enable the page header actions -->
-        <div class="page-actions">
-            <h2 style="color: #ffff00;margin: 5px;">সিলেট মহানগর রাজস্ব সার্কেল
-            </h2>
-        </div>
-        <!-- END PAGE ACTIONS -->
-        <!-- BEGIN PAGE TOP -->
-        <div class="page-top">
-            <!-- BEGIN HEADER SEARCH BOX -->
-            <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-            <!--
-  <form class="search-form" action="extra_search.html" method="GET"><div class="input-group"><input type="text" class="form-control input-sm" placeholder="Search..." name="query"><span class="input-group-btn"><a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a></span></div></form>
-  -->
-            <!-- END HEADER SEARCH BOX -->
-            <!-- BEGIN TOP NAVIGATION MENU -->
-            <div class="top-menu">
-                <ul class="nav navbar-nav pull-right">
-                    <li class="separator hide"></li>
-                    <li class="separator hide"></li>
-                    <!-- BEGIN INBOX DROPDOWN -->
-                    <!-- END TODO DROPDOWN -->
-                    <!-- BEGIN USER LOGIN DROPDOWN -->
-                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                    <li class="dropdown dropdown-user dropdown-dark">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-                           data-close-others="true">
-                            <span class="username username-hide-on-mobile"> পলাশ মন্ডল <br>সহকারী কমিশনার (ভূমি), সিলেট মহানগর রাজস্ব সার্কেল </span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-default">
-
-                            <li>
-                                <a href="logout.php">
-                                    <i class="icon-key"></i> লগ আউট </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- END USER LOGIN DROPDOWN -->
-                </ul>
-            </div>
-            <!-- END TOP NAVIGATION MENU -->
-        </div>
-        <!-- END PAGE TOP -->
-    </div>
-    <!-- END HEADER INNER -->
-</div>
+<?php include 'top_nav.php'; ?>
 <!-- END HEADER -->
 <div class="clearfix"></div>
 <!-- BEGIN CONTAINER -->
@@ -160,7 +95,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                 <div class="col-md-12"></div>
                                 <div class="col-md-6">
                                     <div class="page-title">
-                                        <h2 style="margin-top: 0px;"> সরকারি স্বার্থ সংশোধন করুন</h2>
+                                        <h2 style="margin-top: 0px;"> মৌজা তথ্য সংশোধন করুন</h2>
                                     </div>
                                 </div>
 
@@ -173,273 +108,134 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                 <div class="portlet  box box red-sunglo">
                                     <div class="portlet-title">
                                         <div class="caption">
-                                            <i class="fa fa-pencil"></i>তথ্য সংশোধন করুন
+                                            <i class="fa fa-pencil"></i>মৌজা তথ্য সংশোধন করুন
                                         </div>
                                     </div>
                                     <div class="portlet-body">
                                         <div style="font-size: 15px; text-align: justify;margin: 20px;">
 
 
-                                            <form enctype="multipart/form-data" method="POST"  accept-charset="utf-8"
-                                                  class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'];?>">
+                                            <form enctype="multipart/form-data" method="POST" accept-charset="utf-8"
+                                                  class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                                 <div style="display:none;"><input type="hidden" name="_method"
                                                                                   value="POST"></div>
 
-                                                <input type="hidden" id="id" name="id" value="<?php  echo $id;  ?>">
+
                                                 <div class="form-body">
                                                     <div class="row">
-                                                        <div class="panel-body col-sm-6">
+                                                        <div class="panel-body col-sm-12">
 
                                                             <div class="form-group">
-                                                                <label class="col-sm-4 control-label">মৌজা নির্বাচন করুন
-                                                                    <span class="required"
-                                                                          aria-required="true">* </span></label>
-                                                                <div class="col-sm-6">
-                                                                    <div class="input select">
-                                                                        <select class="form-control select2 select2-hidden-accessible"
-                                                                                name="mouja_id"
-                                                                                placeholder="মৌজা সিলেক্ট করুন"
-                                                                                required="required" id="mouja_id"
-                                                                                tabindex="-1" aria-hidden="true">
-                                                                            <option value="">মৌজা সিলেক্ট করুন</option>
-                                                                            <?php
-
-                                                                            if (isset($_REQUEST["mouja_id"])){
-                                                                                $mouja_id=(int)$_REQUEST["mouja_id"];
-                                                                            }else{
-                                                                                $mouja_id= 0;
-                                                                            }
-
-
-
-
-                                                                            // get the info from the db
-                                                                            $query = "SELECT * FROM `mouja` ORDER BY id ASC";
-                                                                            $result = mysqli_query($conn, $query);
-
-                                                                            $numrows =mysqli_num_rows($result);
-
-
-                                                                            print($numrows);
-
-                                                                            print_r($info);
-
-                                                                            while ($info2 = mysqli_fetch_array($result)) {
-
-                                                                                echo '<option value="';
-                                                                                echo $info2['id'];
-                                                                                echo '"';
-
-                                                                                print_r($mouja_id);
-
-                                                                                if ($info['mouja_id'] == $info2['id']) echo ' selected="selected"';
-                                                                                echo '>';
-                                                                                echo $info2['name'];
-                                                                                echo '</option>';
-                                                                            }
-                                                                            ?>
-                                                                        </select>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="col-sm-4 control-label">এসএ খতিয়ান নম্বর
+                                                                <label class="col-sm-4 control-label"> মৌজার নাম
                                                                 </label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input number "><input type="number"
-                                                                                                      name="sa_khatian"
-
-
-                                                                                                      class="form-control"
-                                                                                                      value="<?php echo $info['sa_khatian']; ?>"
-                                                                                                      maxlength="255"
-                                                                                                      id="sa_khatian">
+                                                                    <input type="hidden" name="mouja_id"
+                                                                           value="<?php echo $info['id']; ?>"/>
+                                                                    <div class="input "><input type="text"
+                                                                                               name="mouja_name"
+                                                                                               class="form-control"
+                                                                                               value="<?php echo $info['name']; ?>"
+                                                                                               required="required"
+                                                                                               maxlength="255"
+                                                                                               id="mouja_name">
                                                                     </div>
                                                                 </div>
                                                             </div>
+
                                                             <div class="form-group">
-                                                                <label class="col-sm-4 control-label">এসএ দাগ নম্বর
+                                                                <label class="col-sm-4 control-label">এসএ জেএল নম্বর
                                                                 </label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input text required"><input type="number"
-                                                                                                            name="sa_dag"
-
-                                                                                                            class="form-control"
-                                                                                                            maxlength="255"
-                                                                                                            value="<?php echo $info['sa_dag']; ?>"
-                                                                                                            id="sa_dag">
+                                                                    <div class="input number"><input type="number"
+                                                                                                     name="sa_jl"
+                                                                                                     class="form-control numeric_bangla"
+                                                                                                     value="<?php echo $info['sa_jl']; ?>"
+                                                                                                     required="required"
+                                                                                                     maxlength="255"
+                                                                                                     id="sa_jl">
                                                                     </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label class="col-sm-4 control-label">এসএ জমির পরিমাণ<span
-                                                                        class="required"
-                                                                        aria-required="true">* </span></label>
+                                                                <label class="col-sm-4 control-label"> বিএস জেএল নম্বর
+                                                                </label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input number "><input type="text"
-                                                                                                      name="sa_land_amount"
-
-                                                                                                      class="form-control"
-                                                                                                      maxlength="200"
-                                                                                                      value="<?php echo $info['sa_land_amount']; ?>"
-                                                                                                      id="sa_land_amount">
+                                                                    <div class="input number"><input type="number"
+                                                                                                     name="bs_jl"
+                                                                                                     class="form-control numeric_bangla"
+                                                                                                     value="<?php echo $info['bs_jl']; ?>"
+                                                                                                     maxlength="255"
+                                                                                                     id="bs_jl"
+                                                                        <?php if ($info['bs_jl'] == null) {
+                                                                            echo "readonly=readonly ";
+                                                                        }
+                                                                        ?>
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-
-
-
-
-
-
-                                                            <div class="form-group">
-                                                                <div id="profile_image_preview" class="col-sm-offset-7"
-                                                                     style="max-height: 200px;max-margin-bottom: 10px;width: 219px;">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <div id="signature_image_preview"
-                                                                     class="col-sm-offset-7"
-                                                                     style="max-height: 200px;margin-bottom: 10px; max-width: 219px;">
-                                                                </div>
-                                                            </div>
-
                                                         </div>
-                                                        <div class="panel-body col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="col-sm-4 control-label">বিএস খতিয়ান</label>
-                                                                <div class="col-sm-6">
-                                                                    <div class="input "><input type="number"
-                                                                                               name="bs_khatian"
-                                                                                               class="form-control user_email "
-                                                                                               maxlength="100"
-                                                                                               value="<?php echo $info['bs_khatian']; ?>"
-                                                                                               id="bs_khatian"></div>
-                                                                    <div class="email_validation"
-                                                                         style="color: red"></div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label"> বিএস অপ্রকাশিত
+                                                            </label>
+                                                            <div class="col-sm-1">
+                                                                <div class="input number"><input type="checkbox"
+                                                                                                 name="bs_jl_unpublished"
+                                                                                                 id="bs_jl_unpublished"
+                                                                                                 class="form-control numeric_bangla"
+                                                                        <?php if ($info['bs_jl'] == null) {
+                                                                            echo "checked";
+                                                                        }
+                                                                        ?>
+
+
+                                                                                                 maxlength="255"
+                                                                                                 id="bs_jl_unpublished">
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label class="col-sm-4 control-label">বিএস দাগ</label>
-                                                                <div class="col-sm-6">
-                                                                    <div class="input "><input type="number"
-                                                                                               name="bs_dag"
-                                                                                               class="form-control user_email "
-                                                                                               maxlength="100"
-                                                                                               value="<?php echo $info['bs_dag']; ?>"
-                                                                                               id="bs_dag"></div>
-                                                                    <div class="email_validation"
-                                                                         style="color: red"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="col-sm-4 control-label">বিএস জমির পরিমাণ</label>
-                                                                <div class="col-sm-6">
-                                                                    <div class="input text ">
-                                                                        <input type="number"
-                                                                               name="bs_land_amount"
-                                                                               step="any"
-
-                                                                               class="form-control"
-                                                                               data-toggle="tooltip"
-                                                                               maxlength="255"
-                                                                               value="<?php echo $info['bs_land_amount']; ?>"
-                                                                               id="bs_land_amount">
-                                                                    </div>
-
-                                                                    <div class="mobile_validation"
-                                                                         style=" color: red"></div>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <?php print_r($info2);?>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-4 control-label">সরকারি স্বার্থ নির্বাচন করুন
-                                                                    <span class="required"
-                                                                          aria-required="true">* </span></label>
-                                                                <div class="col-sm-6">
-                                                                    <div class="input select">
-                                                                        <select class="form-control select2 select2-hidden-accessible required"
-                                                                                name="interest_id"
-                                                                                placeholder="সরকারি স্বার্থ সিলেক্ট করুন"
-                                                                                required="required" id="interest_id"
-                                                                                tabindex="-1" aria-hidden="true">
-
-
-                                                                            <option value="">সরকারি স্বার্থ সিলেক্ট
-                                                                                করুন  </option>
-
-                                                                            <?php
-
-                                                                            // get the info from the db
-                                                                            $interest_query = "SELECT * FROM `interest` ORDER BY `interest_id` ASC";
-                                                                            $interest_result = mysqli_query($conn, $interest_query);
-
-                                                                            $interest_rows =mysqli_num_rows($interest_result);
-
-                                                                            print_r($info['interest_id']);
-
-                                                                            while ($interest_info = mysqli_fetch_array($interest_result)) {
-
-                                                                                echo '<option value="';
-                                                                                echo $interest_info['interest_id'];
-                                                                                echo '"';
-
-                                                                                if ($info['interest_id'] == $interest_info['interest_id']) echo ' selected="selected"';
-                                                                                echo '>';
-                                                                                echo $interest_info['interest_name'];
-                                                                                echo '</option>';
-                                                                            }
-
-                                                                            ?>
-                                                                        </select>
-
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-
-
                                                         </div>
                                                     </div>
 
-                                                </div>
-                                                <div class="form-actions">
-                                                    <div class="row">
-                                                        <div class="col-md-offset-5 col-md-9">
-                                                            <button type="submit" class="btn btn-circle blue">সংরক্ষণ
-                                                            </button>
-                                                            <button type="reset" class="btn btn-circle default">রিসেট
-                                                            </button>
+
+
+
+                                                    <div class="form-actions">
+                                                        <div class="row">
+                                                            <div class="col-md-offset-5 col-md-9">
+                                                                <button type="submit" class="btn btn-circle blue">সংশোধন
+                                                                    করুন
+                                                                </button>
+                                                                <button type="reset" class="btn btn-circle default">
+                                                                    রিসেট
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                             </form>
 
-
-
-
                                         </div>
+
+
                                     </div>
+
+
                                 </div>
                             </div>
+
+
                         </div>
-                        <!-- END PAGE CONTENT INNER -->
-                        <!-- END PAGE CONTENT INNER -->
                     </div>
                 </div>
             </div>
         </div>
+        <!-- END PAGE CONTENT INNER -->
+        <!-- END PAGE CONTENT INNER -->
     </div>
-    <!-- END CONTENT -->
+</div>
+</div>
+</div>
+</div>
+<!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->

@@ -19,21 +19,25 @@
 
 <script src="js/bootstrap.min.js"></script>
 
-<script src="js/main.js"></script>
+
 
 <script src="js/bootstrap-hover-dropdown.min.js"></script>
 
 <script src="js/metronic.js"></script>
-    <script src="js/layout.js"></script>
+
+<script src="js/layout.js"></script>
+<script src="js/jquery.cokie.min.js"></script>
+
+<script src="js/main.js"></script>
+
 
 
 <script>
-
-    $(document).ready(function() {
-        $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
-            $("#success-alert").slideUp(500);
-        });
+    jQuery(document).ready(function() {
+        // initiate layout and plugins
+        Metronic.init(); // init metronic core components
+        Layout.init(); // init current layout
+        //ChartsAmcharts.init();
 
     });
-    
 </script>

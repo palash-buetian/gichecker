@@ -3,18 +3,16 @@
 require_once "config.php";
 
 
-//office name
-$query1 = 'SELECT * FROM `settings` WHERE field_name= "office_name"';
-$result1 = mysqli_query($conn, $query1);
-$info1 = mysqli_fetch_array($result1);
 
 
 // officer name and designation
-$username =$_COOKIE['username'];
+$username =$_SESSION['username'];
 
-$query2 = "SELECT * FROM `users` WHERE `username`= '$username' LIMIT 1";
-$result2 = mysqli_query($conn, $query2);
-$info2 = mysqli_fetch_array($result2);
+
+//office name
+$user_query = "SELECT * FROM `users` WHERE `username`= '$username'";
+$user_result = mysqli_query($conn, $user_query);
+$user_info = mysqli_fetch_array($user_result);
 
 ?>
 
@@ -37,12 +35,14 @@ $info2 = mysqli_fetch_array($result2);
         <!-- END RESPONSIVE MENU TOGGLER -->
         <!-- BEGIN PAGE ACTIONS -->
         <!-- DOC: Remove "hide" class to enable the page header actions -->
-        <div class="page-actions">
-            <h2 style="color: #ffff00;margin: 5px;"><?php echo $info1['field_value']; ?>
+        <div class="page-actions ">
+            <h2 class="homepage" style="color: #ffff00;margin: 5px;">
+                <a href="/"  style="color: yellow;" target="_blank"><?php echo $user_info['office_name']; ?></a>
             </h2>
         </div>
         <!-- END PAGE ACTIONS -->
         <!-- BEGIN PAGE TOP -->
+
         <div class="page-top">
             <!-- BEGIN HEADER SEARCH BOX -->
             <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
@@ -56,31 +56,21 @@ $info2 = mysqli_fetch_array($result2);
                     <li class="separator hide"></li>
                     <li class="separator hide"></li>
                     <!-- BEGIN INBOX DROPDOWN -->
-                    <!-- END TODO DROPDOWN -->
                     <!-- BEGIN USER LOGIN DROPDOWN -->
                     <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                     <li class="dropdown dropdown-user dropdown-dark">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                            data-close-others="true">
                             <img alt="" class="img-circle"
-                                 <?php
-
-                                 if($info2['image'] == 'profile_picture.png'){
-                                     $source = '/images/profile_picture.png';
-                                 }else{
-                                     $source = '/images/uploads/'+ $info2['image'];
-                                 }
-
-                                 ?>
-                                 src="<?php echo $source ?>">
-                            <span class="username username-hide-on-mobile"> <?php echo $info2['officer_name'];?> <br> <?php echo $info2['officer_designation'];?> , <?php echo $info1['field_value']; ?> </span>
+                                 src="/images/uploads/<?php echo $user_info['image'] ?>">
+                            <span class="username username-hide-on-mobile"> <?php echo $user_info['officer_name'];?> <br> <?php echo $user_info['officer_designation'];?> , <?php echo  $user_info['office_name']; ?> </span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-default">
+                        <ul class="dropdown-menu dropdown-menu-default topright">
 
 
                             <li>
                                 <a href="/profile">
-                                    <i class="icon-user"></i></i> প্রফাইল </a>
+                                    <i class="icon-user"></i></i> প্রোফাইল </a>
                             </li>
                             <li class="divider">
                             </li>
@@ -98,4 +88,4 @@ $info2 = mysqli_fetch_array($result2);
         <!-- END PAGE TOP -->
     </div>
     <!-- END HEADER INNER -->
-</div><?php
+</div>

@@ -966,6 +966,7 @@ button {
 	align-items: center;
 	font-family: 'Poppins', sans-serif;
 	padding: 15px;
+
 }
 
 .s131 form {
@@ -1030,7 +1031,7 @@ button {
 }
 
 .s131 form .inner-form .input-field.second-wrap {
-	min-width: 260px;
+	min-width: 200px;
 }
 
 .s131 form .inner-form .input-field.second-wrap .choices__inner {
@@ -1182,7 +1183,7 @@ button {
 }
 
 .bg {
-	background: url("../images/background.jpg");
+	/*background: url("../images/background.jpg");*/
 	background-size: cover;
 	background-position: top;
 	backdrop-filter: blur(5px);
@@ -1243,11 +1244,14 @@ div#output {
 	font-family: kalpurushregular !important;
 }
 
-li span {
+.bangla {
 	font-family: boishakhi !important;
 	font-size: 18px;
 }
-
+.numeric_bangla{
+	font-family: boishakhi !important;
+	font-size: 90%;
+}
 .inner-form {
 	background: rgba(0, 0, 0, .5);
 	padding: 10px;
@@ -1274,7 +1278,7 @@ li span {
 
 #output .list-group-item-danger {
 	color: black !important;
-	background-color: #f2dede;
+	background-color: #e3f2de;
 	border: 1px solid #9be539;
 }
 
@@ -1312,6 +1316,7 @@ footer .footer_text {
 
 #output .exact {
 	color: #aa1313 !important;
+	background: #fffbd4;
 }
 
 .logo a {
@@ -1328,3 +1333,46 @@ footer .footer_text {
 
 .logo a:active { text-decoration: none; }
 
+#output .list-group {
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+#output .list-group:hover{
+	overflow-y:scroll;
+}
+
+::-webkit-scrollbar {
+	width: 12px;
+}
+
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.4);
+}
+
+#login .btn {
+	position: absolute;
+	right: 25px;
+	top: 25px;
+	border: 1px solid;
+	background: transparent;
+}
+
+
+ a:hover, a:visited, a:link, a:active {
+	text-decoration: none !important;
+	 border-bottom-style: none;
+	 text-decoration: none!important;
+
+	 -webkit-box-shadow: none!important;
+	 box-shadow: none!important;
+}
+
+ .topright  li > a{
+	 font-family: kalpurushregular !important;
+ }

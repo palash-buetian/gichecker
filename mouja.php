@@ -22,11 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 }
 
-$query1 = 'SELECT * FROM `settings` WHERE field_name= "office_name"';
-
-$result2 = mysqli_query($conn, $query1);
-$info = mysqli_fetch_array($result2);
-
 
 ?>
 
@@ -66,6 +61,24 @@ $info = mysqli_fetch_array($result2);
         <div class="page-content" style="min-height:588px">
             <div class="row">
                 <div class="col-md-12">
+                    <?php if (isset($_SESSION['success_message']) && !empty($_SESSION['success_message'])) { ?>
+                        <div id="success-alert" class="alert alert-success message success">
+                            <button class="close" data-close="alert"></button>
+                            <?php echo $_SESSION['success_message']; ?>
+                        </div>
+                        <?php unset($_SESSION['success_message']);
+                    }
+                    ?>
+
+                    <?php if (isset($_SESSION['error_message']) && !empty($_SESSION['error_message'])) { ?>
+                        <div id="success-alert" class="alert alert-danger message danger">
+                            <button class="close" data-close="alert"></button>
+                            <?php echo $_SESSION['error_message']; ?>
+                        </div>
+                        <?php unset($_SESSION['error_message']);
+                    }
+                    ?>
+
                     <div id="ajax-content">
                         <div class="page-head">
                             <div class="row" style="margin-bottom: 15px;">
@@ -99,39 +112,6 @@ $info = mysqli_fetch_array($result2);
                                         <div style="font-size: 15px; text-align: justify;margin: 20px;">
 
 
-                                            <div id="deleteDataModal" class="modal fade">
-                                                <div class="modal-dialog modal-confirm">
-                                                    <div class="modal-content">
-                                                        <form action="delete_data.php" method="GET"></form>
-                                                        <div class="modal-header flex-column">
-                                                            <div class="icon-box">
-                                                                <i class="fa fw fa-trash"></i>
-                                                            </div>
-                                                            <h4 class="modal-title w-100">আপনি কি
-                                                                নিশ্চিত?</h4>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-hidden="true">×
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>আপনি কি এই রেকর্ড ডিলিট করার বিষয়ে
-                                                                নিশ্চিত ? এটা ডিলিট করলে রেকর্ডটি আর
-                                                                ফেরত পাওয়া যাবে না।.</p>
-                                                        </div>
-                                                        <div class="modal-footer justify-content-center">
-                                                            <!-- add a hidden input field to store ID for next step -->
-                                                            <input type="hidden" name="id" value="1393">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">না, ফেরত যান
-                                                            </button>
-                                                            <button type="submit" class="btn btn-danger">হ্যাঁ, ডিলিট
-                                                                করুন
-                                                            </button>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                             <table class="table table-striped table-bordered table-hover" id="sample_6">
                                                 <thead>
@@ -149,10 +129,45 @@ $info = mysqli_fetch_array($result2);
                                                 <?php
 
                                                 include 'config.php';
-
                                                 // get the info from the db
                                                 $query = "SELECT * FROM `mouja` ORDER BY id ASC";
                                                 $result = mysqli_query($conn, $query);
+
+                                                $numrows = mysqli_num_rows($result);
+
+                                                // number of rows to show per page
+                                                $rowsperpage = 10;
+                                                // find out total pages
+                                                $totalpages = ceil($numrows / $rowsperpage);
+
+                                                // get the current page or set a default
+                                                if (isset($_GET['currentpage']) && is_numeric($_GET['currentpage'])) {
+                                                    // cast var as int
+                                                    $currentpage = (int)$_GET['currentpage'];
+                                                } else {
+                                                    // default page num
+                                                    $currentpage = 1;
+                                                } // end if
+
+
+                                                // if current page is greater than total pages...
+                                                if ($currentpage > $totalpages) {
+                                                    // set current page to last page
+                                                    $currentpage = $totalpages;
+                                                } // end if
+                                                // if current page is less than first page...
+                                                if ($currentpage < 1) {
+                                                    // set current page to first page
+                                                    $currentpage = 1;
+                                                } // end if
+
+                                                // the offset of the list, based on current page
+                                                $offset = ($currentpage - 1) * $rowsperpage;
+
+                                                // get the info from the db
+                                                $query_final = "SELECT * FROM `mouja` ORDER BY id ASC LIMIT $offset, $rowsperpage";
+
+                                                $result = mysqli_query($conn, $query_final);
                                                 $numrows = mysqli_num_rows($result);
                                                 $i =1;
                                                 while ($info2 = mysqli_fetch_array($result)) {
@@ -160,7 +175,7 @@ $info = mysqli_fetch_array($result2);
 
                                                     echo ' <tr style="">
                                                     <td style="text-align: center;" class="numeric_bangla">';
-                                                    echo $i;
+                                                    echo $offset + $i;
                                                     echo '</td>
                                                     <td style="text-align: center;">';
 
@@ -176,12 +191,55 @@ $info = mysqli_fetch_array($result2);
                                                         <a href="/mouja_edit.php?id=';
                                                     echo $info2['id'];
                                                     echo '" class="btn btn-primary btn-xs label-success" title="সংশোধন"><i class="fa fa-pencil fa-fw"></i> সংশোধন</a>
-                                                        <a href="#deleteDataModal" class="btn btn-danger btn-xs" data-toggle="modal" data-id="';
+                                                        <a href="#deleteDataModal-'.$info2['id'].'" class="btn btn-danger btn-xs" data-toggle="modal" data-id="';
                                                     echo $info2['id'];
-                                                    echo '" title="ডিলিট"><i class="fa fa-trash-o fa-lg"></i> ডিলিট</a>
-                                                    </td>
+                                                    echo '<i class="fa fa-trash-o fa-lg"></i> ডিলিট</a>
+                                                    </td>';
+                                                    ?>
                                                     <!-- Modal HTML -->
-                                                </tr>';
+                                                      <div id="deleteDataModal-<?php echo $info2['id']?>"
+                                                         class="modal fade">
+                                                        <div class="modal-dialog modal-confirm">
+                                                            <div class="modal-content">
+                                                                <form action="delete_mouja.php" method="GET">
+                                                                    <div class="modal-header flex-column">
+                                                                        <div class="icon-box">
+                                                                            <i class="fa fw fa-trash"></i>
+                                                                        </div>
+                                                                        <h4 class="modal-title w-100">আপনি কি
+                                                                            নিশ্চিত?</h4>
+                                                                        <button type="button" class="close"
+                                                                                data-dismiss="modal"
+                                                                                aria-hidden="true">&times;
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>আপনি কি সরকারি স্বার্থের এই ধরণ ডিলিট করার
+                                                                            বিষয়ে
+                                                                            নিশ্চিত ? এটা ডিলিট করলে এই সার্থের সাথে
+                                                                            সম্পর্কিত সকল দাগের তথ্য ডিলিট হয়ে যাবে।</p>
+                                                                    </div>
+                                                                    <div class="modal-footer justify-content-center">
+                                                                        <!-- add a hidden input field to store ID for next step -->
+                                                                        <input type="hidden" name="mouja_id"
+                                                                               value="<?php echo $info2['id']; ?>"/>
+                                                                        <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-dismiss="modal">না, ফেরত যান
+                                                                        </button>
+                                                                        <button type="submit"
+                                                                                class="btn btn-danger">হ্যাঁ, ডিলিট
+                                                                            করুন
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </tr>
+                                                <?php
                                                 $i++;
                                                 }
                                                 ?>
@@ -195,14 +253,59 @@ $info = mysqli_fetch_array($result2);
                                                 <ul class="pagination">
 
 
-                                                    <li class="numeric_bangla"><a href="">1</a></li>
+                                                    <?php
+
+                                                    /******  build the pagination links ******/
+                                                    // range of num links to show
+                                                    $range = 9;
+
+                                                    // if not on page 1, don't show back links
+                                                    if ($currentpage > 1) {
+                                                        // show << link to go back to page 1
+                                                        echo "<li class='numeric_bangla'><a href='{$_SERVER['PHP_SELF']}?currentpage=1'> প্রথম পেজ</a></li> ";
+                                                        // get previous page num
+                                                        $prevpage = $currentpage - 1;
+                                                        // show < link to go back to 1 page
+                                                        echo "<li class='numeric_bangla'><a href='{$_SERVER['PHP_SELF']}?currentpage=$prevpage'> পূর্ববর্তী পেজ</a></li> ";
+                                                    } // end if
+
+                                                    // loop to show links to range of pages around current page
+                                                    for ($x = ($currentpage - $range); $x < (($currentpage + $range) + 1); $x++) {
+                                                        // if it's a valid page number...
+                                                        if (($x > 0) && ($x <= $totalpages)) {
+                                                            // if we're on current page...
+                                                            if ($x == $currentpage) {
+                                                                // 'highlight' it but don't make a link
+                                                                echo " <li class='numeric_bangla'><a href>$x</a></li> ";
+                                                                // if not current page...
+                                                            } else {
+                                                                // make it a link
+                                                                echo " <li class='numeric_bangla'><a href='{$_SERVER['PHP_SELF']}?currentpage=$x'>$x</a></li> ";
+                                                            } // end else
+                                                        } // end if
+                                                    } // end for
+
+                                                    // if not on last page, show forward and last page links
+                                                    if ($currentpage != $totalpages) {
+                                                        // get next page
+                                                        $nextpage = $currentpage + 1;
+                                                        // echo forward link for next page
+                                                        echo " <li class='numeric_bangla'><a href='{$_SERVER['PHP_SELF']}?currentpage=$nextpage'>পরবর্তী পেজ</a></li> ";
+                                                        // echo forward link for lastpage
+                                                        echo " <li class='numeric_bangla'><a href='{$_SERVER['PHP_SELF']}?currentpage=$totalpages'>সর্বশেষ পেজ</a></li> ";
+                                                    } // end if
+                                                    /****** end build pagination links ******/
+
+                                                    ?>
+
 
                                                 </ul>
-                                                <p>বর্তমান পেজ নং 1,
-                                                    মোট 1-টি পেজের মধ্যে। মোট ২০-টি তথ্য
-                                                    প্রদর্শিত হচ্ছে সর্বমোট 2-টির মধ্যে।</p>
+                                                <p>বর্তমান পেজ নং <?php echo $currentpage; ?>,
+                                                    মোট <?php echo $totalpages; ?>-টি পেজের মধ্যে। মোট ২০-টি তথ্য
+                                                    প্রদর্শিত হচ্ছে সর্বমোট <?php echo $numrows; ?>-টির মধ্যে।</p>
 
                                             </div>
+
 
 
                                         </div>

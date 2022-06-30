@@ -13,16 +13,30 @@ include 'config.php';
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 
+    $data =[];
+    foreach ($_POST as $key=>$value){
+        $data[$key] = $value;
+        if($value ==''){
+            $data[$key] = '0';
+        }
+    }
+    //var_dump($data);
+
     $mouja_id =    mysqli_real_escape_string($conn,$_POST['mouja_id']);
-    $sa_dag =mysqli_real_escape_string($conn,$_POST['sa_dag']);
-    $bs_dag =mysqli_real_escape_string($conn,$_POST['bs_dag']);
-    $sa_khatian =mysqli_real_escape_string($conn,$_POST['sa_khatian']);
-    $bs_khatian =mysqli_real_escape_string($conn,$_POST['bs_khatian']);
-    $sa_land_amount =mysqli_real_escape_string($conn,$_POST['sa_land_amount']);
-    $bs_land_amount =mysqli_real_escape_string($conn,$_POST['bs_land_amount']);
     $interest_id =mysqli_real_escape_string($conn,$_POST['interest_id']);
 
-    $update_query = "INSERT INTO dag (mouja_id, sa_dag, bs_dag, sa_khatian, sa_land_amount, bs_land_amount, interest_id) VALUES ('$mouja_id', '$sa_dag', '$bs_dag', '$sa_khatian', '$sa_land_amount', '$bs_land_amount','$interest_id')";
+    $sa_dag =mysqli_real_escape_string($conn,$data['sa_dag']);
+    $bs_dag =mysqli_real_escape_string($conn,$data['bs_dag']);
+    $sa_khatian =mysqli_real_escape_string($conn,$data['sa_khatian']);
+    $bs_khatian =mysqli_real_escape_string($conn,$data['bs_khatian']);
+    $sa_land_amount =mysqli_real_escape_string($conn,$data['sa_land_amount']);
+    $bs_land_amount =mysqli_real_escape_string($conn,$data['bs_land_amount']);
+
+    $comments =mysqli_real_escape_string($conn,$data['comments']);
+
+    $update_query = "INSERT INTO dag (mouja_id, sa_dag, bs_dag, sa_khatian, sa_land_amount, bs_land_amount, interest_id, comments) VALUES ('$mouja_id', '$sa_dag', '$bs_dag', '$sa_khatian', '$sa_land_amount', '$bs_land_amount','$interest_id', '$comments')";
+
+    //print_r($update_query);
 
     if ($conn->query($update_query) === TRUE) {
         $_SESSION['success_message'] = "নতুন দাগের তথ্য সফলভাবে সংরক্ষণ করা হয়েছে।";
@@ -32,16 +46,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 
     $conn->close();
 
-
-
     header("Location: dashboard.php");
     exit();
-
 }
 
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -64,69 +73,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
       oncontextmenu="return false;">
 <!-- BEGIN HEADER -->
 <!-- BEGIN HEADER -->
-<div class="page-header md-shadow-z-1-i navbar navbar-fixed-top">
-    <!-- BEGIN HEADER INNER -->
-    <div class="page-header-inner">
-        <!-- BEGIN LOGO -->
-        <div class="page-logo">
-            <a href="dashboard.php">
-                <img src="./images/logo.png" alt="logo" class="logo-default">
-            </a>
-            <div class="menu-toggler sidebar-toggler">
-                <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
-            </div>
-        </div>
-        <!-- END LOGO -->
-        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse"
-           data-target=".navbar-collapse"></a>
-        <!-- END RESPONSIVE MENU TOGGLER -->
-        <!-- BEGIN PAGE ACTIONS -->
-        <!-- DOC: Remove "hide" class to enable the page header actions -->
-        <div class="page-actions">
-            <h2 style="color: #ffff00;margin: 5px;">সিলেট মহানগর রাজস্ব সার্কেল
-            </h2>
-        </div>
-        <!-- END PAGE ACTIONS -->
-        <!-- BEGIN PAGE TOP -->
-        <div class="page-top">
-            <!-- BEGIN HEADER SEARCH BOX -->
-            <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-            <!--
-  <form class="search-form" action="extra_search.html" method="GET"><div class="input-group"><input type="text" class="form-control input-sm" placeholder="Search..." name="query"><span class="input-group-btn"><a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a></span></div></form>
-  -->
-            <!-- END HEADER SEARCH BOX -->
-            <!-- BEGIN TOP NAVIGATION MENU -->
-            <div class="top-menu">
-                <ul class="nav navbar-nav pull-right">
-                    <li class="separator hide"></li>
-                    <li class="separator hide"></li>
-                    <!-- BEGIN INBOX DROPDOWN -->
-                    <!-- END TODO DROPDOWN -->
-                    <!-- BEGIN USER LOGIN DROPDOWN -->
-                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                    <li class="dropdown dropdown-user dropdown-dark">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-                           data-close-others="true">
-                            <span class="username username-hide-on-mobile"> পলাশ মন্ডল <br>সহকারী কমিশনার (ভূমি), সিলেট মহানগর রাজস্ব সার্কেল </span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-default">
-
-                            <li>
-                                <a href="logout.php">
-                                    <i class="icon-key"></i> লগ আউট </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- END USER LOGIN DROPDOWN -->
-                </ul>
-            </div>
-            <!-- END TOP NAVIGATION MENU -->
-        </div>
-        <!-- END PAGE TOP -->
-    </div>
-    <!-- END HEADER INNER -->
-</div>
+<?php include 'top_nav.php'; ?>
 <!-- END HEADER -->
 <div class="clearfix"></div>
 <!-- BEGIN CONTAINER -->
@@ -146,7 +93,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                 <div class="col-md-12"></div>
                                 <div class="col-md-6">
                                     <div class="page-title">
-                                        <h2 style="margin-top: 0px;"> নতুন তথ্য সংযোজন করুন</h2>
+                                        <h2 style="margin-top: 0px;"> নতুন তথ্য যুক্ত করুন</h2>
                                     </div>
                                 </div>
 
@@ -166,10 +113,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                         <div style="font-size: 15px; text-align: justify;margin: 20px;">
 
 
-                                            <form enctype="multipart/form-data" method="POST"  accept-charset="utf-8"
+                                            <form enctype="multipart/form-data" method="POST" id="add_edit" accept-charset="utf-8"
                                                   class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'];?>">
-                                                <div style="display:none;"><input type="hidden" name="_method"
-                                                                                  value="POST"></div>
+                                                <div style="display:none;"><input type="hidden"
+                                                                                 ></div>
 
                                                 <div class="form-body">
                                                     <div class="row">
@@ -195,8 +142,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                             $numrows =mysqli_num_rows($result);
                                                                             while ($info2 = mysqli_fetch_array($result)) {
                                                                                 echo '<option value="';
-                                                                                echo $info2['id'];
-                                                                                echo '">';
+                                                                                echo $info2['id'].'"';
+
+                                                                                echo 'bs_jl="'.$info2['bs_jl'].'"> ';
                                                                                 echo $info2['name'];
                                                                                 echo '</option>';
                                                                             }
@@ -214,8 +162,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                                                       name="sa_khatian"
 
 
-                                                                                                      class="form-control"
-                                                                                                      value="0"
+                                                                                                      class="form-control numeric_bangla"
+
                                                                                                       maxlength="255"
                                                                                                       id="sa_khatian">
                                                                     </div>
@@ -225,28 +173,27 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <label class="col-sm-4 control-label">এসএ দাগ নম্বর
                                                                 </label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input text required"><input type="number"
+                                                                    <div class="input text required"><input type="text"
                                                                                                             name="sa_dag"
 
-                                                                                                            class="form-control"
+
+                                                                                                            class="form-control numeric_bangla"
                                                                                                             maxlength="255"
-                                                                                                            value="0"
+
                                                                                                             id="sa_dag">
                                                                     </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label class="col-sm-4 control-label">এসএ জমির পরিমাণ<span
-                                                                            class="required"
-                                                                            aria-required="true">* </span></label>
+                                                                <label class="col-sm-4 control-label">এসএ জমির পরিমাণ (একর)</label>
                                                                 <div class="col-sm-6">
                                                                     <div class="input number "><input type="text"
                                                                                                       name="sa_land_amount"
 
-                                                                                                      class="form-control"
+                                                                                                      class="form-control numeric_bangla"
                                                                                                       maxlength="200"
-                                                                                                      value="0"
+
                                                                                                       id="sa_land_amount">
                                                                     </div>
                                                                 </div>
@@ -264,63 +211,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group">
-                                                                <div id="signature_image_preview"
-                                                                     class="col-sm-offset-7"
-                                                                     style="max-height: 200px;margin-bottom: 10px; max-width: 219px;">
-                                                                </div>
-                                                            </div>
 
                                                         </div>
                                                         <div class="panel-body col-sm-6">
-                                                            <div class="form-group">
-                                                                <label class="col-sm-4 control-label">বিএস খতিয়ান</label>
-                                                                <div class="col-sm-6">
-                                                                    <div class="input "><input type="number"
-                                                                                               name="bs_khatian"
-                                                                                               class="form-control user_email "
-                                                                                               maxlength="100"
-                                                                                               value="0"
-                                                                                               id="bs_khatian"></div>
-                                                                    <div class="email_validation"
-                                                                         style="color: red"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="col-sm-4 control-label">বিএস দাগ</label>
-                                                                <div class="col-sm-6">
-                                                                    <div class="input "><input type="number"
-                                                                                               name="bs_dag"
-                                                                                               class="form-control user_email "
-                                                                                               maxlength="100"
-                                                                                               value="0"
-                                                                                               id="bs_dag"></div>
-                                                                    <div class="email_validation"
-                                                                         style="color: red"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="col-sm-4 control-label">বিএস জমির পরিমাণ</label>
-                                                                <div class="col-sm-6">
-                                                                    <div class="input text ">
-                                                                        <input type="number"
-                                                                               name="bs_land_amount"
-                                                                               step="any"
-
-                                                                               class="form-control"
-                                                                               data-toggle="tooltip"
-                                                                               maxlength="255"
-                                                                               value="0"
-                                                                               id="bs_land_amount">
-                                                                    </div>
-
-                                                                    <div class="mobile_validation"
-                                                                         style=" color: red"></div>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <?php print_r($info2);?>
 
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">সরকারি স্বার্থ নির্বাচন করুন
@@ -362,12 +255,79 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 </div>
                                                             </div>
 
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">বিএস খতিয়ান</label>
+                                                                <div class="col-sm-6">
+                                                                    <div class="input "><input type="number"
+                                                                                               name="bs_khatian"
+                                                                                               class="form-control numeric_bangla "
+                                                                                               maxlength="100"
+
+                                                                                               id="bs_khatian"></div>
+                                                                    <div class="email_validation"
+                                                                         style="color: red"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">বিএস দাগ</label>
+                                                                <div class="col-sm-6">
+                                                                    <div class="input "><input type="text"
+                                                                                               name="bs_dag"
+
+                                                                                               class="form-control numeric_bangla "
+                                                                                               maxlength="100"
+
+                                                                                               id="bs_dag"></div>
+                                                                    <div class="email_validation"
+                                                                         style="color: red"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">বিএস জমির পরিমাণ (একর)</label>
+                                                                <div class="col-sm-6">
+                                                                    <div class="input text ">
+                                                                        <input type="number"
+                                                                               name="bs_land_amount"
+                                                                               step="any"
+
+                                                                               class="form-control numeric_bangla"
+                                                                               data-toggle="tooltip"
+                                                                               maxlength="255"
+
+                                                                               id="bs_land_amount">
+                                                                    </div>
+
+                                                                    <div class="mobile_validation"
+                                                                         style=" color: red"></div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <?php print_r($info2);?>
+
+
 
 
                                                         </div>
                                                     </div>
 
+
+                                                    <div class="row">
+                                                        <div class="panel-body col-sm-12">
+                                                            <div class="form-group">
+                                                                <label class="col-sm-3 control-label" for="comments">মন্তব্য/ বিস্তারিত তথ্য</label>
+                                                                <div class="col-sm-6">
+                                                                    <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
+
+
+
+
                                                 <div class="form-actions">
                                                     <div class="row">
                                                         <div class="col-md-offset-5 col-md-9">
@@ -378,6 +338,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                         </div>
                                                     </div>
                                                 </div>
+
+
                                             </form>
 
 

@@ -24,7 +24,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     <link href="css/components-rounded.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
 </head>
-<body class="bg login">
+<body class="bg login" style="overflow: hidden;">
 <div class="head_text">
     <img alt="" class="img-circle" src="/images/bd_logo.png">
     <h1>সিলেট মহানগর রাজস্ব সার্কেল</h1>
@@ -94,7 +94,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             $cookie_name = "username";
                             $cookie_value =  $username;
-                            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+                            setcookie($cookie_name, $cookie_value, time() + (60*120), "/"); // 86400 = 1 day
+
+                            setcookie('sidebar_closed', 0);
 
                             $_SESSION['success_message'] = "আপনি সফলভাবে লগ-ইন করেছেন।";
                             header("Location: dashboard.php");
@@ -188,5 +190,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="footer_text">©পলাশ মন্ডল</div>
 </footer>
 <script src="js/jquery.min.js"></script>
+<script src="js/jquery.backstretch.min.js"></script>
+
+<script>
+    $.backstretch([
+            "/images/background.jpg"
+        ], {
+            fade: 1000,
+            duration: 8000
+        }
+    );
+</script>
 </body>
 </html>

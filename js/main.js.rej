@@ -1,0 +1,58 @@
+diff a/js/main.js b/js/main.js	(rejected hunks)
+@@ -1,42 +1,26 @@
++function validateNumberAndForwardSlash(e) {
++    var key = window.event ? event.keyCode : event.which;
+ 
+-
+-
+-$(document).ready(function () {
++  if (event.keyCode >= 48 && event.keyCode <= 57 || event.keyCode == 191) {
++    return true;
++  } else {
++    return false;
++  }
++    
++	
+ 	
+ 	
+-	const choices = new Choices('[data-trigger]',
+-		{
+-			searchEnabled: true,
+-			itemSelectText: '',
+-			items: [],
+-			choices: [],
+-			renderChoiceLimit: -1,
+-			maxItemCount: -1,
+-			addItems: true,
+-			addItemFilter: null,
+-			removeItems: true,
+-			removeItemButton: false,
+-			editItems: false,
+-			allowHTML: true,
+-			duplicateItemsAllowed: true,
+-			delimiter: ',',
+-			paste: true,
+-			searchEnabled: true,
+-			searchChoices: true,
+-			searchFloor: 1,
+-			searchResultLimit: 4,
+-			searchFields: ['label', 'value'],
+-			position: 'auto',
+-			resetScrollPosition: true,
+-			shouldSort: false,
+-			shouldSortItems: false,
+-		});
++
++};
+ 
+ 
+ 	
++
++$(document).ready(function () {
++	
+ 	$("#submitBtn").click(function () {
+ 		var dag = $('#search').val();
+ 		var mouza = $('select').val()
+ 		
+ 		if (dag != "") {
+ 			$.ajax({

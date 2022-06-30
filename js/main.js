@@ -1,122 +1,58 @@
-function validateNumberAndForwardSlash(e) {
-    var key = window.event ? event.keyCode : event.which;
-
-  if (event.keyCode >= 48 && event.keyCode <= 57 || event.keyCode == 191) {
-    return true;
-  } else {
-    return false;
-  }
-    
-	
-	
-	
-
-};
 
 
-	
 
 $(document).ready(function () {
-	
-	$("#submitBtn").click(function () {
-		var dag = $('#search').val();
-		var mouza = $('select').val()
-		
-		if (dag != "") {
-			$.ajax({
-				url: 'ajax.php',
-				method: 'POST',
-				data: {dag: dag, mouza: mouza},
-				success: function (data) {
-					
-					$('#output').hide();
-					$('#output').html(data);
-					$('#output').slideDown(500);
-					
-					$("#search").focusout(function () {
-						$('#output').css('display', 'block');
-					});
-					$("#search").focusin(function () {
-						$('#output').css('display', 'block');
-					});
-				}
-			});
-		} else {
-			$('#output').html('');
-			$('#output').slideUp(500);
-		}
-	});
-	
-	
-	$("#search").keyup(function () {
-		var dag = $(this).val();
-		var mouza = $('select').val()
-		
-		if (dag != "") {
-			$.ajax({
-				url: 'ajax.php',
-				method: 'POST',
-				data: {dag: dag, mouza: mouza},
-				success: function (data) {
-					
-					$('#output').hide();
-					$('#output').html(data);
-					$('#output').slideDown(500);
-					
-					$("#search").focusout(function () {
-						$('#output').css('display', 'block');
-					});
-					$("#search").focusin(function () {
-						$('#output').css('display', 'block');
-					});
-				}
-			});
-		} else {
-			$('#output').html('');
-			$('#output').slideUp(500);
-		}
+
+	$("#add_edit").submit(function (e) {
+
+	//	e.preventDefault();
+
+		var sa_dag = $.trim($('#sa_dag').val());
+		var bs_dag = $.trim($('#bs_dag').val());
+
+
+		if (sa_dag  === '' && bs_dag ==='') {
+			alert('এসএ অথবা বিএস দাগ দিন।');
+			return false;
+		}else return true
 	});
 
-	//delete data
 
 
-		$('a.delete').click(function (e) {
-			e.preventDefault();
-			var link = this;
-			var deleteModal = $("#deleteDataModal");
-			// open modal
-			deleteModal.modal();
-		});
+
+	$("#mouja_id").on("change",function(){
+
+		var bs_jl = $('#mouja_id option:selected').attr('bs_jl');
+
+		if(bs_jl=='' || bs_jl=='0'){
+
+			$("#sa_dag").attr("required","required");
+
+			$("#bs_khatian").attr("readonly","readonly");
+			$("#bs_khatian").val("");
+
+			$("#bs_land_amount").attr("readonly","readonly");
+			$("#bs_land_amount").val("");
 
 
-	
-	// on select change
-	$('select').on('change', function () {
-		var dag = $("#search").val();
-		mouza = $('select').val()
-		if (dag != "") {
-			$.ajax({
-				url: 'ajax.php',
-				method: 'POST',
-				data: {dag: dag, mouza: mouza},
-				success: function (data) {
-					
-					$('#output').html(data);
-					$('#output').slideDown(500);
-					
-					$("#search").focusout(function () {
-						$('#output').slideDown(500);
-					});
-					$("#search").focusin(function () {
-						$('#output').slideUp(500);
-					});
-				}
-			});
-		} else {
-			$('#output').css('display', 'none');
+			$("#bs_dag").attr("readonly", "readonly");
+			$("#bs_dag").val("");
+
+		}else{
+			$("#bs_khatian").removeAttr("readonly");
+			$("#bs_dag").removeAttr("readonly");
+			$("#bs_land_amount").removeAttr("readonly");
 		}
-	});
-	
 
-	
+
+	// for both edit and add page
+
+
+	});
+
+
+
+	$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+		$("#success-alert").slideUp(500);
+	});
 });
