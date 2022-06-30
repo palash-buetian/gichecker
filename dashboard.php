@@ -391,7 +391,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 
 
-
                                                     $data = array_filter($_REQUEST);
 
 
@@ -421,15 +420,19 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     $query_final = "SELECT * FROM `dag` ORDER BY id DESC LIMIT $offset, $rowsperpage";
                                                 }
 
-                                                // print($query);
+                                                 //print($query);
 
 
                                                 $result_final = mysqli_query($conn, $query_final);
+												
+												//var_dump($result_final);
+												
+
                                                 // $info = mysqli_fetch_array($result_final);
 
 
                                                // var_dump($query_final);
-                                                if (mysqli_num_rows($result_final) > 0) {
+                                                if ( $result_final && mysqli_num_rows($result_final) > 0) {
                                                     $i = 1;
                                                     while ($info = mysqli_fetch_array($result_final)) {
                                                         //var_dump($info);

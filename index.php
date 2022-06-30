@@ -39,7 +39,7 @@ $mouja_result = mysqli_query($conn, $mouja_query);
         <div class="inner-form">
             <div class="input-field first-wrap">
                 <input id="search" type="text" placeholder="জমির এসএ বা বিএস দাগ নম্বর লিখুন" autofocus class="input_bangla"
-                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                       />
             </div>
             <div class="input-field second-wrap">
                 <div class="input-select">
