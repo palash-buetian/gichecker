@@ -38,13 +38,8 @@ $mouja_result = mysqli_query($conn, $mouja_query);
     <form id="myForm">
         <div class="inner-form">
             <div class="input-field first-wrap">
-<<<<<<< HEAD
-                <input id="search" type="text" placeholder="জমির এসএ বা বিএস দাগ নম্বর লিখুন" autofocus class="input_bangla"
-                       />
-=======
                 <input id="search" type="text" placeholder="জমির এসএ বা বিএস দাগ নম্বর লিখুন" autofocus pattern="^[0-9]{10}$" class="numeric input_bangla"
                       />
->>>>>>> d03d2bd (minor corrections)
             </div>
             <div class="input-field second-wrap">
                 <div class="input-select">
@@ -56,11 +51,7 @@ $mouja_result = mysqli_query($conn, $mouja_query);
                         }
                         ?>
                     </select>
-<<<<<<< HEAD
-                    
-=======
 
->>>>>>> d03d2bd (minor corrections)
                 </div>
             </div>
             <div class="input-field third-wrap">
