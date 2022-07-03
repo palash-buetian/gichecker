@@ -106,7 +106,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         <div style="font-size: 32px;text-align: center;margin: 20px;margin-bottom: 0px;">
                                             <div class="col-sm-13">
 
-                                                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                                <form id="dashboard" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                                     <div class="row">
                                                         <div class="col-sm-1" style="width: 10%;flex: 0 0 10%;max-width: 10%;">
                                                             <div class="form-group">
@@ -577,13 +577,16 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 
 
+
+                                            <?php
+                                            if (mysqli_num_rows($result_final) > 10) { ?>
+
+
                                             <div class="paginator">
                                                 <ul class="pagination">
 
 
                                                     <?php
-
-
 
 
                                                     /******  build the pagination links ******/
@@ -637,6 +640,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                                             </div>
 
+
+                                            <?php
+                                            }
+                                            ?>
 
                                         </div>
                                     </div>

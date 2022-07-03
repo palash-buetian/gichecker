@@ -11,7 +11,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 require_once "config.php";
 
 // officer name and designation
-$username =$_COOKIE['username'];
+$username = 'admin';
 
 $query1 = "SELECT * FROM `users` WHERE `username`= '$username' LIMIT 1";
 $result2 = mysqli_query($conn, $query1);

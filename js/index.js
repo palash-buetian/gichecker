@@ -32,7 +32,47 @@ $(document).ready(function () {
 			shouldSortItems: false,
 		});
 
-	
+
+	//convert bangla to eng
+
+
+	var numbers = {
+		'০': 0,
+		'১': 1,
+		'২': 2,
+		'৩': 3,
+		'৪': 4,
+		'৫': 5,
+		'৬': 6,
+		'৭': 7,
+		'৮': 8,
+		'৯': 9
+	};
+
+	function replaceNumbers(input) {
+		var output = [];
+		for (var i = 0; i < input.length; ++i) {
+			if (numbers.hasOwnProperty(input[i])) {
+				output.push(numbers[input[i]]);
+			} else {
+				output.push(input[i]);
+			}
+		}
+		return output.join('');
+	}
+
+	$("#search").keyup( function()
+	{
+
+		var searchQuery = $("#search").val();
+
+		var bangla = replaceNumbers(searchQuery);
+		//alert(bangla);
+		$("#search").val(bangla);
+	});
+
+
+
 	$("#search").keyup(function () {
 		var dag = $(this).val();
 		var mouza = $('select').val()
@@ -156,6 +196,8 @@ $(document).ready(function () {
 			$('#output').css('display', 'none');
 		}
 	});
-	
-	
+
+
+
+
 });

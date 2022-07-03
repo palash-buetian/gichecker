@@ -3,6 +3,87 @@
 
 $(document).ready(function () {
 
+	//convert bangla to eng
+
+
+	var numbers = {
+		'০': 0,
+		'১': 1,
+		'২': 2,
+		'৩': 3,
+		'৪': 4,
+		'৫': 5,
+		'৬': 6,
+		'৭': 7,
+		'৮': 8,
+		'৯': 9
+	};
+
+	function replaceNumbers(input) {
+		var output = [];
+		for (var i = 0; i < input.length; ++i) {
+			if (numbers.hasOwnProperty(input[i])) {
+				output.push(numbers[input[i]]);
+			} else {
+				output.push(input[i]);
+			}
+		}
+		return output.join('');
+	}
+
+	// for edit and add page input fields
+	$("form#add_edit :input").each(function(){
+		var input = $(this); // This is the jquery object of the input, do what you will
+
+		$(input).keyup( function()
+		{
+
+			var searchQuery = $(input).val();
+
+			var bangla = replaceNumbers(searchQuery);
+			//alert(bangla);
+			$(input).val(bangla);
+		});
+
+	});
+
+	// for dashboard input fields
+	$("form#dashboard :input").each(function(){
+		var input = $(this); // This is the jquery object of the input, do what you will
+
+		$(input).keyup( function()
+		{
+
+			var searchQuery = $(input).val();
+
+			var bangla = replaceNumbers(searchQuery);
+			//alert(bangla);
+			$(input).val(bangla);
+		});
+
+	});
+
+
+
+	//for default
+	var bs_jl = $('#mouja_id option:selected').attr('bs_jl');
+
+	if(bs_jl=='' || bs_jl=='0'){
+
+		$("#sa_dag").attr("required","required");
+
+		$("#bs_khatian").attr("readonly","readonly");
+		$("#bs_khatian").val("");
+
+		$("#bs_land_amount").attr("readonly","readonly");
+		$("#bs_land_amount").val("");
+
+
+		$("#bs_dag").attr("readonly", "readonly");
+		$("#bs_dag").val("");
+
+	}
+
 	$("#add_edit").submit(function (e) {
 
 	//	e.preventDefault();
@@ -55,6 +136,7 @@ $(document).ready(function () {
 	$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
 		$("#success-alert").slideUp(500);
 	});
+<<<<<<< HEAD
 	
 	
 	var bs_unpublished = $('#bs_jl_unpublished').is(':checked');
@@ -72,4 +154,8 @@ $(document).ready(function () {
     });
 	
 	
+=======
+
+
+>>>>>>> d03d2bd (minor corrections)
 });

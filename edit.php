@@ -170,7 +170,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                             $numrows =mysqli_num_rows($result);
 
 
-                                                                            print($numrows);
+                                                                            //print($numrows);
 
                                                                             print_r($info);
 
