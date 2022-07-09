@@ -73,7 +73,7 @@ $(document).ready(function () {
 
 
 
-	$("#search").keyup(function () {
+	$("#search").keyup( function() {
 		var dag = $(this).val();
 		var mouza = $('select').val()
 		
@@ -81,6 +81,8 @@ $(document).ready(function () {
 			$.ajax({
 				url: 'ajax.php',
 				method: 'POST',
+				async: false,
+				cache: true,
 				data: {dag: dag, mouza: mouza},
 				success: function (data) {
 					
@@ -134,34 +136,6 @@ $(document).ready(function () {
 	});
 	
 	
-	$("#search").keyup(function () {
-		var dag = $(this).val();
-		var mouza = $('select').val()
-		
-		if (dag != "") {
-			$.ajax({
-				url: 'ajax.php',
-				method: 'POST',
-				data: {dag: dag, mouza: mouza},
-				success: function (data) {
-					
-					$('#output').hide();
-					$('#output').html(data);
-					$('#output').slideDown(500);
-					
-					$("#search").focusout(function () {
-						$('#output').css('display', 'block');
-					});
-					$("#search").focusin(function () {
-						$('#output').css('display', 'block');
-					});
-				}
-			});
-		} else {
-			$('#output').html('');
-			$('#output').slideUp(500);
-		}
-	});
 
 	//delete data
 
