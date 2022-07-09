@@ -1,4 +1,7 @@
 <?php
+
+ob_start(); // Initiate the output buffer
+ 
 // Initialize the session
 session_start();
 
@@ -7,31 +10,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     header("location: dashboard.php");
     exit;
 }
-?>
 
-
-<html>
-<head>
-    <title>সরকারি স্বার্থ যাচাই সিস্টেম- লগ ইন</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <meta name="author" content="Palash Mondal">
-    <link href="css/main.css" rel="stylesheet"/>
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="css/login.css" rel="stylesheet"/>
-    <link href="css/components-rounded.css" rel="stylesheet"/>
-    <link href="css/style.css" rel="stylesheet"/>
-</head>
-<body class="bg login" style="overflow: hidden;">
-<div class="head_text">
-    <img alt="" class="img-circle" src="/images/bd_logo.png">
-    <h1>সিলেট মহানগর রাজস্ব সার্কেল</h1>
-    <h2>সরকারি স্বার্থ যাচাই সিস্টেম</h2>
-</div>
-
-<?php
 // Include config file
 require_once "config.php";
 // Define variables and initialize with empty values
@@ -83,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         if (password_verify($password, $hashed_password)) {
 // Password is correct, so start a new session
-                            session_start();
+                            //session_start();
 
 // Store data in session variables
                             $_SESSION["loggedin"] = true;
@@ -94,10 +73,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             $cookie_name = "username";
                             $cookie_value =  $username;
+							
                             setcookie($cookie_name, $cookie_value, time() + (60*120), "/"); // 86400 = 1 day
-
                             setcookie('sidebar_closed', 0);
-
                             $_SESSION['success_message'] = "আপনি সফলভাবে লগ-ইন করেছেন।";
                             header("Location: dashboard.php");
                             exit();
@@ -124,7 +102,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close connection
     mysqli_close($conn);
 }
+
+ob_end_flush(); // Flush the output from the buffer
 ?>
+
+
+<html>
+<head>
+    <title>সরকারি স্বার্থ যাচাই সিস্টেম- লগ ইন</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <meta name="author" content="Palash Mondal">
+    <link href="css/main.css" rel="stylesheet"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/login.css" rel="stylesheet"/>
+    <link href="css/components-rounded.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+</head>
+<body class="bg login" style="overflow: hidden;">
+<div class="head_text">
+    <img alt="" class="img-circle" src="/images/bd_logo.png">
+    <h1>সিলেট মহানগর রাজস্ব সার্কেল</h1>
+    <h2>সরকারি স্বার্থ যাচাই সিস্টেম</h2>
+</div>
 
 
 <div class="content">

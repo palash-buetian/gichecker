@@ -392,24 +392,26 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 
 
-                                                    $data = array_filter($_REQUEST);
+                                                    $data = array_filter($_POST);
 
 
                                                     $joiner = '';
                                                     $i = 1;
                                                     foreach ($data as $var=>$val){
-                                                        $joiner .= "$var=$val";
+												
+															$joiner .= "$var=$val";
 
                                                         if($i<sizeof($data))
                                                             $joiner .= " AND ";
                                                         $i++;
+														
                                                     }
 
 
                                                     if((isset($sa_dag) && !empty($sa_dag)) || (isset($bs_dag) && !empty($bs_dag)) || (isset($sa_khatian) && !empty($sa_khatian)) || (isset($bs_khatian) && !empty($bs_khatian)) || (isset($interest_id) && !empty($interest_id)) || (isset($mouja_id) && !empty($mouja_id))){
                                                         $query_final = "SELECT * FROM dag WHERE ".$joiner." ORDER BY id DESC LIMIT $offset, $rowsperpage";
 
-                                                     //   var_dump($query_final);
+                                                       // var_dump($query_final);
                                                     }
 
 
