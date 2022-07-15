@@ -1,0 +1,277 @@
+<?php
+// Initialize the session
+session_start();
+
+// Check if the user is logged in, if not then redirect him to login page
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
+{
+    header("location: login.php");
+    exit;
+}
+
+//
+//
+//print_r($_SESSION);
+include 'config.php';
+
+?>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<!--
+  <![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <?php include 'header.php'; ?>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
+<!-- DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default -->
+<!-- DOC: Apply "page-sidebar-hide" class to the body to make the sidebar completely hidden on toggle -->
+<!-- DOC: Apply "page-sidebar-closed-hide-logo" class to the body element to make the logo hidden on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-hide" class to body element to completely hide the sidebar on sidebar toggle -->
+<!-- DOC: Apply "page-sidebar-fixed" class to have fixed sidebar -->
+<!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
+<!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
+<!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
+<body class="page-md page-sidebar-page-sidebar-closed-hide-logo page-header-fixed page-footer-fixed"
+      oncontextmenu="return false;">
+<!-- BEGIN HEADER -->
+<!-- BEGIN HEADER -->
+
+<?php include 'top_nav.php'; ?>
+
+<!-- END HEADER -->
+<div class="clearfix"></div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+
+    <!-- BEGIN SIDEBAR -->
+    <?php include 'sidebar.php'; ?>
+    <!-- END SIDEBAR -->
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content" id="scroller" style="min-height:588px">
+            <div class="row">
+                <div class="col-md-12">
+
+
+
+
+
+                    <div id="ajax-content">
+                        <div class="page-head">
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="col-md-12"></div>
+                                <div class="col-md-6">
+                                    <div class="page-title">
+                                        <h2 style="margin-top: 0px;"> ড্যাশবোর্ডে স্বাগতম!</h2>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="dashboard-stat blue-madison">
+                                        <div class="visual">
+
+                                        </div>
+                                        <div class="details">
+                                            <div class="number numeric_bangla">
+                                                <?php
+                                                $query = "SELECT * FROM `dag`";
+                                                $result = mysqli_query($conn, $query);
+
+                                                $numrows_entries = mysqli_num_rows($result);
+                                                echo $numrows_entries;
+                                                ?>
+                                            </div>
+                                            <div class="desc">
+                                                এন্ট্রিকৃত সরকারি স্বার্থের তথ্য সংখ্যা
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="dashboard-stat purple-soft">
+                                        <div class="visual">
+
+                                        </div>
+                                        <div class="details">
+                                            <div class="number numeric_bangla">
+                                                <?php
+                                                $query_mouja = "SELECT * FROM `mouja`";
+                                                $result_mouja = mysqli_query($conn, $query_mouja);
+
+                                                $numrows_mouja = mysqli_num_rows($result_mouja);
+                                                echo $numrows_mouja;
+
+                                                ?>
+                                            </div>
+                                            <div class="desc">
+                                                এন্ট্রিকৃত মোট মৌজা সংখ্যা
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="dashboard-stat green-soft">
+                                        <div class="visual">
+
+                                        </div>
+                                        <div class="details">
+                                            <div class="number numeric_bangla">
+                                                <?php
+                                                $query_interest = "SELECT * FROM `interest`";
+                                                $result_interest = mysqli_query($conn, $query_interest);
+
+                                                $numrows_interest = mysqli_num_rows($result_interest);
+                                                echo $numrows_interest;
+
+                                                ?>                  </div>
+                                            <div class="desc">
+                                                এন্ট্রিকৃত সরকারি স্বার্থের ধরণ
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="dashboard-stat red-soft">
+                                        <div class="visual">
+
+                                        </div>
+                                        <div class="details">
+                                            <div class="number numeric_bangla">
+                                                <?php
+                                                $query_sa_count = "SELECT COUNT(DISTINCT mouja_id, sa_dag)+COUNT(DISTINCT mouja_id,bs_dag) AS sa FROM `dag`";
+
+                                                $result_interest = mysqli_query($conn, $query_sa_count);
+                                                $result = mysqli_fetch_array($result_interest);
+
+                                                echo $result['sa'];
+
+                                                ?>
+                                            </div>
+                                            <div class="desc">
+                                                এন্ট্রিকৃত মোট এসএ ও বিএস দাগের সংখ্যা
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <!-- END PAGE CONTENT INNER -->
+
+                        <?php
+                        $mouja_info  = mysqli_fetch_array($result_mouja);
+
+                        print_r($mouja_info);
+                        ?>
+                        <div class="indexPart5"><div class="row" style="margin-top: 20px;">
+                                <div class="admin_group col-lg-3 col-md-3 col-sm-6 col-xs-12" style="margin-bottom:20px;">
+                                    <div class="admin dashboard-stat red-soft" href="#" style="height: 215px !important;">
+                                        <div class="visual">
+                                            <i class="fa fa-globe"></i>
+                                        </div>
+                                        <div class="details">
+                                            <div class="division_stat">
+                                                <h3><span>হবিনন্দী</span></h3>
+                                            </div>
+                                            <div class="description" style="font-size: 12px;">
+                                                <table class="report-table" style="font-size: 11px !important;">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th class="text-left">টার্গেট হোল্ডিং</th>
+                                                        <td class="sub-mark">:</td>
+                                                        <td class="text-left  input_bangla">0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="text-left">এন্ট্রিকৃত হোল্ডিং</th>
+                                                        <td class="sub-mark">:</td>
+                                                        <td class="text-left  input_bangla">910</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="text-left">অনুমোদিত হোল্ডিং</th>
+                                                        <td class="sub-mark">:</td>
+                                                        <td class="text-left  input_bangla">908</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th class="text-left">অপেক্ষমান হোল্ডিং</th>
+                                                        <td class="sub-mark">:</td>
+                                                        <td class="text-left  input_bangla">2</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th class="text-left">মোট দাবি</th>
+                                                        <td class="sub-mark">:</td>
+                                                        <td class="text-left input_bangla">7552622</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th class="text-left">মোট আদায়</th>
+                                                        <td class="sub-mark">:</td>
+                                                        <td class="text-left input_bangla">172898.00</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th class="text-left">মোট বকেয়া</th>
+                                                        <td class="sub-mark">:</td>
+                                                        <td class="text-left input_bangla">7379724</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+                            </div> </div>
+                        <!-- END PAGE CONTENT INNER -->
+                        <!-- END PAGE CONTENT INNER -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<?php include 'footer.php'; ?>
+<!-- END FOOTER -->
+
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+
+
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<!-- END PAGE LEVEL SCRIPTS -->
+
+<!-- END PAGE LEVEL SCRIPTS -->
+
+<!-- END JAVASCRIPTS -->
+<!-- END BODY -->
+</body>
+</html>

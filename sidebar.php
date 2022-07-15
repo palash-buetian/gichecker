@@ -14,6 +14,13 @@
                     <span class="title">ড্যাশবোর্ড</span>
                 </a>
             </li>
+            <li class="start active">
+                <a href="/infograph.php">
+                    <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-info"></i>
+                    <span class="title">মৌজাভিত্তিক তথ্য</span>
+                </a>
+            </li>
+
             <li class="">
                 <a href="#" class="">
                     <i style="float: left; margin: 2px 6px 4px 7px;" class="a2i_gn_settings1"></i>

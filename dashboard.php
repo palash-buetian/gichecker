@@ -112,8 +112,8 @@ include 'config.php';
                                                 $query = "SELECT * FROM `dag`";
                                                 $result = mysqli_query($conn, $query);
 
-                                                $numrows = mysqli_num_rows($result);
-                                                echo $numrows;
+                                                $numrows_entries = mysqli_num_rows($result);
+                                                echo $numrows_entries;
                                                 ?>
                                             </div>
                                             <div class="desc">
@@ -252,6 +252,8 @@ include 'config.php';
                                                                             if (isset($_REQUEST["mouja_id"]))
                                                                             {
                                                                                 $mouja_id = (int)$_REQUEST["mouja_id"];
+                                                                            }elseif(isset($_GET["mouja_id"])){
+                                                                                $interest_id = (int)$_GET["mouja_id"];
                                                                             }
                                                                             else
                                                                             {
@@ -265,7 +267,7 @@ include 'config.php';
                                                                             $query = "SELECT * FROM `mouja` ORDER BY id ASC";
                                                                             $result = mysqli_query($conn, $query);
 
-                                                                            $numrows = mysqli_num_rows($result);
+                                                                            //$numrows = mysqli_num_rows($result);
 
                                                                             // print($numrows);
                                                                             while ($info = mysqli_fetch_array($result))
@@ -312,6 +314,8 @@ include 'config.php';
                                                                             if (isset($_REQUEST["interest_id"]))
                                                                             {
                                                                                 $interest_id = (int)$_REQUEST["interest_id"];
+                                                                            }elseif(isset($_GET["interest_id"])){
+                                                                                $interest_id = (int)$_GET["interest_id"];
                                                                             }
                                                                             else
                                                                             {
@@ -463,7 +467,7 @@ include 'config.php';
                                                 {
 
                                                     // Include config file
-                                                    $sa_dag = $_POST['sa_dag'];
+                                                    $sa_dag = $_POST['sa_dag'] ;
                                                     $bs_dag = $_POST['bs_dag'];
                                                     $sa_khatian = $_POST['sa_khatian'];
                                                     $bs_khatian = $_POST['bs_khatian'];
@@ -471,40 +475,62 @@ include 'config.php';
                                                     $interest_id = $_POST['interest_id'];
 
                                                     $data = array_filter($_POST);
+                                                }else{
+                                                    $sa_dag = isset($_GET['sa_dag']) ? $_GET['sa_dag'] : '';
+                                                    $bs_dag = isset($_GET['bs_dag']) ? $_GET['bs_dag'] : '';
+                                                    $sa_khatian = isset($_GET['sa_khatian']) ? $_GET['sa_khatian'] : '';
+                                                    $bs_khatian =isset($_GET['bs_khatian']) ? $_GET['bs_khatian'] : '';
+                                                    $mouja_id = isset($_GET['mouja_id']) ? $_GET['mouja_id'] : '';
+                                                    $interest_id = isset($_GET['interest_id']) ? $_GET['interest_id'] : '';
 
-                                                    $joiner = '';
+                                                    $data = array_filter($_GET);
+                                                }
+
+                                                unset($data['currentpage']);
+
+                                                    $joiner  = '';
+                                                    $pagination_joiner = '&';
                                                     $i = 1;
                                                     foreach ($data as $var => $val)
                                                     {
 
-                                                        $joiner .= "$var=$val";
 
-                                                        if ($i < sizeof($data)) $joiner .= " AND ";
-                                                        $i++;
+                                                            $joiner .= "$var=$val";
+                                                            //pagination joiner
+                                                            $pagination_joiner .= "$var=$val";
+
+                                                            if ($i < sizeof($data)) {
+                                                                $joiner .= " AND ";
+                                                                $pagination_joiner .= "&";
+                                                            }
+                                                            $i++;
+
+
+
 
                                                     }
 
-                                                   
+
                                                     if ((isset($sa_dag) && !empty($sa_dag)) || (isset($bs_dag) && !empty($bs_dag)) || (isset($sa_khatian) && !empty($sa_khatian)) || (isset($bs_khatian) && !empty($bs_khatian)) || (isset($interest_id) && !empty($interest_id)) || (isset($mouja_id) && !empty($mouja_id)))
                                                     {
                                                         $query_final = "SELECT * FROM dag WHERE " . $joiner . " ORDER BY id DESC LIMIT $offset, $rowsperpage";
 
+                                                        $filtered_all = "SELECT * FROM dag WHERE " . $joiner . " ORDER BY id DESC";
 
-                                                        // var_dump($query_final);
+                                                         //var_dump($query_final);
 
-                                                    }
-
-                                                }
-                                                else
+                                                    }else
                                                 {
-                                                    $query_all = "SELECT * FROM `dag` ORDER BY id DESC";
                                                     $query_final = "SELECT * FROM `dag` ORDER BY id DESC LIMIT $offset, $rowsperpage";
+                                                     $filtered_all = "SELECT * FROM dag";
+                                                    $pagination_joiner ='';
                                                 }
 
                                                 // print($query_final);
 
 
                                                 $result_final = mysqli_query($conn, $query_final);
+                                                $filtered_all_result = mysqli_query($conn, $filtered_all);
                                                 // $info = mysqli_fetch_array($result_final);
 
 
@@ -648,23 +674,22 @@ include 'config.php';
                                                 }
                                                 else
                                                 {
-                                                    echo "<div id='success-alert' class='alert alert-danger   ' >  <button class='close' data-close='alert'></button>
-                                                     কোন সরকারি স্বার্থ খুঁজে পাওয়া যায় নাই।</div>";
+                                                    echo "<div id='success-alert' class='alert alert-danger' >  <button class='close' data-close='alert'></button> কোন সরকারি স্বার্থ খুঁজে পাওয়া যায় নাই।</div>";
 
                                                 }
 
                                                 ?>
 
-
                                                 </tbody>
                                             </table>
 
 
-
-
                                             <?php
-                                            if (mysqli_num_rows($result_final) > 10)
-                                            { ?>
+                                            $pagination_needed = mysqli_num_rows($result_final) > 10;
+                                            if ($pagination_needed)
+                                            {
+
+                                                ?>
 
 
                                                 <div class="paginator">
@@ -681,17 +706,20 @@ include 'config.php';
                                                         if ($currentpage > 1)
                                                         {
                                                             // show << link to go back to page 1
-                                                            echo "<li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=1'> প্রথম পেজ</a></li> ";
+                                                            echo "<li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=1$pagination_joiner'> প্রথম পেজ</a></li> ";
                                                             // get previous page num
                                                             $prevpage = $currentpage - 1;
                                                             // show < link to go back to 1 page
-                                                            echo "<li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=$prevpage'> পূর্ববর্তী পেজ</a></li> ";
+                                                            echo "<li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=$prevpage$pagination_joiner'> পূর্ববর্তী পেজ</a></li> ";
                                                         } // end if
+
+                                                        $total_page = (int)(mysqli_num_rows($filtered_all_result)/$rowsperpage);;
+
                                                         // loop to show links to range of pages around current page
-                                                        for ($x = ($currentpage - $range);$x < (($currentpage + $range) + 1);$x++)
+                                                        for ($x = ($currentpage);$x < (($currentpage + $range) + 1);$x++)
                                                         {
                                                             // if it's a valid page number...
-                                                            if (($x > 0) && ($x <= $totalpages))
+                                                            if (($x > 0) && ($x <= $total_page+1))
                                                             {
                                                                 // if we're on current page...
                                                                 if ($x == $currentpage)
@@ -704,21 +732,23 @@ include 'config.php';
                                                                 else
                                                                 {
                                                                     // make it a link
-                                                                    echo " <li ><a href='{$_SERVER['PHP_SELF']}?currentpage=$x'>$x</a></li> ";
+                                                                    echo " <li ><a href='{$_SERVER['PHP_SELF']}?currentpage=$x$pagination_joiner'>$x</a></li> ";
                                                                 } // end else
 
                                                             } // end if
 
                                                         } // end for
                                                         // if not on last page, show forward and last page links
-                                                        if ($currentpage != $totalpages)
+
+
+                                                        if ($currentpage <= $total_page)
                                                         {
                                                             // get next page
                                                             $nextpage = $currentpage + 1;
                                                             // echo forward link for next page
-                                                            echo " <li class='bangla_text' ><a href='{$_SERVER['PHP_SELF']}?currentpage=$nextpage'>পরবর্তী পেজ</a></li> ";
+                                                            echo " <li class='bangla_text' ><a href='{$_SERVER['PHP_SELF']}?currentpage=$nextpage$pagination_joiner'>পরবর্তী পেজ</a></li> ";
                                                             // echo forward link for lastpage
-                                                            echo " <li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=$totalpages'>সর্বশেষ পেজ</a></li> ";
+                                                            echo " <li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=$total_page$pagination_joiner'>সর্বশেষ পেজ</a></li> ";
                                                         } // end if
                                                         /****** end build pagination links ******/
 
@@ -727,8 +757,8 @@ include 'config.php';
 
                                                     </ul>
                                                     <p>বর্তমান পেজ নং <?php echo $currentpage; ?>,
-                                                        মোট <?php echo $totalpages; ?>-টি পেজের মধ্যে। মোট ২০-টি তথ্য
-                                                        প্রদর্শিত হচ্ছে সর্বমোট <?php echo $numrows; ?>-টির মধ্যে।</p>
+                                                        মোট <?php echo $total_page; ?>-টি পেজের মধ্যে। মোট <?php echo $rowsperpage;?>-টি তথ্য
+                                                        প্রদর্শিত হচ্ছে সর্বমোট <?php echo mysqli_num_rows($filtered_all_result); ?>-টির মধ্যে।</p>
 
                                                 </div>
 
