@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
 <!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo"
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo page-footer-fixed "
       oncontextmenu="return false;">
 <!-- BEGIN HEADER -->
 <!-- BEGIN HEADER -->
@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                                                                      value="<?php echo $info['sa_jl']; ?>"
                                                                                                      required="required"
                                                                                                      maxlength="255"
-                                                                                                     id="sa_jl">
+                                                                                                     id="sa_jl" min="1">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -167,6 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                                                                      value="<?php echo $info['bs_jl']; ?>"
                                                                                                      maxlength="255"
                                                                                                      id="bs_jl"
+                                                                                                     min="1"
                                                                         <?php if ($info['bs_jl'] == null) {
                                                                             echo "readonly=readonly ";
                                                                         }

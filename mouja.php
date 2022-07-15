@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
 <!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo"
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo page-footer-fixed "
       oncontextmenu="return false;">
 <!-- BEGIN HEADER -->
 <!-- BEGIN HEADER -->
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                                                 include 'config.php';
                                                 // get the info from the db
-                                                $query = "SELECT * FROM `mouja` ORDER BY id ASC";
+                                                $query = "SELECT * FROM `mouja` ORDER BY id DESC";
                                                 $result = mysqli_query($conn, $query);
 
                                                 $numrows = mysqli_num_rows($result);
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                 $offset = ($currentpage - 1) * $rowsperpage;
 
                                                 // get the info from the db
-                                                $query_final = "SELECT * FROM `mouja` ORDER BY id ASC LIMIT $offset, $rowsperpage";
+                                                $query_final = "SELECT * FROM `mouja` ORDER BY id DESC LIMIT $offset, $rowsperpage";
 
                                                 $result = mysqli_query($conn, $query_final);
                                                 $numrows = mysqli_num_rows($result);

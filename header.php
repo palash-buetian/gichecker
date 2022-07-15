@@ -10,6 +10,7 @@
 <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="/css/simple-line-icons.min.css" rel="stylesheet" type="text/css">
 <link href="/css/components-rounded.css" id="style_components" rel="stylesheet" type="text/css">
+<link href="/css/select2.min.css" id="style_components" rel="stylesheet" type="text/css">
 
 
 <!-- END GLOBAL MANDATORY STYLES -->

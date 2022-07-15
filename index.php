@@ -26,7 +26,17 @@ $mouja_result = mysqli_query($conn, $mouja_query);
 </head>
 <body class="bg" style="overflow:hidden;">
 <div id="login">
-    <a class="btn" href="/login" >লগ-ইন</a>
+
+<?php
+session_start();
+// Check if the user is logged in, if not then redirect him to login page
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    echo '<a class="btn" href="/login" >লগ-ইন</a>';
+}else {
+echo '<a class="btn" href="/dashboard" >ড্যাশবোর্ড</a>';
+}
+?>
+    
 </div>
 <div class="head_text">
     <a class="logo" href="/">

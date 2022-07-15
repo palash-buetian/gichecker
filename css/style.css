@@ -1103,3 +1103,35 @@ li>a {
 .bangla_text a {
 	font-family: "kalpurushregular" !important;
 }
+
+#comments {
+	font-family: 'kalpurushregular';
+}
+
+#dashboard .form-group input {
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	font-family: boishakhi !important;
+
+}
+#dashboard .form-group input::placeholder {
+	font-family: Kalpurush !important;
+}
+.select2-selection__rendered {
+	line-height: 31px !important;
+	padding-top: 1px;
+}
+.select2-container .select2-selection--single {
+	height: 35px !important;
+	padding-top: 1px;
+}
+.select2-selection__arrow {
+	height: 34px !important;
+	padding-top: 1px;
+}
+
+#dag_search {
+	padding: 5px 24px 5px 20px;
+	border-radius: 5px;
+}
+}

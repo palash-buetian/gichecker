@@ -1,13 +1,8 @@
 <?php
-
 require_once "config.php";
 
-
-
-
 // officer name and designation
-$username =$_SESSION['username'];
-
+$username = $_SESSION['username'];
 
 //office name
 $user_query = "SELECT * FROM `users` WHERE `username`= '$username'";
@@ -63,7 +58,7 @@ $user_info = mysqli_fetch_array($user_result);
                            data-close-others="true">
                             <img alt="" class="img-circle"
                                  src="/images/uploads/<?php echo $user_info['image'] ?>">
-                            <span class="username username-hide-on-mobile"> <?php echo $user_info['officer_name'];?> <br> <?php echo $user_info['officer_designation'];?> , <?php echo  $user_info['office_name']; ?> </span>
+                            <span class="username username-hide-on-mobile"> <?php echo $user_info['officer_name']; ?> <br> <?php echo $user_info['officer_designation']; ?> , <?php echo $user_info['office_name']; ?> </span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default topright">
 

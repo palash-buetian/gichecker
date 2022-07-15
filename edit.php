@@ -83,7 +83,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 <!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
 <!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo"
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo page-footer-fixed "
       oncontextmenu="return false;">
 <!-- BEGIN HEADER -->
 <!-- BEGIN HEADER -->
@@ -146,7 +146,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                           aria-required="true">* </span></label>
                                                                 <div class="col-sm-6">
                                                                     <div class="input select">
-                                                                        <select class="form-control select2 select2-hidden-accessible"
+                                                                        <select class="form-control"
                                                                                 name="mouja_id"
                                                                                 placeholder="মৌজা সিলেক্ট করুন"
                                                                                 required="required" id="mouja_id"
@@ -204,6 +204,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                                                             class="form-control numeric_bangla"
                                                                                                             value="<?php if($info['sa_khatian']!='0'){ echo $info['sa_khatian'];} ?>"
                                                                                                             maxlength="255"
+                                                                                                            min="1"
                                                                                                             id="sa_khatian">
                                                                     </div>
                                                                 </div>
@@ -218,6 +219,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 
                                                                                                             class="form-control numeric_bangla"
                                                                                                             maxlength="255"
+                                                                                                            min="1"
                                                                                                             value="<?php if($info['sa_dag']!='0'){ echo $info['sa_dag'];} ?>"
                                                                                                             id="sa_dag">
                                                                     </div>
@@ -232,6 +234,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 
                                                                                                             class="form-control numeric_bangla"
                                                                                                             maxlength="200"
+                                                                                                      min="1"
                                                                                                             value="<?php if($info['sa_land_amount']!='0'){ echo $info['sa_land_amount'];} ?>"
                                                                                                             id="sa_land_amount">
                                                                     </div>
@@ -254,7 +257,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                           aria-required="true">* </span></label>
                                                                 <div class="col-sm-6">
                                                                     <div class="input select">
-                                                                        <select class="form-control select2 select2-hidden-accessible required"
+                                                                        <select class="form-control"
                                                                                 name="interest_id"
                                                                                 placeholder="সরকারি স্বার্থ সিলেক্ট করুন"
                                                                                 required="required" id="interest_id"
@@ -304,10 +307,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                                                     name="bs_khatian"
                                                                                                     class="form-control user_email numeric_bangla"
                                                                                                     maxlength="100"
+                                                                                               min="1"
                                                                                                     value="<?php if($info['bs_khatian']!='0'){ echo $info['bs_khatian'];} ?>"
                                                                                                     id="bs_khatian"></div>
-                                                                    <div class="email_validation"
-                                                                         style="color: red"></div>
+
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -315,6 +318,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <div class="col-sm-6">
                                                                     <div class="input "><input type="number"
                                                                                                     name="bs_dag"
+                                                                                               min="1"
                                                                                                     class="form-control user_email numeric_bangla"
                                                                                                     maxlength="100"
                                                                                                     value="<?php if($info['bs_dag']!='0'){ echo $info['bs_dag'];} ?>"
@@ -330,7 +334,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                         <input type="number"
                                                                                name="bs_land_amount"
                                                                                step="any"
-
+                                                                               min="1"
                                                                                class="form-control numeric_bangla"
                                                                                data-toggle="tooltip"
                                                                                maxlength="255"

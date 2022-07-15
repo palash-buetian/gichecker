@@ -198,8 +198,9 @@ ob_end_flush(); // Flush the output from the buffer
     $.backstretch([
             "/images/background.jpg"
         ], {
-            fade: 1000,
-            duration: 8000
+            fade: 500,
+            duration: 6000,
+			scale: 'cover'
         }
     );
 </script>

@@ -1,15 +1,13 @@
 <div class="page-footer">
     <div class="page-footer-inner">
-        <a href="http://www.bangladesh.gov.bd/" target="_blank">
-            <img src="https://ldtax.gov.bd/assets/admin/layout4/img/bd.png" alt="">
+        <a href="http://www.sylhet.gov.bd/" target="_blank">
+            <img src="/images/bd.png" alt="">
         </a> <span class="title"> জেলা প্রশাসকের কার্যালয়, সিলেট</span>
-        <!--   <a href="http://www.a2i.pmo.gov.bd/" target="_blank">
-            <img src="https://ldtax.gov.bd/assets/admin/layout4/img/a2i.png" alt=""/>
-                    </a> -->
+
         &nbsp;&nbsp;
     </div>
     <div class="page-footer-inner pull-right">
-        <span class="title">@ পলাশ মন্ডল</span>
+        <a href="https://github.com/palash-buetian/gichecker" target="_blank" class="title">@ পলাশ মন্ডল</a>
 
         &nbsp;&nbsp;
     </div>
@@ -27,7 +25,7 @@
 
 <script src="js/layout.js"></script>
 <script src="js/jquery.cokie.min.js"></script>
-
+<script src="js/select2.min.js"></script>
 <script src="js/main.js"></script>
 
 

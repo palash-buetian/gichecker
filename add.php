@@ -34,7 +34,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 
     $comments =mysqli_real_escape_string($conn,$data['comments']);
 
-    $update_query = "INSERT INTO dag (mouja_id, sa_dag, bs_dag, sa_khatian, sa_land_amount, bs_land_amount, interest_id, comments) VALUES ('$mouja_id', '$sa_dag', '$bs_dag', '$sa_khatian', '$sa_land_amount', '$bs_land_amount','$interest_id', '$comments')";
+    $update_query = "INSERT INTO dag (mouja_id, sa_dag, bs_dag, sa_khatian,bs_khatian, sa_land_amount, bs_land_amount, interest_id, comments) VALUES ('$mouja_id', '$sa_dag', '$bs_dag', '$sa_khatian', '$bs_khatian', '$sa_land_amount', '$bs_land_amount','$interest_id', '$comments')";
 
     //print_r($update_query);
 
@@ -69,7 +69,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 <!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
 <!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo"
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo page-footer-fixed "
       oncontextmenu="return false;">
 <!-- BEGIN HEADER -->
 <!-- BEGIN HEADER -->
@@ -128,7 +128,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                           aria-required="true">* </span></label>
                                                                 <div class="col-sm-6">
                                                                     <div class="input select">
-                                                                        <select class="form-control select2 select2-hidden-accessible"
+                                                                        <select class="form-control"
                                                                                 name="mouja_id"
                                                                                 placeholder="মৌজা সিলেক্ট করুন"
                                                                                 required="required" id="mouja_id"
@@ -160,7 +160,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <div class="col-sm-6">
                                                                     <div class="input number "><input type="number"
                                                                                                       name="sa_khatian"
-
+                                                                                                      min="1"
 
                                                                                                       class="form-control numeric_bangla"
 
@@ -176,7 +176,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                     <div class="input text required"><input type="text"
                                                                                                             name="sa_dag"
 
-
+                                                                                                            min="1"
                                                                                                             class="form-control numeric_bangla"
                                                                                                             maxlength="255"
 
@@ -190,7 +190,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <div class="col-sm-6">
                                                                     <div class="input number "><input type="text"
                                                                                                       name="sa_land_amount"
-
+                                                                                                      min="1"
                                                                                                       class="form-control numeric_bangla"
                                                                                                       maxlength="200"
 
@@ -221,7 +221,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                           aria-required="true">* </span></label>
                                                                 <div class="col-sm-6">
                                                                     <div class="input select">
-                                                                        <select class="form-control select2 select2-hidden-accessible required"
+                                                                        <select class="form-control"
                                                                                 name="interest_id"
                                                                                 placeholder="সরকারি স্বার্থ সিলেক্ট করুন"
                                                                                 required="required" id="interest_id"
@@ -262,7 +262,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                                                name="bs_khatian"
                                                                                                class="form-control numeric_bangla "
                                                                                                maxlength="100"
-
+                                                                                               min="1"
                                                                                                id="bs_khatian"></div>
                                                                     <div class="email_validation"
                                                                          style="color: red"></div>
@@ -273,7 +273,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <div class="col-sm-6">
                                                                     <div class="input "><input type="text"
                                                                                                name="bs_dag"
-
+                                                                                               min="1"
                                                                                                class="form-control numeric_bangla "
                                                                                                maxlength="100"
 
@@ -289,7 +289,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                         <input type="number"
                                                                                name="bs_land_amount"
                                                                                step="any"
-
+                                                                               min="1"
                                                                                class="form-control numeric_bangla"
                                                                                data-toggle="tooltip"
                                                                                maxlength="255"

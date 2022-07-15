@@ -3,7 +3,8 @@
 session_start();
 
 // Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
+{
     header("location: login.php");
     exit;
 }
@@ -11,11 +12,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 //
 //
 //print_r($_SESSION);
+include 'config.php';
+
 ?>
 
 
 
-																			
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <!--
@@ -46,6 +49,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <div class="clearfix"></div>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
+
     <!-- BEGIN SIDEBAR -->
     <?php include 'sidebar.php'; ?>
     <!-- END SIDEBAR -->
@@ -57,16 +61,18 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="col-md-12">
 
 
-                    <?php if (isset($_SESSION['success_message']) && !empty($_SESSION['success_message'])) { ?>
+                    <?php if (isset($_SESSION['success_message']) && !empty($_SESSION['success_message']))
+                    { ?>
                         <div id="success-alert" class="alert alert-success message success">
                             <button class="close" data-close="alert"></button>
-                        <?php echo $_SESSION['success_message']; ?>
-                    </div>
-                    <?php unset($_SESSION['success_message']);
+                            <?php echo $_SESSION['success_message']; ?>
+                        </div>
+                        <?php unset($_SESSION['success_message']);
                     }
                     ?>
 
-                    <?php if (isset($_SESSION['error_message']) && !empty($_SESSION['error_message'])) { ?>
+                    <?php if (isset($_SESSION['error_message']) && !empty($_SESSION['error_message']))
+                    { ?>
                         <div id="success-alert" class="alert alert-danger message danger">
                             <button class="close" data-close="alert"></button>
                             <?php echo $_SESSION['error_message']; ?>
@@ -93,6 +99,99 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="dashboard-stat blue-madison">
+                                        <div class="visual">
+
+                                        </div>
+                                        <div class="details">
+                                            <div class="number numeric_bangla">
+                                                <?php
+                                                $query = "SELECT * FROM `dag`";
+                                                $result = mysqli_query($conn, $query);
+
+                                                $numrows = mysqli_num_rows($result);
+                                                echo $numrows;
+                                                ?>
+                                            </div>
+                                            <div class="desc">
+                                                এন্ট্রিকৃত সরকারি স্বার্থের তথ্য সংখ্যা
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="dashboard-stat purple-soft">
+                                        <div class="visual">
+
+                                        </div>
+                                        <div class="details">
+                                            <div class="number numeric_bangla">
+                                                <?php
+                                                $query_mouja = "SELECT * FROM `mouja`";
+                                                $result_mouja = mysqli_query($conn, $query_mouja);
+
+                                                $numrows_mouja = mysqli_num_rows($result_mouja);
+                                                echo $numrows_mouja;
+
+                                                ?>
+                                            </div>
+                                            <div class="desc">
+                                                এন্ট্রিকৃত মোট মৌজা সংখ্যা
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="dashboard-stat green-soft">
+                                        <div class="visual">
+
+                                        </div>
+                                        <div class="details">
+                                            <div class="number numeric_bangla">
+                                                <?php
+                                                $query_interest = "SELECT * FROM `interest`";
+                                                $result_interest = mysqli_query($conn, $query_interest);
+
+                                                $numrows_interest = mysqli_num_rows($result_interest);
+                                                echo $numrows_interest;
+
+                                                ?>                  </div>
+                                            <div class="desc">
+                                                এন্ট্রিকৃত সরকারি স্বার্থের ধরণ
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div class="dashboard-stat red-soft">
+                                        <div class="visual">
+
+                                        </div>
+                                        <div class="details">
+                                            <div class="number numeric_bangla">
+                                                <?php
+                                                $query_sa_count = "SELECT COUNT(DISTINCT mouja_id, sa_dag)+COUNT(DISTINCT mouja_id,bs_dag) AS sa FROM `dag`";
+
+                                                $result_interest = mysqli_query($conn, $query_sa_count);
+                                                $result = mysqli_fetch_array($result_interest);
+
+                                                echo $result['sa'];
+
+                                                ?>
+                                            </div>
+                                            <div class="desc">
+                                                এন্ট্রিকৃত মোট এসএ ও বিএস দাগের সংখ্যা
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -103,7 +202,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         </div>
                                     </div>
                                     <div class="portlet-body" >
-                                        <div style="font-size: 32px;text-align: center;margin: 20px;margin-bottom: 0px;">
+                                        <div style="font-size: 16px;text-align: center;margin: 20px;margin-bottom: 0px;">
                                             <div class="col-sm-13">
 
                                                 <form id="dashboard" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -144,33 +243,33 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                             <div class="form-group">
                                                                 <div class=" input select">
                                                                     <div id="container_mouja_id" class="">
-                                                                        <select class="form-control select2 select2-hidden-accessible"
+                                                                        <select class="form-control  "
                                                                                 name="mouja_id"
                                                                                 placeholder="মৌজা সিলেক্ট করুন"
                                                                                 id="mouja_id"
                                                                                 tabindex="-1" aria-hidden="true">
                                                                             <?php
-                                                                            if (isset($_REQUEST["mouja_id"])) {
+                                                                            if (isset($_REQUEST["mouja_id"]))
+                                                                            {
                                                                                 $mouja_id = (int)$_REQUEST["mouja_id"];
-                                                                            } else {
+                                                                            }
+                                                                            else
+                                                                            {
                                                                                 $mouja_id = 0;
                                                                             }
-
 
                                                                             ?>
                                                                             <option value="0">মৌজা সিলেক্ট করুন</option>
                                                                             <?php
-                                                                            include 'config.php';
                                                                             // get the info from the db
                                                                             $query = "SELECT * FROM `mouja` ORDER BY id ASC";
                                                                             $result = mysqli_query($conn, $query);
 
                                                                             $numrows = mysqli_num_rows($result);
 
-
-                                                                           // print($numrows);
-
-                                                                            while ($info = mysqli_fetch_array($result)) {
+                                                                            // print($numrows);
+                                                                            while ($info = mysqli_fetch_array($result))
+                                                                            {
 
                                                                                 echo '<option value="';
                                                                                 echo $info['id'];
@@ -187,19 +286,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 
                                                                         </select>
-                                                                        <span class="select2 select2-container select2-container--default select2-container--below"
-                                                                              dir="ltr" style="width: 183px;">
-                                          <span class="selection">
-                                            <span class="select2-selection select2-selection--single" role="combobox"
-                                                  aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                                  aria-labelledby="select2-mouja_id-container">
-                                              <span class="select2-selection__arrow" role="presentation">
-                                                <b role="presentation"></b>
-                                              </span>
-                                            </span>
-                                          </span>
-                                          <span class="dropdown-wrapper" aria-hidden="true"></span>
-                                        </span>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -209,45 +296,47 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                             <div class="form-group">
                                                                 <div class=" input select">
                                                                     <div id="container_mouja_id" class="">
-                                                                        <select class="form-control select2 select2-hidden-accessible"
+                                                                        <select class="form-control "
                                                                                 name="interest_id"
                                                                                 placeholder="সরকারি স্বার্থ সিলেক্ট করুন"
-                                                                                 id="interest_id"
+                                                                                id="interest_id"
                                                                                 tabindex="-1" aria-hidden="true">
 
 
-                                                                         
+
                                                                             <option value="">সরকারি স্বার্থ সিলেক্ট
                                                                                 করুন  </option>
 
-                                                                           <?php
-																		   
-																		   
-																		   if (isset($_REQUEST["interest_id"])) {
-																				$interest_id = (int)$_REQUEST["interest_id"];
-																			} else {
-																				$interest_id = 0;
-}
+                                                                            <?php
 
-																			//print_r($interest_id);
-																			
+                                                                            if (isset($_REQUEST["interest_id"]))
+                                                                            {
+                                                                                $interest_id = (int)$_REQUEST["interest_id"];
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                $interest_id = 0;
+                                                                            }
+
+                                                                            //print_r($interest_id);
                                                                             // get the info from the db
                                                                             $interest_query = "SELECT * FROM `interest` ORDER BY `interest_id` ASC";
                                                                             $interest_result = mysqli_query($conn, $interest_query);
 
-                                                                            $interest_rows =mysqli_num_rows($interest_result);
+                                                                            $interest_rows = mysqli_num_rows($interest_result);
 
-                                                                            
-
-                                                                            while ($interest_info = mysqli_fetch_array($interest_result)) {
+                                                                            while ($interest_info = mysqli_fetch_array($interest_result))
+                                                                            {
 
                                                                                 echo '<option value="';
                                                                                 echo $interest_info['interest_id'];
                                                                                 echo '"';
 
-																				if($interest_id!=0 & $interest_id == $interest_info['interest_id']){
-                                                                                 echo ' selected="selected"';}
-																				
+                                                                                if ($interest_id != 0 & $interest_id == $interest_info['interest_id'])
+                                                                                {
+                                                                                    echo ' selected="selected"';
+                                                                                }
+
                                                                                 echo '>';
                                                                                 echo $interest_info['interest_name'];
                                                                                 echo '</option>';
@@ -257,19 +346,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                                         </select>
 
 
-                                                                        <span class="select2 select2-container select2-container--default select2-container--below"
-                                                                              dir="ltr" style="width: 183px;">
-                                          <span class="selection">
-                                            <span class="select2-selection select2-selection--single" role="combobox"
-                                                  aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                                  aria-labelledby="select2-mouja_id-container">
-                                              <span class="select2-selection__arrow" role="presentation">
-                                                <b role="presentation"></b>
-                                              </span>
-                                            </span>
-                                          </span>
-                                          <span class="dropdown-wrapper" aria-hidden="true"></span>
-                                        </span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -277,7 +353,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
                                                                 <div>
-                                                                    <button type="submit" name="submit"
+                                                                    <button id="dag_search" type="submit" name="submit"
                                                                             id="submit" class="btn btn-primary">
                                                                         <i class="fa fa-fw fa-search"></i> অনুসন্ধান
                                                                     </button>
@@ -352,34 +428,38 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                 $totalpages = ceil($numrows / $rowsperpage);
 
                                                 // get the current page or set a default
-                                                if (isset($_GET['currentpage']) && is_numeric($_GET['currentpage'])) {
+                                                if (isset($_GET['currentpage']) && is_numeric($_GET['currentpage']))
+                                                {
                                                     // cast var as int
                                                     $currentpage = (int)$_GET['currentpage'];
-                                                } else {
+                                                }
+                                                else
+                                                {
                                                     // default page num
                                                     $currentpage = 1;
                                                 } // end if
 
 
                                                 // if current page is greater than total pages...
-                                                if ($currentpage > $totalpages) {
+                                                if ($currentpage > $totalpages)
+                                                {
                                                     // set current page to last page
                                                     $currentpage = $totalpages;
                                                 } // end if
                                                 // if current page is less than first page...
-                                                if ($currentpage < 1) {
+                                                if ($currentpage < 1)
+                                                {
                                                     // set current page to first page
                                                     $currentpage = 1;
                                                 } // end if
-
                                                 // the offset of the list, based on current page
                                                 $offset = ($currentpage - 1) * $rowsperpage;
 
                                                 // get the info from the db
                                                 $query_final = "SELECT * FROM `dag` ORDER BY id DESC LIMIT $offset, $rowsperpage";
 
-
-                                                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                                                if ($_SERVER['REQUEST_METHOD'] == 'POST')
+                                                {
 
                                                     // Include config file
                                                     $sa_dag = $_POST['sa_dag'];
@@ -389,36 +469,31 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     $mouja_id = $_POST['mouja_id'];
                                                     $interest_id = $_POST['interest_id'];
 
-
-
-
                                                     $data = array_filter($_POST);
-
 
                                                     $joiner = '';
                                                     $i = 1;
-                                                    foreach ($data as $var=>$val){
-												
-															$joiner .= "$var=$val";
+                                                    foreach ($data as $var => $val)
+                                                    {
 
-                                                        if($i<sizeof($data))
-                                                            $joiner .= " AND ";
+                                                        $joiner .= "$var=$val";
+
+                                                        if ($i < sizeof($data)) $joiner .= " AND ";
                                                         $i++;
-														
+
                                                     }
 
+                                                    if ((isset($sa_dag) && !empty($sa_dag)) || (isset($bs_dag) && !empty($bs_dag)) || (isset($sa_khatian) && !empty($sa_khatian)) || (isset($bs_khatian) && !empty($bs_khatian)) || (isset($interest_id) && !empty($interest_id)) || (isset($mouja_id) && !empty($mouja_id)))
+                                                    {
+                                                        $query_final = "SELECT * FROM dag WHERE " . $joiner . " ORDER BY id DESC LIMIT $offset, $rowsperpage";
 
-                                                    if((isset($sa_dag) && !empty($sa_dag)) || (isset($bs_dag) && !empty($bs_dag)) || (isset($sa_khatian) && !empty($sa_khatian)) || (isset($bs_khatian) && !empty($bs_khatian)) || (isset($interest_id) && !empty($interest_id)) || (isset($mouja_id) && !empty($mouja_id))){
-                                                        $query_final = "SELECT * FROM dag WHERE ".$joiner." ORDER BY id DESC LIMIT $offset, $rowsperpage";
+                                                        // var_dump($query_final);
 
-                                                       // var_dump($query_final);
                                                     }
 
-
-
-
-
-                                                } else {
+                                                }
+                                                else
+                                                {
 
                                                     $query_final = "SELECT * FROM `dag` ORDER BY id DESC LIMIT $offset, $rowsperpage";
                                                 }
@@ -430,24 +505,23 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                 // $info = mysqli_fetch_array($result_final);
 
 
-                                               // var_dump($query_final);
-                                                if (mysqli_num_rows($result_final) > 0) {
+                                                // var_dump($query_final);
+                                                if (mysqli_num_rows($result_final) > 0)
+                                                {
                                                     $i = 1;
-                                                    while ($info = mysqli_fetch_array($result_final)) {
+                                                    while ($info = mysqli_fetch_array($result_final))
+                                                    {
                                                         //var_dump($info);
-
                                                         $mouja_query = "SELECT * FROM `mouja` WHERE id ={$info['mouja_id']}";
 
                                                         $mouja_result = mysqli_query($conn, $mouja_query);
                                                         $mouja_info = mysqli_fetch_array($mouja_result);
 
                                                         //var_dump($mouja_info);
-
                                                         $interest_query = "SELECT * FROM `interest` WHERE interest_id ={$info['interest_id']}";
 
                                                         $interest_result = mysqli_query($conn, $interest_query);
                                                         $interest_info = mysqli_fetch_array($interest_result);
-
 
                                                         ?>
 
@@ -464,12 +538,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                             <!-- SA jl -->
                                                             <td style="text-align: center;"
                                                                 class="numeric_bangla"> <?php echo $mouja_info['sa_jl']; ?></td>
-                                                           <!-- bs jl -->
+                                                            <!-- bs jl -->
                                                             <td style="text-align: center;"
                                                             <?php
-                                                            if ($mouja_info['bs_jl'] == null || $mouja_info['bs_jl'] == '0') {
+                                                            if ($mouja_info['bs_jl'] == null || $mouja_info['bs_jl'] == '0')
+                                                            {
                                                                 echo '>  অপ্রকাশিত';
-                                                            } else {
+                                                            }
+                                                            else
+                                                            {
                                                                 echo ' class="numeric_bangla">' . $mouja_info['bs_jl'];
                                                             }
                                                             echo '</td>';
@@ -483,10 +560,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                             <td style="text-align: center"
 
                                                             <?php
-                                                            if ($mouja_info['bs_jl'] == null || $mouja_info['bs_jl'] == '0') {
+                                                            if ($mouja_info['bs_jl'] == null || $mouja_info['bs_jl'] == '0')
+                                                            {
                                                                 echo '> অপ্রকাশিত';
-                                                            } else {
-                                                            echo $info['bs_dag'] == 0 ? ">অজানা" : ' class="numeric_bangla">' . $info['bs_dag'];
+                                                            }
+                                                            else
+                                                            {
+                                                                echo $info['bs_dag'] == 0 ? ">অজানা" : ' class="numeric_bangla">' . $info['bs_dag'];
                                                             }
                                                             echo '</td>';
                                                             ?>
@@ -525,34 +605,34 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                                 <div class="modal-dialog modal-confirm">
                                                                     <div class="modal-content">
                                                                         <form action="delete_data.php" method="GET">
-                                                                        <div class="modal-header flex-column">
-                                                                            <div class="icon-box">
-                                                                                <i class="fa fw fa-trash"></i>
+                                                                            <div class="modal-header flex-column">
+                                                                                <div class="icon-box">
+                                                                                    <i class="fa fw fa-trash"></i>
+                                                                                </div>
+                                                                                <h4 class="modal-title w-100">আপনি কি
+                                                                                    নিশ্চিত?</h4>
+                                                                                <button type="button" class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-hidden="true">&times;
+                                                                                </button>
                                                                             </div>
-                                                                            <h4 class="modal-title w-100">আপনি কি
-                                                                                নিশ্চিত?</h4>
-                                                                            <button type="button" class="close"
-                                                                                    data-dismiss="modal"
-                                                                                    aria-hidden="true">&times;
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body bangla_text">
-                                                                            <p>আপনি কি এই রেকর্ড ডিলিট করার বিষয়ে
-                                                                                নিশ্চিত ? এটা ডিলিট করলে রেকর্ডটি আর
-                                                                                ফেরত পাওয়া যাবে না।.</p>
-                                                                        </div>
-                                                                        <div class="modal-footer justify-content-center">
-                                                                            <!-- add a hidden input field to store ID for next step -->
-                                                                            <input type="hidden" name="id" value="<?php echo $info['id']; ?>" />
-                                                                            <button type="button"
-                                                                                    class="btn btn-secondary"
-                                                                                    data-dismiss="modal">না, ফেরত যান
-                                                                            </button>
-                                                                            <button  type="submit"
-                                                                                    class="btn btn-danger">হ্যাঁ, ডিলিট
-                                                                                করুন
-                                                                            </button>
-                                                                        </div>
+                                                                            <div class="modal-body bangla_text">
+                                                                                <p>আপনি কি এই রেকর্ড ডিলিট করার বিষয়ে
+                                                                                    নিশ্চিত ? এটা ডিলিট করলে রেকর্ডটি আর
+                                                                                    ফেরত পাওয়া যাবে না।</p>
+                                                                            </div>
+                                                                            <div class="modal-footer justify-content-center">
+                                                                                <!-- add a hidden input field to store ID for next step -->
+                                                                                <input type="hidden" name="id" value="<?php echo $info['id']; ?>" />
+                                                                                <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-dismiss="modal">না, ফেরত যান
+                                                                                </button>
+                                                                                <button  type="submit"
+                                                                                         class="btn btn-danger">হ্যাঁ, ডিলিট
+                                                                                    করুন
+                                                                                </button>
+                                                                            </div>
                                                                         </form>
                                                                     </div>
                                                                 </div>
@@ -562,7 +642,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                         <?php
                                                         $i++;
                                                     }
-                                                } else {
+                                                }
+                                                else
+                                                {
                                                     echo "<div id='success-alert' class='alert alert-danger   ' >  <button class='close' data-close='alert'></button>
                                                      কোন সরকারি স্বার্থ খুঁজে পাওয়া যায় নাই।</div>";
 
@@ -578,69 +660,77 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 
                                             <?php
-                                            if (mysqli_num_rows($result_final) > 10) { ?>
+                                            if (mysqli_num_rows($result_final) > 10)
+                                            { ?>
 
 
-                                            <div class="paginator">
-                                                <ul class="pagination">
+                                                <div class="paginator">
+                                                    <ul class="pagination">
 
 
-                                                    <?php
+                                                        <?php
 
+                                                        /******  build the pagination links ******/
+                                                        // range of num links to show
+                                                        $range = 9;
 
-                                                    /******  build the pagination links ******/
-                                                    // range of num links to show
-                                                    $range = 9;
-
-                                                    // if not on page 1, don't show back links
-                                                    if ($currentpage > 1) {
-                                                        // show << link to go back to page 1
-                                                        echo "<li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=1'> প্রথম পেজ</a></li> ";
-                                                        // get previous page num
-                                                        $prevpage = $currentpage - 1;
-                                                        // show < link to go back to 1 page
-                                                        echo "<li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=$prevpage'> পূর্ববর্তী পেজ</a></li> ";
-                                                    } // end if
-
-                                                    // loop to show links to range of pages around current page
-                                                    for ($x = ($currentpage - $range); $x < (($currentpage + $range) + 1); $x++) {
-                                                        // if it's a valid page number...
-                                                        if (($x > 0) && ($x <= $totalpages)) {
-                                                            // if we're on current page...
-                                                            if ($x == $currentpage) {
-                                                                // 'highlight' it but don't make a link
-                                                                echo " <li class='numeric_bangla active'><a href>$x</a></li> ";
-                                                                // if not current page...
-                                                            } else {
-                                                                // make it a link
-                                                                echo " <li ><a href='{$_SERVER['PHP_SELF']}?currentpage=$x'>$x</a></li> ";
-                                                            } // end else
+                                                        // if not on page 1, don't show back links
+                                                        if ($currentpage > 1)
+                                                        {
+                                                            // show << link to go back to page 1
+                                                            echo "<li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=1'> প্রথম পেজ</a></li> ";
+                                                            // get previous page num
+                                                            $prevpage = $currentpage - 1;
+                                                            // show < link to go back to 1 page
+                                                            echo "<li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=$prevpage'> পূর্ববর্তী পেজ</a></li> ";
                                                         } // end if
-                                                    } // end for
+                                                        // loop to show links to range of pages around current page
+                                                        for ($x = ($currentpage - $range);$x < (($currentpage + $range) + 1);$x++)
+                                                        {
+                                                            // if it's a valid page number...
+                                                            if (($x > 0) && ($x <= $totalpages))
+                                                            {
+                                                                // if we're on current page...
+                                                                if ($x == $currentpage)
+                                                                {
+                                                                    // 'highlight' it but don't make a link
+                                                                    echo " <li class='numeric_bangla active'><a href>$x</a></li> ";
+                                                                    // if not current page...
 
-                                                    // if not on last page, show forward and last page links
-                                                    if ($currentpage != $totalpages) {
-                                                        // get next page
-                                                        $nextpage = $currentpage + 1;
-                                                        // echo forward link for next page
-                                                        echo " <li class='bangla_text' ><a href='{$_SERVER['PHP_SELF']}?currentpage=$nextpage'>পরবর্তী পেজ</a></li> ";
-                                                        // echo forward link for lastpage
-                                                        echo " <li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=$totalpages'>সর্বশেষ পেজ</a></li> ";
-                                                    } // end if
-                                                    /****** end build pagination links ******/
+                                                                }
+                                                                else
+                                                                {
+                                                                    // make it a link
+                                                                    echo " <li ><a href='{$_SERVER['PHP_SELF']}?currentpage=$x'>$x</a></li> ";
+                                                                } // end else
 
-                                                    ?>
+                                                            } // end if
+
+                                                        } // end for
+                                                        // if not on last page, show forward and last page links
+                                                        if ($currentpage != $totalpages)
+                                                        {
+                                                            // get next page
+                                                            $nextpage = $currentpage + 1;
+                                                            // echo forward link for next page
+                                                            echo " <li class='bangla_text' ><a href='{$_SERVER['PHP_SELF']}?currentpage=$nextpage'>পরবর্তী পেজ</a></li> ";
+                                                            // echo forward link for lastpage
+                                                            echo " <li class='bangla_text'><a href='{$_SERVER['PHP_SELF']}?currentpage=$totalpages'>সর্বশেষ পেজ</a></li> ";
+                                                        } // end if
+                                                        /****** end build pagination links ******/
+
+                                                        ?>
 
 
-                                                </ul>
-                                                <p>বর্তমান পেজ নং <?php echo $currentpage; ?>,
-                                                    মোট <?php echo $totalpages; ?>-টি পেজের মধ্যে। মোট ২০-টি তথ্য
-                                                    প্রদর্শিত হচ্ছে সর্বমোট <?php echo $numrows; ?>-টির মধ্যে।</p>
+                                                    </ul>
+                                                    <p>বর্তমান পেজ নং <?php echo $currentpage; ?>,
+                                                        মোট <?php echo $totalpages; ?>-টি পেজের মধ্যে। মোট ২০-টি তথ্য
+                                                        প্রদর্শিত হচ্ছে সর্বমোট <?php echo $numrows; ?>-টির মধ্যে।</p>
 
-                                            </div>
+                                                </div>
 
 
-                                            <?php
+                                                <?php
                                             }
                                             ?>
 

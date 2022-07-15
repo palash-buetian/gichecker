@@ -3,6 +3,15 @@
 
 $(document).ready(function () {
 
+
+
+	$("#mouja_id").select2();
+	$("#interest_id").select2();
+
+
+
+
+
 	//convert bangla to eng
 
 
@@ -126,12 +135,22 @@ $(document).ready(function () {
 		}
 
 
-	// for both edit and add page
+	});
+
+// mouja add/edit page
+	$("#bs_jl_unpublished").on("change",function(){
+
+		if(this.checked) {
+			$("#bs_jl").attr("readonly","readonly");
+			$("#bs_jl").val("");
+		}else{
+
+			$("#bs_jl").removeAttr("readonly");
+			$("#bs_jl").attr("required","required");
+		}
 
 
 	});
-
-
 
 	$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
 		$("#success-alert").slideUp(500);

@@ -68,7 +68,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 <!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
 <!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
 <!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
-<body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo"
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo page-footer-fixed "
       oncontextmenu="return false;">
 <!-- BEGIN HEADER -->
 <!-- BEGIN HEADER -->
@@ -114,7 +114,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 
                                             <form enctype="multipart/form-data" method="POST"  accept-charset="utf-8"
                                                   class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'];?>">
-                                                <div style="display:none;"><input type="hidden" name="_method"
+                                                <div style="display:none;"><input type="hidden" name="_method" id="add_edit"
                                                                                   value="POST"></div>
 
 
@@ -131,6 +131,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                                                name="mouja_name"
                                                                                                class="form-control"
                                                                                                value=""
+
                                                                                                required="required"
                                                                                                maxlength="255"
                                                                                                id="mouja_name">
@@ -146,6 +147,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                                                      name="sa_jl"
                                                                                                      class="form-control numeric_bangla"
                                                                                                      value=""
+                                                                                                     min="1"
                                                                                                      required="required"
                                                                                                      maxlength="255"
                                                                                                      id="sa_jl">
@@ -161,9 +163,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                                                      name="bs_jl"
                                                                                                      class="form-control numeric_bangla"
                                                                                                      value=""
-                                                                                                     maxlength="255"
-                                                                                                     id="bs_jl"
                                                                                                      required="required"
+                                                                                                     min="1"
+                                                                                                     maxlength="255"
+                                                                                                     id="bs_jl">
+
 
                                                                     </div>
                                                                 </div>

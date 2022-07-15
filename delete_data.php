@@ -2,9 +2,11 @@
 
 // Include config file
 require_once "config.php";
+ob_start(); // Initiate the output buffer
 
 // Initialize the session
 session_start();
+
 
 //print_r($_SESSION);
 
@@ -21,7 +23,7 @@ if (isset($_GET["id"])) {
 
     $delete_query = "DELETE FROM dag WHERE id = '{$id}'";
 
-    print_r($delete_query);
+    //print_r($delete_query);
 
     if ($conn->query($delete_query) === TRUE) {
         $_SESSION['success_message'] = "এই দাগের তথ্য সফলভাবে মুছে দেয়া হয়েছে।";
@@ -32,4 +34,6 @@ if (isset($_GET["id"])) {
     $conn->close();
     header("location: dashboard.php");
     exit;
+	
 }
+ob_end_flush(); // Flush the output from the buffer
