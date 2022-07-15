@@ -423,7 +423,7 @@ include 'config.php';
                                                 $numrows = mysqli_num_rows($result);
 
                                                 // number of rows to show per page
-                                                $rowsperpage = 10;
+                                                $rowsperpage = 11;
                                                 // find out total pages
                                                 $totalpages = ceil($numrows / $rowsperpage);
 
@@ -458,6 +458,7 @@ include 'config.php';
                                                 // get the info from the db
                                                 $query_final = "SELECT * FROM `dag` ORDER BY id DESC LIMIT $offset, $rowsperpage";
 
+
                                                 if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                                 {
 
@@ -483,9 +484,11 @@ include 'config.php';
 
                                                     }
 
+                                                   
                                                     if ((isset($sa_dag) && !empty($sa_dag)) || (isset($bs_dag) && !empty($bs_dag)) || (isset($sa_khatian) && !empty($sa_khatian)) || (isset($bs_khatian) && !empty($bs_khatian)) || (isset($interest_id) && !empty($interest_id)) || (isset($mouja_id) && !empty($mouja_id)))
                                                     {
                                                         $query_final = "SELECT * FROM dag WHERE " . $joiner . " ORDER BY id DESC LIMIT $offset, $rowsperpage";
+
 
                                                         // var_dump($query_final);
 
@@ -494,11 +497,11 @@ include 'config.php';
                                                 }
                                                 else
                                                 {
-
+                                                    $query_all = "SELECT * FROM `dag` ORDER BY id DESC";
                                                     $query_final = "SELECT * FROM `dag` ORDER BY id DESC LIMIT $offset, $rowsperpage";
                                                 }
 
-                                                // print($query);
+                                                // print($query_final);
 
 
                                                 $result_final = mysqli_query($conn, $query_final);

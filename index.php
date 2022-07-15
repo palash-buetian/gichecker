@@ -1,6 +1,7 @@
 <?php
 require_once "config.php";
-
+ob_start();
+session_start();
 $query1 = "SELECT * FROM `users` WHERE `username`= 'admin' LIMIT 1";
 $result2 = mysqli_query($conn, $query1);
 $info2 = mysqli_fetch_array($result2);
@@ -28,13 +29,15 @@ $mouja_result = mysqli_query($conn, $mouja_query);
 <div id="login">
 
 <?php
-session_start();
+
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     echo '<a class="btn" href="/login" >লগ-ইন</a>';
 }else {
 echo '<a class="btn" href="/dashboard" >ড্যাশবোর্ড</a>';
 }
+
+ob_flush();
 ?>
     
 </div>
