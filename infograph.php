@@ -3,8 +3,7 @@
 session_start();
 
 // Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
-{
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: login.php");
     exit;
 }
@@ -15,8 +14,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
 include 'config.php';
 
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -61,16 +58,13 @@ include 'config.php';
                 <div class="col-md-12">
 
 
-
-
-
                     <div id="ajax-content">
                         <div class="page-head">
                             <div class="row" style="margin-bottom: 15px;">
                                 <div class="col-md-12"></div>
                                 <div class="col-md-6">
                                     <div class="page-title">
-                                        <h2 style="margin-top: 0px;"> ড্যাশবোর্ডে স্বাগতম!</h2>
+                                        <h2 style="margin-top: 0px;">গ্রাফিক্যাল ড্যাশবোর্ডে স্বাগতম!</h2>
                                     </div>
                                 </div>
 
@@ -110,6 +104,7 @@ include 'config.php';
                                                 $result_mouja = mysqli_query($conn, $query_mouja);
 
                                                 $numrows_mouja = mysqli_num_rows($result_mouja);
+
                                                 echo $numrows_mouja;
 
                                                 ?>
@@ -167,95 +162,165 @@ include 'config.php';
                             </div>
 
 
-
                         </div>
 
                         <!-- END PAGE CONTENT INNER -->
 
-                        <?php
-                        $mouja_info  = mysqli_fetch_array($result_mouja);
+                        <div class="row">
 
-                        print_r($mouja_info);
-                        ?>
-                        <div class="indexPart5"><div class="row" style="margin-top: 20px;">
-                                <div class="admin_group col-lg-3 col-md-3 col-sm-6 col-xs-12" style="margin-bottom:20px;">
-                                    <div class="admin dashboard-stat red-soft" href="#" style="height: 215px !important;">
+                            <script src="https://code.highcharts.com/highcharts.js"></script>
+                            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                            <script src="https://code.highcharts.com/modules/export-data.js"></script>
+                            <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+                            <figure class="highcharts-figure">
+                                <div id="container"></div>
+
+                            </figure>
+
+
+                        </div>
+
+
+                        <div class="indexPart5">
+                            <div class="row"
+                            ">
+
+
+                            <?php
+                            $query_mouja = "SELECT * FROM `mouja`";
+                            $result_mouja = mysqli_query($conn, $query_mouja);
+
+                            $mouja_names = $mouja_entries = [];
+                            while ($info = mysqli_fetch_array($result_mouja)) {
+
+
+
+                                $dag_query = "SELECT * FROM `dag` WHERE mouja_id ={$info['id']}";
+
+                                $dag_result = mysqli_query($conn, $dag_query);
+                                $dag_info = mysqli_num_rows($dag_result);
+
+                                array_push($mouja_names, $info['name']);
+                                array_push($mouja_entries, $dag_info);
+
+                                ?>
+                                <div class="admin_group col-lg-3 col-md-3 col-sm-6 col-xs-12"
+                                     style="height: 120px !important;">
+                                    <div class="admin dashboard-stat <?php
+                                    if ($info['id'] % 2 == 0) {
+                                        echo 'red-soft';
+                                    } else echo 'blue-madison'
+                                    ?>" href="#">
                                         <div class="visual">
                                             <i class="fa fa-globe"></i>
                                         </div>
                                         <div class="details">
                                             <div class="division_stat">
-                                                <h3><span>হবিনন্দী</span></h3>
+                                                <h3><span>
+                                                      <?php echo $info['name']; ?>
+                                                    </span></h3>
                                             </div>
-                                            <div class="description" style="font-size: 12px;">
-                                                <table class="report-table" style="font-size: 11px !important;">
-                                                    <tbody>
-                                                    <tr>
-                                                        <th class="text-left">টার্গেট হোল্ডিং</th>
-                                                        <td class="sub-mark">:</td>
-                                                        <td class="text-left  input_bangla">0</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="text-left">এন্ট্রিকৃত হোল্ডিং</th>
-                                                        <td class="sub-mark">:</td>
-                                                        <td class="text-left  input_bangla">910</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="text-left">অনুমোদিত হোল্ডিং</th>
-                                                        <td class="sub-mark">:</td>
-                                                        <td class="text-left  input_bangla">908</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <th class="text-left">অপেক্ষমান হোল্ডিং</th>
-                                                        <td class="sub-mark">:</td>
-                                                        <td class="text-left  input_bangla">2</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <th class="text-left">মোট দাবি</th>
-                                                        <td class="sub-mark">:</td>
-                                                        <td class="text-left input_bangla">7552622</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <th class="text-left">মোট আদায়</th>
-                                                        <td class="sub-mark">:</td>
-                                                        <td class="text-left input_bangla">172898.00</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <th class="text-left">মোট বকেয়া</th>
-                                                        <td class="sub-mark">:</td>
-                                                        <td class="text-left input_bangla">7379724</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                            <div class="description" style="font-size: 15px;">
+                                                <div>মোট <span class="numeric_bangla"> <?php echo $dag_info; ?> </span>টি
+                                                    দাগের তথ্য
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
+                                <?php
+                            }
+
+                            $mouja_names = "'" . implode ( "', '", $mouja_names ) . "'";
+                            $mouja_entries = implode ( ", ", $mouja_entries );
+                            ?>
 
 
-
-
-
-
-
-
-
-                            </div> </div>
-                        <!-- END PAGE CONTENT INNER -->
-                        <!-- END PAGE CONTENT INNER -->
+                        </div>
                     </div>
+
+
+                    <!-- END PAGE CONTENT INNER -->
+                    <!-- END PAGE CONTENT INNER -->
                 </div>
             </div>
         </div>
     </div>
-    <!-- END CONTENT -->
+</div>
+<!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
+
+
+<script>
+    Highcharts.chart('container', {
+        chart: {
+            type: 'bar'
+        },
+        style: {
+            filter:'alpha(opacity=10)',
+            opacity:10,
+            background:'transparent',
+            fontFamily: 'kalpurushregular !important',
+        },
+        title: {
+            text: 'মৌজাভিত্তিক মোট সরকারি স্বার্থ সম্পর্কিত দাগের সংখ্যার তুলনামূলক চিত্র'
+        },
+        xAxis: {
+            categories: [<?php  echo $mouja_names; ?>],
+            title: {
+                text: null
+            }
+        },
+        series: [{
+            name: 'এন্ট্রির সংখ্যা',
+            data: [<?php echo $mouja_entries;?>]
+        }],
+
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'এন্ট্রিকৃত এসএ অথবা বিএস দাগের সংখ্যা',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' টি'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 80,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor:
+                Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+
+    });
+</script>
+
+
 <?php include 'footer.php'; ?>
 <!-- END FOOTER -->
 
