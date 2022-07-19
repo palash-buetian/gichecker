@@ -197,7 +197,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <label class="col-sm-4 control-label">এসএ খতিয়ান নম্বর
                                                                 </label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input number "><input type="number"
+                                                                    <div class="input number "><input type="text"
                                                                                                             name="sa_khatian"
 
 
@@ -219,7 +219,6 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 
                                                                                                             class="form-control numeric_bangla"
                                                                                                             maxlength="255"
-                                                                                                            min="1"
                                                                                                             value="<?php if($info['sa_dag']!='0'){ echo $info['sa_dag'];} ?>"
                                                                                                             id="sa_dag">
                                                                     </div>
@@ -229,12 +228,12 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">এসএ জমির পরিমাণ (একর)</label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input number "><input type="text"
+                                                                    <div class="input number "><input type="number"
                                                                                                             name="sa_land_amount"
 
                                                                                                             class="form-control numeric_bangla"
                                                                                                             maxlength="200"
-                                                                                                      min="1"
+                                                                                                      min="0"
                                                                                                             value="<?php if($info['sa_land_amount']!='0'){ echo $info['sa_land_amount'];} ?>"
                                                                                                             id="sa_land_amount">
                                                                     </div>
@@ -303,7 +302,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">বিএস খতিয়ান</label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input "><input type="number"
+                                                                    <div class="input "><input type="text"
                                                                                                     name="bs_khatian"
                                                                                                     class="form-control user_email numeric_bangla"
                                                                                                     maxlength="100"
@@ -316,9 +315,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">বিএস দাগ</label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input "><input type="number"
+                                                                    <div class="input "><input type="text"
                                                                                                     name="bs_dag"
-                                                                                               min="1"
+                                                                                               
                                                                                                     class="form-control user_email numeric_bangla"
                                                                                                     maxlength="100"
                                                                                                     value="<?php if($info['bs_dag']!='0'){ echo $info['bs_dag'];} ?>"
@@ -334,7 +333,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                         <input type="number"
                                                                                name="bs_land_amount"
                                                                                step="any"
-                                                                               min="1"
+                                                                               min="0"
                                                                                class="form-control numeric_bangla"
                                                                                data-toggle="tooltip"
                                                                                maxlength="255"

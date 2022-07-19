@@ -158,7 +158,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <label class="col-sm-4 control-label">এসএ খতিয়ান নম্বর
                                                                 </label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input number "><input type="number"
+                                                                    <div class="input number "><input type="text"
                                                                                                       name="sa_khatian"
                                                                                                       min="1"
 
@@ -176,7 +176,6 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                     <div class="input text required"><input type="text"
                                                                                                             name="sa_dag"
 
-                                                                                                            min="1"
                                                                                                             class="form-control numeric_bangla"
                                                                                                             maxlength="255"
 
@@ -188,9 +187,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">এসএ জমির পরিমাণ (একর)</label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input number "><input type="text"
+                                                                    <div class="input number "><input type="number"
                                                                                                       name="sa_land_amount"
-                                                                                                      min="1"
+                                                                                                      min="0"
                                                                                                       class="form-control numeric_bangla"
                                                                                                       maxlength="200"
 
@@ -258,11 +257,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">বিএস খতিয়ান</label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input "><input type="number"
+                                                                    <div class="input "><input type="text"
                                                                                                name="bs_khatian"
                                                                                                class="form-control numeric_bangla "
                                                                                                maxlength="100"
-                                                                                               min="1"
+                                                                                               
                                                                                                id="bs_khatian"></div>
                                                                     <div class="email_validation"
                                                                          style="color: red"></div>
@@ -273,7 +272,6 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <div class="col-sm-6">
                                                                     <div class="input "><input type="text"
                                                                                                name="bs_dag"
-                                                                                               min="1"
                                                                                                class="form-control numeric_bangla "
                                                                                                maxlength="100"
 
@@ -289,10 +287,10 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                         <input type="number"
                                                                                name="bs_land_amount"
                                                                                step="any"
-                                                                               min="1"
                                                                                class="form-control numeric_bangla"
                                                                                data-toggle="tooltip"
                                                                                maxlength="255"
+																			   min="0"
 
                                                                                id="bs_land_amount">
                                                                     </div>
