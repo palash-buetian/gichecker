@@ -234,6 +234,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                                                             class="form-control numeric_bangla"
                                                                                                             maxlength="200"
                                                                                                       min="0"
+																									  step=".0001"
                                                                                                             value="<?php if($info['sa_land_amount']!='0'){ echo $info['sa_land_amount'];} ?>"
                                                                                                             id="sa_land_amount">
                                                                     </div>
@@ -332,7 +333,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                     <div class="input text ">
                                                                         <input type="number"
                                                                                name="bs_land_amount"
-                                                                               step="any"
+                                                                               step=".0001"
                                                                                min="0"
                                                                                class="form-control numeric_bangla"
                                                                                data-toggle="tooltip"

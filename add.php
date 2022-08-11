@@ -192,6 +192,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                                                       min="0"
                                                                                                       class="form-control numeric_bangla"
                                                                                                       maxlength="200"
+																									  step=".0001"
 
                                                                                                       id="sa_land_amount">
                                                                     </div>
@@ -286,7 +287,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                     <div class="input text ">
                                                                         <input type="number"
                                                                                name="bs_land_amount"
-                                                                               step="any"
+                                                                               step=".0001"
                                                                                class="form-control numeric_bangla"
                                                                                data-toggle="tooltip"
                                                                                maxlength="255"

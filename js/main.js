@@ -46,12 +46,15 @@ $(document).ready(function () {
 
 		$(input).keyup( function()
 		{
+			//var amount = $('sa_land_amount');
 
+		
 			var searchQuery = $(input).val();
-
 			var bangla = replaceNumbers(searchQuery);
 			//alert(bangla);
 			$(input).val(bangla);
+		
+
 		});
 
 	});
