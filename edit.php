@@ -215,8 +215,6 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <div class="col-sm-6">
                                                                     <div class="input text required"><input type="text"
                                                                                                             name="sa_dag"
-																											onkeypress="return validateNumberAndForwardSlash(event)"
-
                                                                                                             class="form-control numeric_bangla"
                                                                                                             maxlength="255"
                                                                                                             value="<?php if($info['sa_dag']!='0'){ echo $info['sa_dag'];} ?>"
@@ -228,7 +226,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">এসএ জমির পরিমাণ (একর)</label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input number "><input type="number"
+                                                                    <div class="input number "><input type="text"
                                                                                                             name="sa_land_amount"
 
                                                                                                             class="form-control numeric_bangla"
@@ -331,7 +329,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <label class="col-sm-4 control-label">বিএস জমির পরিমাণ (একর)</label>
                                                                 <div class="col-sm-6">
                                                                     <div class="input text ">
-                                                                        <input type="number"
+                                                                        <input type="text"
                                                                                name="bs_land_amount"
                                                                                step=".0001"
                                                                                min="0"

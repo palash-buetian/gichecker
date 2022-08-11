@@ -187,7 +187,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">এসএ জমির পরিমাণ (একর)</label>
                                                                 <div class="col-sm-6">
-                                                                    <div class="input number "><input type="number"
+                                                                    <div class="input number "><input type="text"
                                                                                                       name="sa_land_amount"
                                                                                                       min="0"
                                                                                                       class="form-control numeric_bangla"
@@ -285,7 +285,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 <label class="col-sm-4 control-label">বিএস জমির পরিমাণ (একর)</label>
                                                                 <div class="col-sm-6">
                                                                     <div class="input text ">
-                                                                        <input type="number"
+                                                                        <input type="text"
                                                                                name="bs_land_amount"
                                                                                step=".0001"
                                                                                class="form-control numeric_bangla"
