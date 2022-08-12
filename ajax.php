@@ -5,7 +5,7 @@ require_once "config.php";
 
 if (isset($_POST['dag']))
 {
-    $dag = (int)$_POST['dag'];
+    $dag = $_POST['dag'];
 
     if ($_POST['mouza'] != 0)
     {
@@ -18,7 +18,7 @@ if (isset($_POST['dag']))
         $query = "SELECT * FROM dag WHERE (sa_dag LIKE '{$dag}%' OR bs_dag LIKE '{$dag}%')  ORDER BY CASE WHEN (sa_dag='{$dag}' OR bs_dag='{$dag}') THEN 1 WHEN (sa_dag LIKE '{$dag}%' OR bs_dag LIKE '{$dag}%') THEN 2 ELSE 3 END LIMIT 20";
     }
 
-  //print_r($query);
+  print_r($query);
 
     $result = mysqli_query($conn, $query);
 
