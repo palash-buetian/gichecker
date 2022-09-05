@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: login.php");
+    header("location: login");
     exit;
 }
 
@@ -35,7 +35,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 
 //Start the session if already not started.
     $_SESSION['success_message'] = "আপনার পরিবর্তন সফলভাবে সংরক্ষণ করা হয়েছে।";
-     header("Location: interest.php");
+     header("Location: interest");
     exit();
 
 }

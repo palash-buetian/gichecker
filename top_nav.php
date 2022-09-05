@@ -16,7 +16,7 @@ $user_info = mysqli_fetch_array($user_result);
     <div class="page-header-inner">
         <!-- BEGIN LOGO -->
         <div class="page-logo">
-            <a href="dashboard.php">
+            <a href="dashboard">
                 <img src="./images/logo.png" alt="logo" class="logo-default">
             </a>
             <div class="menu-toggler sidebar-toggler">
@@ -70,7 +70,7 @@ $user_info = mysqli_fetch_array($user_result);
                             <li class="divider">
                             </li>
                             <li>
-                                <a href="logout.php">
+                                <a href="logout">
                                     <i class="icon-key"></i> লগ আউট </a>
                             </li>
                         </ul>

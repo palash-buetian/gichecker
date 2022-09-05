@@ -7,7 +7,7 @@ session_start();
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: dashboard.php");
+    header("location: dashboard");
     exit;
 }
 
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             setcookie($cookie_name, $cookie_value, time() + (60*120), "/"); // 86400 = 1 day
                             setcookie('sidebar_closed', 0);
                             $_SESSION['success_message'] = "আপনি সফলভাবে লগ-ইন করেছেন।";
-                            header("Location: dashboard.php");
+                            header("Location: dashboard");
                             exit();
 
 

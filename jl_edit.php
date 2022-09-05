@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: login.php");
+    header("location: login");
     exit;
 }
 
@@ -93,7 +93,7 @@ if (isset($_GET["id"]) == true) {
                         <ul class="dropdown-menu dropdown-menu-default">
 
                             <li>
-                                <a href="logout.php">
+                                <a href="logout">
                                     <i class="icon-key"></i> লগ আউট </a>
                             </li>
                         </ul>

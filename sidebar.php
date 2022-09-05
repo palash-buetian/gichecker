@@ -9,13 +9,13 @@
                 </a>
             </li>
             <li class="start active">
-                <a href="/dashboard.php">
+                <a href="/dashboard">
                     <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-home"></i>
                     <span class="title">ড্যাশবোর্ড</span>
                 </a>
             </li>
             <li class="start">
-                <a href="/infograph.php">
+                <a href="/infograph">
                     <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-info"></i>
                     <span class="title">মৌজাভিত্তিক তথ্য</span>
                 </a>
@@ -28,7 +28,7 @@
                 </a>
                 <ul class="sub-menu" style="display: none;">
                     <li>
-                        <a href="/mouja.php" class="service-list" data-s_id="13">
+                        <a href="/mouja" class="service-list" data-s_id="13">
                             <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-flag"></i>
                             <!--
                                                                          <form class="login-form" action="http://oh.lams.gov.bd/emutationSso" method="post">-->
@@ -37,7 +37,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/interest.php" class="service-list" data-s_id="13">
+                        <a href="/interest" class="service-list" data-s_id="13">
                             <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-list"></i>
                             <!--                                <form class="login-form" action="http://oh.lams.gov.bd/emutationSso" method="post">-->
                             <span class="title">সরকারি স্বার্থের ধরণ</span>
@@ -45,7 +45,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/profile.php" class="service-list" data-s_id="13">
+                        <a href="/profile" class="service-list" data-s_id="13">
                             <i class="a2i_gn_usermanagement1"></i>
                             <!--                                <form class="login-form" action="http://oh.lams.gov.bd/emutationSso" method="post">-->
                             <span class="title">অফিস নাম</span>
@@ -90,7 +90,7 @@
 
                     ?> </ul>
             <li>
-                <a href="/help.php" class="service-list" data-s_id="13">
+                <a href="/help" class="service-list" data-s_id="13">
                     <i class="a2i_gn_usermanagement1"></i>
                     <!--                                <form class="login-form" action="http://oh.lams.gov.bd/emutationSso" method="post">-->
                     <span class="title">সাহায্য ও প্রশ্ন-উত্তর</span>

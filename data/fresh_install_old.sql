@@ -16,7 +16,8 @@
 
 
 -- Dumping database structure for gichecker
-DROP DATABASE IF EXISTS `gichecker`;
+/*DROP DATABASE IF EXISTS `gichecker`;*/
+
 CREATE DATABASE IF NOT EXISTS `gichecker` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `gichecker`;
 
