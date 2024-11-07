@@ -62,8 +62,10 @@ php -S localhost:8000
 ## It's Done!
 
 ## Screenshots
-![Alt text](https://github.com/palash-buetian/gichecker/raw/master/Screenshots/1.png "Homepage")
-[![Watch the video](https://github.com/palash-buetian/gichecker/raw/master/Screenshots/2.png)](https://github.com/palash-buetian/gichecker/blob/master/Screenshots/screetcast.mov)
+![Alt text](https://github.com/palash-buetian/gichecker/blob/68312f09ed84f7f2bf8eb8e49dfa725d71b0efb6/Screenshots/1.png "Homepage")
+![Alt text](https://github.com/palash-buetian/gichecker/blob/68312f09ed84f7f2bf8eb8e49dfa725d71b0efb6/Screenshots/2.png "Search Result")
+
+![Watch the video](https://github.com/palash-buetian/gichecker/blob/68312f09ed84f7f2bf8eb8e49dfa725d71b0efb6/Screenshots/screetcast.mov)
 
 ### License
 MIT
