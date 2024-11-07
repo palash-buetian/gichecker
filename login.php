@@ -124,7 +124,7 @@ ob_end_flush(); // Flush the output from the buffer
 <body class="bg login" style="overflow: hidden;">
 <div class="head_text">
     <img alt="" class="img-circle" src="/images/bd_logo.png">
-    <h1>সিলেট মহানগর রাজস্ব সার্কেল</h1>
+   <!-- <h1>সিলেট মহানগর রাজস্ব সার্কেল</h1> -->
     <h2>সরকারি স্বার্থ যাচাই সিস্টেম</h2>
 </div>
 
