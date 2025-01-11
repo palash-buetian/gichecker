@@ -48,6 +48,28 @@ CREATE TABLE `dag` (
   `interest_id` int(11) NOT NULL DEFAULT 0,
   `comments` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `dag`
+--
+ALTER TABLE `dag`
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `Unique` (`mouja_id`,`sa_dag`,`bs_dag`,`interest_id`) USING BTREE;
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `dag`
+--
+ALTER TABLE `dag`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+COMMIT;
 ```
 
 5. edit connection on ajax.php  
