@@ -24,7 +24,7 @@ if (isset($_POST['dag']))
 
     if (mysqli_num_rows($result) && mysqli_num_rows($result) > 0)
     {
-        echo '<ul class="list-group">';
+        echo '<ul class="list-group" style=" max-height: 40vh !important;">';
 
         $i = 0;
         while ($info = mysqli_fetch_array($result))
@@ -50,25 +50,54 @@ if (isset($_POST['dag']))
                 $exact = 'exact';
             }
 
+            $info['sa_dag'] = en2bn($info['sa_dag']);
+            $info['bs_dag'] = en2bn($info['bs_dag']);
 
-            if ($info['bs_dag'] == '0' || $info['bs_dag'] == NULL)
+
+             if ($info['bs_dag'] == '0' || $info['bs_dag'] == NULL)
             {
-                $dag_out = ' এসএ <span class="numeric_bangla"> ' . $info['sa_dag'].'</span>' ;
+
+
+                $dag_out = ' এসএ ' . $info['sa_dag'] ;
             }
+            
+            
             if($info['sa_dag']=='0'){
-                $dag_out = ' বিএস <span class="numeric_bangla"> ' . $info['bs_dag'].'</span>' ;
+                $dag_out = ' বিএস ' . $info['bs_dag'];
             }
+            
+            
             if ($info['sa_dag'] != '0' && $info['bs_dag'] != '0')
             {
-                $dag_out = ' এসএ <span class="numeric_bangla">' . $info['sa_dag'].'</span> এবং বিএস <span class="numeric_bangla">' . $info['bs_dag'].' </span>' ;
+                $dag_out = ' এসএ ' . $info['sa_dag'].' দাগে';
+
+				if ($info['sa_class'] != '0')
+				{
+					$dag_out .= ' ('.$info['sa_class'].' শ্রেণি)';
+				}
+				
+				$dag_out .= ' এবং বিএস ' . $info['bs_dag'] ;
+				
+				if ($info['bs_class'] != '0')
+				{
+					$dag_out .= ' ('.$info['bs_class'].' শ্রেণি)';
+				}				
             }
 
 
             $str = $mouja_info['name'] . ' মৌজার ' . $dag_out . ' দাগে ' . $interest_info['interest_name'];
 
+            $is_comment = 'collapsible ';
+            if ($info['comments'] == '0' || $info['comments'] == NULL)
+            {
+                $is_comment = '';
+            }
 
-
-            echo '<li class="'. $exact. '  list-group-item list-group-item-danger">' . $str . "</li>";
+            echo '<li class="'.$is_comment. $exact. ' list-group-item list-group-item-danger">' . $str;
+           if ($is_comment){
+               echo '<div class="contents"> <p>⮞ '.$info['comments'].'</p></div>';
+           }
+            echo "</li>";
         }
 
         echo '</ul>';
@@ -82,5 +111,11 @@ if (isset($_POST['dag']))
         </div>';
     }
 
+}
+
+function en2bn($input){
+    $bn_digits=array('০','১','২','৩','৪','৫','৬','৭','৮','৯');
+    $output = str_replace(range(0, 9),$bn_digits, $input);
+    return $output;
 }
 ?>

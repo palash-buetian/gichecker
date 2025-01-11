@@ -403,10 +403,15 @@ include 'config.php';
 
                                                     <th style="text-align: center;">এসএ দাগ</th>
                                                     <th style="text-align: center;">বিএস দাগ</th>
-
+													
+													
 
                                                     <th style="text-align: center;">এসএ খতিয়ান </th>
                                                     <th style="text-align: center;">বিএস খতিয়ান</th>
+													
+													<th style="text-align: center;">এসএ শ্রেণি</th>
+                                                    <th style="text-align: center;">বিএস শ্রেণি</th>
+
 
                                                     <th style="text-align: center;">এসএ জমি (একর)</th>
                                                     <th style="text-align: center;">বিএস জমি (একর)</th>
@@ -584,7 +589,7 @@ include 'config.php';
                                                             <!-- sa khatian -->
 
                                                             <td style="text-align: center;"
-                                                            <?php echo $info['sa_dag'] == 0 ? ">অজানা" : ' class="numeric_bangla">' . $info['sa_dag']; ?></td>
+                                                            <?php echo $info['sa_dag'] == '0' ? ">অজানা" : ' class="numeric_bangla">' . $info['sa_dag']; ?></td>
 
                                                             <td style="text-align: center"
 
@@ -595,21 +600,28 @@ include 'config.php';
                                                             }
                                                             else
                                                             {
-                                                                echo $info['bs_dag'] == 0 ? ">অজানা" : ' class="numeric_bangla">' . $info['bs_dag'];
+                                                                echo $info['bs_dag'] == '0' ? ">অজানা" : ' class="numeric_bangla">' . $info['bs_dag'];
                                                             }
                                                             echo '</td>';
                                                             ?>
 
                                                             <td style="text-align: center;"
-                                                            <?php echo $info['sa_khatian'] == 0 ? ">অজানা" : ' class="numeric_bangla">' . $info['sa_khatian']; ?></td>
+                                                            <?php echo $info['sa_khatian'] == '0' ? ">অজানা" : ' class="numeric_bangla">' . $info['sa_khatian']; ?></td>
                                                             <td style="text-align: center;"
-                                                            <?php echo $info['bs_khatian'] == 0 ? ">অজানা" : ' class="numeric_bangla">' . $info['bs_khatian']; ?></td>
+                                                            <?php echo $info['bs_khatian'] == '0' ? ">অজানা" : ' class="numeric_bangla">' . $info['bs_khatian']; ?></td>
 
 
                                                             <td style="text-align: center;"
-                                                            <?php echo $info['sa_land_amount'] == 0 ? ">অজানা" : 'class="numeric_bangla">' . $info['sa_land_amount']; ?></td>
+                                                            <?php echo $info['sa_class'] == '0' ? ">অজানা" : ' class="">' . $info['sa_class']; ?></td>
                                                             <td style="text-align: center;"
-                                                            <?php echo $info['bs_land_amount'] == 0 ? ">অজানা" : 'class="numeric_bangla">' . $info['bs_land_amount']; ?></td>
+                                                            <?php echo $info['bs_class'] == '0' ? ">অজানা" : ' class="">' . $info['bs_class']; ?></td>
+
+
+
+                                                            <td style="text-align: center;"
+                                                            <?php echo $info['sa_land_amount'] == '0' ? ">অজানা" : 'class="numeric_bangla">' . $info['sa_land_amount']; ?></td>
+                                                            <td style="text-align: center;"
+                                                            <?php echo $info['bs_land_amount'] == '0' ? ">অজানা" : 'class="numeric_bangla">' . $info['bs_land_amount']; ?></td>
 
                                                             <td style="text-align: center;"><?php echo $interest_info['interest_name']; ?></td>
                                                             <td class="text-center">

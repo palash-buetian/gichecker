@@ -35,11 +35,18 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
     }
     //var_dump($data);
 
+    $data['sa_khatian'] =  str_replace(' ', '', $data['sa_khatian']);
+    $data['bs_khatian'] =  str_replace(' ', '', $data['bs_khatian']);
+
     $mouja_id =    mysqli_real_escape_string($conn,$_POST['mouja_id']);
     $interest_id =mysqli_real_escape_string($conn,$_POST['interest_id']);
 
     $sa_dag =mysqli_real_escape_string($conn,$data['sa_dag']);
     $bs_dag =mysqli_real_escape_string($conn,$data['bs_dag']);
+    
+    $sa_class =ltrim(mysqli_real_escape_string($conn,$data['sa_class']));
+    $bs_class =ltrim(mysqli_real_escape_string($conn,$data['bs_class']));
+    
     $sa_khatian =mysqli_real_escape_string($conn,$data['sa_khatian']);
     $bs_khatian =mysqli_real_escape_string($conn,$data['bs_khatian']);
     $sa_land_amount =mysqli_real_escape_string($conn,$data['sa_land_amount']);
@@ -47,16 +54,21 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
 
     $comments =mysqli_real_escape_string($conn,$data['comments']);
 
-    $update_query = "UPDATE `dag` SET `mouja_id`='$mouja_id', `sa_dag`='$sa_dag', `bs_dag`='$bs_dag', `sa_khatian`='$sa_khatian', `bs_khatian`='$bs_khatian', `sa_land_amount`='$sa_land_amount', `bs_land_amount`='$bs_land_amount', `interest_id`='$interest_id', `comments`='$comments' WHERE `id`='$id' LIMIT 1;";
+    $update_query = "UPDATE `dag` SET `mouja_id`='$mouja_id', `sa_dag`='$sa_dag', `bs_dag`='$bs_dag',`sa_class`='$sa_class', `bs_class`='$bs_class', `sa_khatian`='$sa_khatian', `bs_khatian`='$bs_khatian', `sa_land_amount`='$sa_land_amount', `bs_land_amount`='$bs_land_amount', `interest_id`='$interest_id', `comments`='$comments' WHERE `id`='$id' LIMIT 1;";
 
    // print_r($update_query);
     $result = mysqli_query($conn, $update_query);
 
 
-
 //Start the session if already not started.
+if (isset($_GET["refer"]) == true) {
+    $url= $_GET["refer"];
+}
+   else{
+        $url = "dashboard";
+    }
     $_SESSION['success_message'] = "আপনার পরিবর্তন সফলভাবে সংরক্ষণ করা হয়েছে।";
-    header("Location: dashboard");
+    header("Location: ".$url);
     exit();
 
 }
@@ -131,8 +143,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                         <div style="font-size: 15px; text-align: justify;margin: 20px;">
 
 
+
                                             <form enctype="multipart/form-data" method="POST"  id="add_edit" accept-charset="utf-8"
-                                                  class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'];?>">
+                                                  class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'].'?refer='.$_SERVER['HTTP_REFERER'];?>">
 
 
                                                 <input type="hidden" id="id" name="id" value="<?php  echo $id;  ?>">
@@ -223,6 +236,20 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                 </div>
                                                             </div>
 
+                                                            <div class="form-group">
+                                                                <label class="col-sm-4 control-label">এসএ শ্রেণি
+                                                                </label>
+                                                                <div class="col-sm-6">
+                                                                    <div class="input text required"><input type="text"
+                                                                                                            name="sa_class"
+                                                                                                            class="form-control"
+                                                                                                            maxlength="255"
+                                                                                                            value="<?php if($info['sa_class']!='0'){ echo $info['sa_class'];} ?>"
+                                                                                                            id="sa_class">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">এসএ জমির পরিমাণ (একর)</label>
                                                                 <div class="col-sm-6">
@@ -325,6 +352,22 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) {
                                                                          style="color: red"></div>
                                                                 </div>
                                                             </div>
+                                                            
+                                                                                                                        <div class="form-group">
+                                                                <label class="col-sm-4 control-label">বিএস শ্রেণি</label>
+                                                                <div class="col-sm-6">
+                                                                    <div class="input "><input type="text"
+                                                                                                    name="bs_class"
+                                                                                               
+                                                                                                    class="form-control user_email"
+                                                                                                    maxlength="100"
+                                                                                                    value="<?php if($info['bs_class']!='0'){ echo $info['bs_class'];} ?>"
+                                                                                                    id="bs_class"></div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            
                                                             <div class="form-group">
                                                                 <label class="col-sm-4 control-label">বিএস জমির পরিমাণ (একর)</label>
                                                                 <div class="col-sm-6">

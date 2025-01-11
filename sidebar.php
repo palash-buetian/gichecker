@@ -15,53 +15,87 @@
                 </a>
             </li>
             <li class="start">
+                <a href="/add">
+                    <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-plus"></i>
+                    <span class="title">নতুন তথ্য যুক্ত করুন</span>
+                </a>
+            </li>
+            <li class="start">
                 <a href="/infograph">
-                    <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-info"></i>
-                    <span class="title">মৌজাভিত্তিক তথ্য</span>
+                    <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-graph"></i>
+                    <span class="title">তথ্যচিত্র</span>
                 </a>
             </li>
 
             <li class="">
                 <a href="#" class="">
-                    <i style="float: left; margin: 2px 6px 4px 7px;" class="a2i_gn_settings1"></i>
-                    <span>সেটিংস</span>
+                    <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-settings"></i>
+                    <span class="title">সেটিংস</span>
                 </a>
                 <ul class="sub-menu" style="display: none;">
                     <li>
                         <a href="/mouja" class="service-list" data-s_id="13">
                             <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-flag"></i>
-                            <!--
-                                                                         <form class="login-form" action="http://oh.lams.gov.bd/emutationSso" method="post">-->
-                            <span class="title">মৌজা তালিকা</span>
-                            <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->
+                                <span class="title">মৌজা তালিকা</span>
                         </a>
                     </li>
                     <li>
                         <a href="/interest" class="service-list" data-s_id="13">
                             <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-list"></i>
-                            <!--                                <form class="login-form" action="http://oh.lams.gov.bd/emutationSso" method="post">-->
                             <span class="title">সরকারি স্বার্থের ধরণ</span>
-                            <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->
                         </a>
                     </li>
                     <li>
                         <a href="/profile" class="service-list" data-s_id="13">
                             <i class="a2i_gn_usermanagement1"></i>
-                            <!--                                <form class="login-form" action="http://oh.lams.gov.bd/emutationSso" method="post">-->
                             <span class="title">অফিস নাম</span>
-                            <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->
                         </a>
                     </li>
                 </ul>
             </li>
+
+            <li class="">
+                <a href="#" class="">
+                    <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-settings"></i>
+                    <span class="title">মৌজাভিত্তিক তথ্য</span>
+                </a>
+                <ul class="sub-menu" style="display: none;">
+                    <?php
+
+                    // get the info from the db
+                    $mouja_query = "SELECT * FROM `mouja` ORDER BY `id` ASC";
+                    $mouja_result = mysqli_query($conn, $mouja_query);
+
+                    while ($mouja_info = mysqli_fetch_array($mouja_result)) {
+
+                        echo ' 
+					<li> ';
+                        echo ' 
+						<a href="/mouja_details.php?mouja=';
+                        echo $mouja_info['id'];
+                        echo '" class="service-list" data-s_id="13">
+							<i style="float: left; margin: 2px 6px 4px 7px;" class="icon-map"></i>
+							<span class="title">';
+
+                        echo $mouja_info['name'];
+                        echo "</span>
+						</a>
+					</li>";
+
+                    }
+
+                    ?>
+
+                </ul>
+            </li>
+
             <li class="open">
                 <a href="#" class="">
-                    <i style="float: left; margin: 2px 6px 4px 7px;" class="a2i_gn_settings1"></i>
-                    <span>সরকারি স্বার্থের তালিকা</span>
+                    <i style="float: left; margin: 2px 6px 4px 7px;" class="icon-list"></i>
+                    <span class="title">সরকারি স্বার্থের তালিকা</span>
                 </a>
-                <ul class="sub-menu" style="display: block;"> <?php
-
-                    include 'config.php';
+                <ul class="sub-menu" style="display: block;">
+                    <?php
 
                     // get the info from the db
                     $interest_query = "SELECT * FROM `interest` ORDER BY `interest_id` ASC";
@@ -88,13 +122,12 @@
 
                     }
 
-                    ?> </ul>
+                    ?>
+                </ul>
             <li>
                 <a href="/help" class="service-list" data-s_id="13">
-                    <i class="a2i_gn_usermanagement1"></i>
-                    <!--                                <form class="login-form" action="http://oh.lams.gov.bd/emutationSso" method="post">-->
-                    <span class="title">সাহায্য ও প্রশ্ন-উত্তর</span>
-                    <!--                                    <input type="hidden" name="username" value="palashmondal"/><input type="hidden" name="password" value="ACL@Mohanagar002"/></form>-->
+                    <i class="icon-question"></i>
+                   <span class="title">সাহায্য ও প্রশ্ন-উত্তর</span>
                 </a>
             </li>
         </ul>

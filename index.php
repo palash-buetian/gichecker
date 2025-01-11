@@ -24,6 +24,7 @@ $mouja_result = mysqli_query($conn, $mouja_query);
     <link href="css/main.css" rel="stylesheet"/>
     <link href="css/choices.min.css" rel="stylesheet"/>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
+
 </head>
 <body class="bg" style="overflow:hidden;">
 <div id="login">
@@ -79,8 +80,8 @@ ob_flush();
 </footer>
 
 <script src="js/jquery.min.js"></script>
-<script src="js/choices.min.js"></script>
 <script src="js/index.js"></script>
+<script src="js/choices.min.js"></script>
 <script src="js/jquery.backstretch.min.js"></script>
 
 <script>
