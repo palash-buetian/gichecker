@@ -34,18 +34,20 @@ GIChecker requires [PHP](https://php.net/) v7+ to run.
 3. Import the data 'gichecker_final' into the database. A table will be automatically created and data will be manipulated.
 4. Or alternatively you can create a table with the following code.
 ```sh
-   CREATE TABLE `interest_list` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `mouza` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `sa_jl` int DEFAULT NULL,
-  `bs_jl` int DEFAULT NULL,
-  `sa_dag` int DEFAULT NULL,
-  `bs_dag` int DEFAULT NULL,
-  `interest` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `sa_dag` (`sa_dag`,`interest`,`sa_jl`),
-  UNIQUE KEY `bs_dag` (`bs_dag`,`sa_jl`,`interest`)
-) ENGINE=InnoDB AUTO_INCREMENT=8493 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `dag` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `mouja_id` int(11) NOT NULL DEFAULT 0,
+  `sa_dag` varchar(50) NOT NULL DEFAULT '0',
+  `bs_dag` varchar(50) DEFAULT '0',
+  `sa_class` varchar(50) DEFAULT '0',
+  `bs_class` varchar(50) DEFAULT '0',
+  `sa_khatian` varchar(50) DEFAULT '0',
+  `bs_khatian` varchar(50) DEFAULT '0',
+  `sa_land_amount` double DEFAULT 0,
+  `bs_land_amount` double DEFAULT 0,
+  `interest_id` int(11) NOT NULL DEFAULT 0,
+  `comments` varchar(256) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
 
 5. edit connection on ajax.php  
